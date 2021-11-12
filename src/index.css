@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.Mui-selected {
+	color: #20b2aa;
+}
+
+/* .container .ql-editor {
+	width: 8.5in;
+	min-height: 11in;
+	padding: 1in;
+	margin: 1rem;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+	background-color: white;
+}
+
+.container .ql-container.ql-snow {
+	display: flex;
+	justify-content: center;
+}
+
+.container .ql-toolbar.ql-snow {
+	display: flex;
+	justify-content: center;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: #f3f3f3;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+	overflow-y: hidden;
+}
+.ql-editor {
+	z-index: -9999;
+}
+
+@page {
+	margin: 1in;
+}
+
+@media print {
+	body {
+		background: none;
+	}
+
+	.container .ql-editor {
+		width: 500px;
+		height: 600px;
+		padding: 0;
+		margin: 0;
+		box-shadow: none;
+		align-self: flex-start;
+	}
+
+	.container .ql-toolbar.ql-snow {
+		display: none;
+	}
+} */
+/* Tell Quill not to scroll */
+#quill-container {
+	/* height: auto; */
+	justify-content: center;
+	min-height: 900px;
+	border-radius: 2rem;
+	padding: 50px;
+}
+#quill-container .ql-editor {
+	font-size: 18px;
+	overflow-y: visible;
+}
+#scrolling-container {
+	/* height: 100%; */
+	min-height: 800px;
+	/* min-height: 100%; */
+	overflow-y: auto;
+}
