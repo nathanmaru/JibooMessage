@@ -1,6 +1,7 @@
 import React from "react";
 import SubmissionDropdown from "../components/dropdowns/SubmissionDropdown";
 import ResourcesCards from "../components/ResourcesCards";
+import CardComponent from "../materialUI/components/reuseableComponents/cardComponent";
 
 const items = [
 	{
@@ -23,7 +24,7 @@ const ClassroomSubmissions = () => {
 
 				<div className="flex flex-row flex-wrap w-full items-center lg:justify-start justify-center p-3 space-x-3">
 					{items.map((item) => (
-						<ResourcesCards item={item} />
+						<CardComponent item={item} />
 					))}
 				</div>
 			</div>
