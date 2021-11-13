@@ -1,71 +1,98 @@
-# Getting Started with Create React App
+# Reusable Components and Hooks Guide
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is to ensure all members of the group are able to understand what has been done already.
 
-## Available Scripts
+## Available Components
 
-In the project directory, you can run:
+In the src/materialUI/components/reuseableComponents directory, you can see the available reusable components:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `card component`
 
-### `npm test`
+The standard card component of the project.\
+### How to use?
+***Example Usage:***
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+<CardHolder>
+  {items.map((item) => (
+    <CardComponent item={item} link={`/works/${item.id}?tab=dashboard`} />
+  ))}
+</CardHolder>
+```
+Props for card components:
 
-### `npm run build`
+| Props Keyword | Description | Type | Required |
+|---------------|-------------|-----|-----------|
+| ***item*** | object you want to render in the card | object | true |
+| ***link*** | if you want redirect after clicking the card | string | false |
+| ***onClick*** | makes the card component acts like a button | function | false |
+| ***height*** | if you want to specify the height of the card| string | false |
+| ***image*** | if you want image on the card | string | false |
+| ***children*** | to customize what would be the contents of the card for example if you want to put button or any other components | component | false |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `dialog component`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Launches a pop up modal.
+### How to use?
+***Example Usage:***
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+<DialogComponent
+  button={<Button variant='contained'>Join Classroom</Button>}
+  open={open}
+  handleClose={handleClose}
+  title='Join Classroom'
+  context='Collaborate with your classmates and discover something!'
+  action={{ label: 'Join', handler: handleSubmit }}
+  >
+    <TextField
+      id='standard-search'
+      label='Code'
+      variant='standard'
+      name='sectionCode'
+      value={sectionCode}
+      onChange={(e) => onChange(e)}
+      sx={{
+        width: '520px',
+        marginBottom: '3px',
+        marginTop: '15px',
+        marginLeft: '15px',
+        padding: '2px',
+        fontWeight: 'bold',
+      }}
+    />
+</DialogComponent>
+```
 
-### `npm run eject`
+Props for dialog components:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+| Props Keyword | Description | Type | Required |
+|---------------|-------------|-----|-----------|
+| ***title*** | The title that you see above on the upper part of the modal | string | false |
+| ***context*** | A subtitle below the title | string | false |
+| ***action*** | compose of label and the handler. This describe the button ok of the dialog | object | false |
+| ***height*** | if you want to specify the height of the card| string | false |
+| ***maxWidth*** | specify maxWidth ("lg", "md", etc.) | string | false |
+| ***children*** | to customize what would be the contents inside the dialog for example if you want to put button or any other components | component | false |
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Available Hooks
 
-## Learn More
+### `useFetch`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Uses the fetched data and updates the component state for you. It requires object or array of object and return an object which compose of an object,***items*** and a function, ***setItems***
+### How to use?
+***Example Usage:***
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+useEffect(() => {
+  dispatch(getClassroom()); # dispatch an action in the backend
+}, []);
+const { classes } = useSelector((state) => state.class); # get data from redux
+const { items: classrooms, setItems: setClassrooms } = useFetch(classes); # using useFetch hook
+```
+> Note: Assign alias name for the returned ***items*** and ***setItems*** to avoid confusion and improve code readablity
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# meeguFrontend
