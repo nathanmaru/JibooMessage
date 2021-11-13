@@ -5,7 +5,7 @@ import JoinClassroomBanner from '../../../../../components/JoinClassroomBanner';
 import BGImg from '../../../../../../assets/img/temp_bg.jpg';
 import { getStudentClassroom, joinClassroom } from '../../../../../../store/classroomSlice';
 import BannerComponent from '../../../../../components/reuseableComponents/bannerComponent';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import DialogComponent from '../../../../../components/reuseableComponents/dialogComponent';
 import CardHolder from '../../../../../components/reuseableComponents/cardHolder';
 import CardComponent from '../../../../../components/reuseableComponents/cardComponent';
@@ -14,31 +14,22 @@ const bg = BGImg;
 
 const ClassroomResearcher = () => {
 	const dispatch = useDispatch();
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useState([{ id: 1, name: 'name' }]);
 	const [inputForm, setInputForm] = useState({ sectionCode: '' });
 	const { sectionCode } = inputForm;
 	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
 	const user = useSelector((state) => state.auth.user);
-	const { classes } = useSelector((state) => state.class);
-	useEffect(() => {
-		dispatch(getStudentClassroom());
-	}, []);
-	useEffect(() => {
-		if (classes) {
-			setItems(classes);
-		}
-	}, [classes]);
+	// const { classes } = useSelector((state) => state.class);
+	// useEffect(() => {
+	// 	dispatch(getStudentClassroom());
+	// }, []);
+	// useEffect(() => {
+	// 	if (classes) {
+	// 		setItems(classes);
+	// 	}
+	// }, [classes]);
 
 	// Dialog
-	const [open, setOpen] = React.useState(false);
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 	const handleSubmit = () => {
 		dispatch(joinClassroom(user.id, sectionCode));
 	};
@@ -51,8 +42,6 @@ const ClassroomResearcher = () => {
 				>
 					<DialogComponent
 						button={<Button variant='contained'>Join Classroom</Button>}
-						open={open}
-						handleClose={handleClose}
 						title='Join Classroom'
 						context='Collaborate with your classmates and discover something!'
 						action={{ label: 'Join', handler: handleSubmit }}
@@ -82,8 +71,27 @@ const ClassroomResearcher = () => {
 							{items.map((item) => (
 								<CardComponent
 									item={item}
+									height='150px'
+									width='600px'
 									link={`/classroom/researcher/${item.id}?tab=dashboard`}
-								/>
+								>
+									<div className='flex flex-col space-y-2 w-full'>
+										<div class='flex justify-end'>
+											<DialogComponent
+												title='Dummy'
+												button={<Button variant='contained'>Add Article</Button>}
+											></DialogComponent>
+										</div>
+										<div>
+											<Typography gutterBottom variant='h6' component='div'>
+												{item.name}
+											</Typography>
+											<Typography variant='body2' color='text.secondary'>
+												{item.description}
+											</Typography>
+										</div>
+									</div>
+								</CardComponent>
 							))}
 						</>
 					) : (

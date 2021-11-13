@@ -43,6 +43,8 @@ const Login = () => {
 		console.log(response);
 		dispatch(socialLoginFacebook(response.accessToken));
 	};
+	console.log(process.env.REACT_APP_CLIENT_ID);
+	console.log(process.env.REACT_APP_CLIENT_SECRET);
 
 	return (
 		<>

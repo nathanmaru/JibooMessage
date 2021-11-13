@@ -10,6 +10,7 @@ const ProfileCardComponent = ({ item, setItem, dispatchAction, editButton }) => 
 		let form_data = new FormData();
 		switch (e.target.name) {
 			case 'image':
+				console.log(e.target.files[0]);
 				form_data.append('image', e.target.files[0], e.target.files[0].name);
 				break;
 			case 'cover':

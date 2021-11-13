@@ -15,11 +15,14 @@ const bg = BGImg;
 
 const ClassroomAdviser = () => {
 	const dispatch = useDispatch();
+	// api call
 	useEffect(() => {
 		dispatch(getClassroom());
 	}, []);
+	// get from redux
 	const { classes } = useSelector((state) => state.class);
 	const { user } = useSelector((state) => state.auth);
+
 	const { items: classrooms, setItems: setClassrooms } = useFetch(classes);
 	const [inputForm, setInputForm] = useState({ name: '', subject: '' });
 	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
