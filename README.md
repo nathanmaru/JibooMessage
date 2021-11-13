@@ -41,8 +41,6 @@ Launches a pop up modal.
 ```
 <DialogComponent
   button={<Button variant='contained'>Join Classroom</Button>}
-  open={open}
-  handleClose={handleClose}
   title='Join Classroom'
   context='Collaborate with your classmates and discover something!'
   action={{ label: 'Join', handler: handleSubmit }}
