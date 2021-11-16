@@ -17,7 +17,7 @@ The standard card component of the project.\
 ```
 <CardHolder>
   {items.map((item) => (
-    <CardComponent item={item} link={`/works/${item.id}?tab=dashboard`} />
+    <CardComponent item={item} link={`/works/${item.id}?tab=dashboard`}> "Your Card Component Contents here"</CardComponent>
   ))}
 </CardHolder>
 ```
