@@ -2,6 +2,9 @@
 	"name": "meegu",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"node": "16.x"
+	},
 	"dependencies": {
 		"@craco/craco": "^6.3.0",
 		"@emotion/react": "^11.4.1",
