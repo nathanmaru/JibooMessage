@@ -21,7 +21,7 @@ export const userSlice = createSlice({
 		userLoggedInSuccess: (state, action) => {
 			console.log(action.payload);
 			localStorage.setItem('access_token', action.payload.access_token);
-			localStorage.setItem('refresh_token', action.payload.access_token);
+			localStorage.setItem('refresh_token', action.payload.refresh_token);
 			state.isAuthenticated = true;
 			toast.update(toastId, {
 				render: 'Login Successfully',
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
 				autoClose: 1000,
 				isLoading: false,
 			});
-			window.location.href = '/home';
+			window.location.href = '/home'; //alisdan ni para dili mu whole page refresh
 		},
 		userLoggedInFailed: (state, action) => {
 			console.log();

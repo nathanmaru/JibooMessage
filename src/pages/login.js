@@ -17,7 +17,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-	console.log(process.env.REACT_APP_CLIENT_ID);
 	const [formData, setFormData] = useState({
 		email: '',
 		password: '',
@@ -43,8 +42,6 @@ const Login = () => {
 		console.log(response);
 		dispatch(socialLoginFacebook(response.accessToken));
 	};
-	console.log(process.env.REACT_APP_CLIENT_ID);
-	console.log(process.env.REACT_APP_CLIENT_SECRET);
 
 	return (
 		<>
