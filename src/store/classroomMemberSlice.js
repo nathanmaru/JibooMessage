@@ -74,9 +74,9 @@ export default classroomMemberSlice.reducer;
 
 //action creators
 
-export const getMembers = (id) =>
+export const getMembers = (classroom) =>
 	apiCallBegan({
-		url: '/classroom/members/' + String(id),
+		url: '/classroom/members/' + String(classroom),
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -88,7 +88,7 @@ export const getMembers = (id) =>
 		onSuccess: memberListLoadSuccess.type,
 		onError: memberListLoadFailed.type,
 	});
-export const findClassroom = (code) =>
+export const findClassroom = (code) => //outdated?
 	apiCallBegan({
 		url: '/classroom/find/' + code,
 		method: 'get',
