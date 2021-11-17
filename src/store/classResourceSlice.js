@@ -216,7 +216,7 @@ export default classResourceSlice.reducer;
 
 export const getFiles = (folder) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/?search=' + folder,
+		url: '/resource/classroom/file/' + folder,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -230,7 +230,7 @@ export const getFiles = (folder) =>
 	});
 export const getUploadedFiles = (folder) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/upload-list?search=' + folder,
+		url: '/resource/classroom/uploadfile/' + folder,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -242,37 +242,37 @@ export const getUploadedFiles = (folder) =>
 		onSuccess: uploadedFileLoadSuccess.type,
 		onError: uploadedFileLoadFailed.type,
 	});
-export const uploadFile = (formData) =>
+export const uploadFile = (formData, folder) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/upload',
+		url: '/resource/classroom/uploadfile/' + folder,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
 			accept: '*/*',
 		},
-		data: formData,
+		data: formData ,
 		onStart: fileUploadRequest.type,
 		onSuccess: fileUploadSuccess.type,
 		onError: fileUploadFailed.type,
 	});
-export const createFile = (name, folder) =>
+export const createFile = ( name ) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/',
+		url: '/resource/classroom/file',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, folder },
+		data: { name },
 		onStart: createFileRequest.type,
 		onSuccess: createFileSuccess.type,
 		onError: createFileFailed.type,
 	});
 export const retrieveFile = (id) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/' + id,
+		url: '/resource/classroom/file/change/' + id,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -285,7 +285,7 @@ export const retrieveFile = (id) =>
 	});
 export const editFile = (id, name, content) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/' + id,
+		url: '/resource/classroom/file/change/' + id,
 		method: 'patch',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -299,7 +299,7 @@ export const editFile = (id, name, content) =>
 	});
 export const deleteFile = (id) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/' + id,
+		url: '/resource/classroom/file/change/' + id,
 		method: 'delete',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -312,7 +312,7 @@ export const deleteFile = (id) =>
 	});
 export const deleteUploadFile = (id) =>
 	apiCallBegan({
-		url: '/classroom/resources-file/upload/' + id,
+		url: '/resource/classroom/uploadfile/change/' + id,
 		method: 'delete',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -325,9 +325,9 @@ export const deleteUploadFile = (id) =>
 	});
 
 ///Folders CRUD Operations
-export const getFolders = (id) =>
+export const getFolders = (resource) =>
 	apiCallBegan({
-		url: '/classroom/resources-folder-list/' + id,
+		url: '/resource/classroom/folder/' + resource,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -341,7 +341,7 @@ export const getFolders = (id) =>
 	});
 export const createFolder = (name, resource) =>
 	apiCallBegan({
-		url: '/classroom/resources-folder/',
+		url: '/resource/classroom/folder',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -356,7 +356,7 @@ export const createFolder = (name, resource) =>
 	});
 export const editFolder = (id, name, resource) =>
 	apiCallBegan({
-		url: '/classroom/resources-folder/' + id,
+		url: '/resource/classroom/folder/change/' + id,
 		method: 'put',
 
 		headers: {
@@ -373,7 +373,7 @@ export const editFolder = (id, name, resource) =>
 	});
 export const deleteFolder = (id) =>
 	apiCallBegan({
-		url: '/classroom/resources-folder/' + id,
+		url: '/resource/classroom/folder/change/' + id,
 		method: 'delete',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
