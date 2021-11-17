@@ -1,5 +1,6 @@
 import { Route } from "react-router";
 import Dummy from "../experiments/Dummy";
+import DummyDashboard from "../experiments/DummyDashboard";
 import ArticleCards from "../materialUI/components/articlecards";
 import AboutArticles from "../materialUI/pages/AboutArticles";
 import Experiment from "../pages/experiment";
@@ -20,4 +21,5 @@ export default [
 	<Route path="/password-reset-confirm" component={NewPassword} />,
 	<Route path="/chatExp" component={ArticleCards} />,
 	<Route path="/dummy" component={Dummy} />,
+	<Route path="/dummy-dashboard" component={DummyDashboard} />,
 ];
