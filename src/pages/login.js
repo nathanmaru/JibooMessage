@@ -39,9 +39,9 @@ const Login = () => {
 	};
 	const history = useHistory();
 
-	const responseGoogle = (response) => {
+	const responseGoogle = (response, e) => {
 		console.log(response);
-		// dispatch(socialLoginGoogle(response.accessToken));
+		dispatch(socialLoginGoogle(response.accessToken));
 	};
 
 	const responseFacebook = (response) => {
@@ -163,8 +163,8 @@ const Login = () => {
 													Google
 												</button>
 											)}
-											onSuccess={responseGoogle}
-											onFailure={responseGoogle}
+											onSuccess={(e) => responseGoogle(e)}
+											onFailure={(e) => responseGoogle(e)}
 										/>
 									</div>
 								</div>
