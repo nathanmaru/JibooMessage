@@ -27,7 +27,10 @@ const Login = () => {
 
 	const { email, password } = formData;
 
-	const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+	const onChange = (e) => {
+		e.preventDefault();
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -95,53 +98,42 @@ const Login = () => {
 								type='password'
 							/>
 
-							{/* <div>
-								<InputIconField
-									icon={<AiFillUnlock className='h-4 w-4' />}
-									name='password'
-									placeholder='Your password'
-									value={password}
-									onChange={(e) => onChange(e)}
-									type='password'
-								/>
-							</div> */}
+							<div className='flex flex-row justify-between'>
+								<div class='pt-12 pb-12 text-center justify-start'>
+									<p>
+										<Link
+											to='/signup'
+											className='text-base ml-2 text-gray-400 hover:text-purple-400'
+										>
+											Register
+										</Link>
+									</p>
+								</div>
+
+								<div class='pt-12 pb-12 text-center justify-start'>
+									<p>
+										<Link
+											to='/reset-password'
+											class='-ml-8 text-gray-400 hover:text-purple-400'
+										>
+											Forgot your password?
+										</Link>
+									</p>
+								</div>
+
+								<div className='mt-9 justify-between'>
+									<button
+										onClick={(e) => handleSubmit(e)}
+										type='submit'
+										class='w-36 px-4  py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-purple-800 shadow-md hover:text-purple-800 hover:bg-white focus:outline-none focus:ring-2 rounded-md'
+									>
+										<span class='w-full'>Log in</span>
+									</button>
+								</div>
+							</div>
 						</Box>
 						{/* <form class='flex flex-col pt-3 md:pt-8 space-y-2'>
 						</form> */}
-
-						<div className='flex flex-row justify-between'>
-							<div class='pt-12 pb-12 text-center justify-start'>
-								<p>
-									<Link
-										to='/signup'
-										className='text-base ml-2 text-gray-400 hover:text-purple-400'
-									>
-										Register
-									</Link>
-								</p>
-							</div>
-
-							<div class='pt-12 pb-12 text-center justify-start'>
-								<p>
-									<Link
-										to='/reset-password'
-										class='-ml-8 text-gray-400 hover:text-purple-400'
-									>
-										Forgot your password?
-									</Link>
-								</p>
-							</div>
-
-							<div className='mt-9 justify-between'>
-								<button
-									onClick={(e) => handleSubmit(e)}
-									type='submit'
-									class='w-36 px-4  py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-purple-800 shadow-md hover:text-purple-800 hover:bg-white focus:outline-none focus:ring-2 rounded-md'
-								>
-									<span class='w-full'>Log in</span>
-								</button>
-							</div>
-						</div>
 					</div>
 					<div className='flex flex-row justify-between mb-12 px-10'>
 						<div className='text-gray-500'>Continue with: </div>
