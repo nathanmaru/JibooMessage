@@ -16,6 +16,84 @@ import Resources from "../../ManageInstitution/tabs/Resources";
 import DialogComponent from "../../../components/reuseableComponents/dialogComponent";
 import { Button, TextField, Chip, Avatar } from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+
+//Chartjs
+import { Doughnut } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
+
+const storagedata = {
+	labels: ["Storage Used", "Storage Left"],
+	datasets: [
+		{
+			label: "Storage Data",
+			data: [34, 19],
+			fill: false,
+			backgroundColor: ["#904CB3", "#D2B6E0"],
+			borderColor: ["#904CB3", "#D2B6E0"],
+			borderWidth: 1,
+			hoverOffset: 2,
+			cutout: "80%",
+			options: {
+				animation: {
+					animateScale: true,
+				},
+			},
+		},
+	],
+};
+
+const linedata = {
+	labels: [
+		"Education",
+		"Political Science",
+		"Engineering",
+		"IT",
+		"Biology",
+		"Theology",
+	],
+	datasets: [
+		{
+			label: "Staff",
+			data: [23, 12, 9, 25, 16, 11],
+			fill: false,
+			backgroundColor: "#2EA3D1",
+			borderColor: "#57B5DB",
+			yAxisID: "y-axis-staff",
+		},
+
+		{
+			label: "Students",
+			data: [102, 84, 23, 125, 48, 8],
+			fill: false,
+			backgroundColor: "#1DE2A4",
+			borderColor: "#4AE8B7",
+			yAxisID: "y-axis-students",
+		},
+	],
+};
+
+const lineoptions = {
+	scales: {
+		yAxes: [
+			{
+				type: "linear",
+				display: "true",
+				position: "left",
+				id: "y-axis-staff",
+			},
+			{
+				type: "linear",
+				display: "true",
+				position: "right",
+				id: "y-axis-students",
+				gridLines: {
+					drawOnArea: false,
+				},
+			},
+		],
+	},
+};
+
 const MyInstitutionManager = () => {
 	const location = useLocation();
 	const { id } = useParams();
@@ -120,6 +198,28 @@ const MyInstitutionManager = () => {
 								/>
 								<p className="text-sm text-gray-400">3</p>
 							</div>
+						</div>
+					</div>
+
+					<div className="w-full flex flex-row space-x-4 p-1">
+						<div
+							className="p-4 shadow-lg border border-gray-100"
+							style={{ width: "400px", height: "450px" }}
+						>
+							<p className="text-lg text-center text-gray-400 mb-1">
+								Storage Data
+							</p>
+
+							<Doughnut data={storagedata} />
+						</div>
+						<div
+							className="p-4 shadow-lg border border-gray-100"
+							style={{ width: "820px", height: "450px" }}
+						>
+							<p className="text-lg text-center text-gray-400 mb-1">
+								Staff & Students
+							</p>
+							<Line data={linedata} options={lineoptions} />
 						</div>
 					</div>
 				</>
