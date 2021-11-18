@@ -42,7 +42,7 @@ export const classroomSlice = createSlice({
 			state.currentClassroom = action.payload;
 		},
 		loadCurrentClassroomFailed: (state, action) => {
-			window.location.href = '/classroom';
+			// window.location.href = '/classroom';
 		},
 		editCurrentClassroomRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -505,9 +505,9 @@ export const createFiles = (name) =>
 		onError: loadFilesFailed.type,
 	});
 
-export const loadCurrentClassroom = () =>
+export const loadCurrentClassroom = (classroom) =>
 	apiCallBegan({
-		url: '/classroom/' + localStorage.getItem('currentClassroom'),
+		url: '/classroom/' + classroom,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -519,9 +519,9 @@ export const loadCurrentClassroom = () =>
 		onSuccess: loadCurrentClassroomSuccess.type,
 		onError: loadCurrentClassroomFailed.type,
 	});
-export const editCurrentClassroom = (name, status, code, subject, description) =>
+export const editCurrentClassroom = (classroom, name, status, code, subject, description) =>
 	apiCallBegan({
-		url: '/classroom/' + localStorage.getItem('currentClassroom') + '/',
+		url: '/classroom/' + classroom,
 		method: 'put',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import { useParams } from 'react-router';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,8 +26,9 @@ const ClassroomDashboard = () => {
 		code: '',
 		subject: '',
 	});
+	const { id } = useParams();
 	useEffect(() => {
-		dispatch(loadCurrentClassroom());
+		dispatch(loadCurrentClassroom(id));
 	}, []);
 	const [status, setStatus] = React.useState('');
 
