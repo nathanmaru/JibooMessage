@@ -12,6 +12,8 @@ import { FcGoogle } from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import axios from 'axios';
 import purple from '../assets/img/Artboard 1.png';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -65,18 +67,35 @@ const Login = () => {
 					</div>
 					<div class='flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32'>
 						<p class='text-3xl text-center'>Welcome back!</p>
-						<form class='flex flex-col pt-3 md:pt-8 space-y-2'>
-							<div>
-								<InputIconField
-									icon={<IoMdMail className='h-4 w-4' />}
-									name='email'
-									placeholder='Your email'
-									value={email}
-									onChange={(e) => onChange(e)}
-									type='email'
-								/>
-							</div>
-							<div>
+						<Box
+							component='form'
+							sx={{
+								'& > :not(style)': { m: 1, width: '500px' },
+							}}
+							noValidate
+							autoComplete='off'
+							className='flex flex-col pt-3 md:pt-8 space-y-2 w-full'
+						>
+							<TextField
+								variant='outlined'
+								fullWidth
+								name='email'
+								placeholder='Your email'
+								value={email}
+								onChange={(e) => onChange(e)}
+								type='email'
+							/>
+							<TextField
+								variant='outlined'
+								fullWidth
+								name='password'
+								placeholder='Your password'
+								value={password}
+								onChange={(e) => onChange(e)}
+								type='password'
+							/>
+
+							{/* <div>
 								<InputIconField
 									icon={<AiFillUnlock className='h-4 w-4' />}
 									name='password'
@@ -85,8 +104,10 @@ const Login = () => {
 									onChange={(e) => onChange(e)}
 									type='password'
 								/>
-							</div>
-						</form>
+							</div> */}
+						</Box>
+						{/* <form class='flex flex-col pt-3 md:pt-8 space-y-2'>
+						</form> */}
 
 						<div className='flex flex-row justify-between'>
 							<div class='pt-12 pb-12 text-center justify-start'>
