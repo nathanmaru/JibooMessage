@@ -4,19 +4,16 @@ import { socialLoginFacebook, login, socialLoginGoogle } from '../store/authSlic
 import GoogleLogin from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login';
 import { useDispatch, useSelector } from 'react-redux';
-import InputIconField from '../components/commons/inputIconField';
-import { BsFillPersonFill } from 'react-icons/bs';
-import { IoMdMail } from 'react-icons/io';
-import { AiFillUnlock } from 'react-icons/ai';
-import { FcGoogle } from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import axios from 'axios';
 import purple from '../assets/img/Artboard 1.png';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingButton from '@mui/lab/LoadingButton';
+import FeedBackButton from '../hooks/feedBackButton';
+import useStatus from '../hooks/useStatus';
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -49,19 +46,14 @@ const Login = () => {
 		// dispatch(socialLoginFacebook(response.accessToken));
 	};
 
+	const { status } = useSelector((state) => state.auth);
+	const { loading } = useStatus(status);
+	const handleRedirect = () => {
+		history.push('/home');
+	};
+
 	return (
 		<>
-			<ToastContainer
-				position='top-center'
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 			<div class='flex flex-wrap w-full'>
 				<div class='flex flex-col w-full md:w-1/2'>
 					<div class='flex justify-center pt-12 md:justify-start md:pl-12 md:-mb-24'>
@@ -123,13 +115,31 @@ const Login = () => {
 								</div>
 
 								<div className='mt-9 justify-between'>
-									<button
+									<FeedBackButton
+										button={
+											<LoadingButton
+												onClick={handleSubmit}
+												loading={loading}
+												type='submit'
+												loadingPosition='end'
+												variant='contained'
+												className='w-36 px-4  py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-purple-800 shadow-md hover:text-purple-800 hover:bg-white focus:outline-none focus:ring-2 rounded-md'
+											>
+												Login
+											</LoadingButton>
+										}
+										status={status}
+										actionSuccess={handleRedirect}
+										actionDescription='Login'
+									/>
+
+									{/* <button
 										onClick={(e) => handleSubmit(e)}
 										type='submit'
 										class='w-36 px-4  py-2 text-base font-semibold text-center text-white transition duration-200 ease-in bg-purple-800 shadow-md hover:text-purple-800 hover:bg-white focus:outline-none focus:ring-2 rounded-md'
 									>
 										<span class='w-full'>Log in</span>
-									</button>
+									</button> */}
 								</div>
 							</div>
 							<div className='flex flex-row justify-between mb-12 px-10'>

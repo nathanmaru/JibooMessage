@@ -11,96 +11,77 @@ export const userSlice = createSlice({
 	initialState: {
 		user: null,
 		image: null,
-		isLoading: false,
+		status: 'idle',
 		isAuthenticated: false,
 	},
 	reducers: {
 		//actions => action handlers
 		//use this when you talk to the state
-
+		userLoggedInRequest: (state, action) => {
+			state.status = 'Login loading';
+		},
 		userLoggedInSuccess: (state, action) => {
 			console.log(action.payload);
 			localStorage.setItem('access_token', action.payload.access_token);
 			localStorage.setItem('refresh_token', action.payload.refresh_token);
 			state.isAuthenticated = true;
-			toast.update(toastId, {
-				render: 'Login Successfully',
-				type: 'success',
-				autoClose: 1000,
-				isLoading: false,
-			});
-			// window.location.href = '/home'; //alisdan ni para dili mu whole page refresh
+
+			state.status = 'Login success';
 		},
+
 		userLoggedInFailed: (state, action) => {
-			console.log();
 			localStorage.removeItem('access_token');
 			localStorage.removeItem('refresh_token');
 			state.isAuthenticated = false;
-			toast.update(toastId, {
-				render: `Login Failed Reason: ${action.payload.error_description}`,
-				type: 'error',
-				autoClose: 3000,
-				isLoading: false,
-			});
+			state.status = 'Login failed';
 		},
-		loginRequest: (state, action) => {
-			toastId = toast.loading('Please wait...');
+		userRegisteredRequest: (state, action) => {
+			state.status = 'loading';
 		},
-
 		userRegisteredSuccess: (state, action) => {
 			console.log(action.payload);
 			state.user = action.payload;
-			toast.update(toastId, {
-				render:
-					'Register Successfully! You can now login to your account. And activate your account.',
-				type: 'success',
-				autoClose: 3000,
-				isLoading: false,
-			});
+
 			alert('Sign up success you can now login! ');
-			// window.location.href = '/login/';
+			state.status = 'success';
 		},
 		userRegisteredFailed: (state, action) => {
 			alert('Sign up failed! ');
+			state.status = 'failed';
 		},
-		registerRequest: (state, action) => {
-			toastId = toast.loading('Please wait...');
-		},
-
-		userLoggedOut: (state, action) => {
-			localStorage.removeItem('access_token');
-			localStorage.removeItem('refresh_token');
-			state.isAuthenticated = false;
+		userLoadedRequest: (state, action) => {
+			state.status = 'loading';
 		},
 		userLoadedSuccess: (state, action) => {
 			state.user = action.payload;
+			state.status = 'success';
 		},
 		userLoadedFailed: (state, action) => {
-			// state.user = null;
-			// window.location.href = '/login/';
+			state.status = 'failed';
 		},
+		userEditRequest: (state, action) => {
+			state.status = 'loading';
+		},
+
 		userEditSuccess: (state, action) => {
 			console.log(action.payload, 'payload');
 			state.user = action.payload;
 			alert('Profile edit success!');
+			state.status = 'success';
 		},
 		userEditFailed: (state, action) => {
 			// state.user = null;
 			alert('Profile edit failed!');
+			state.status = 'failed';
 		},
 		logoutRequest: (state, action) => {
-			toastId = toast.loading('Please wait...');
+			state.status = 'Logout Loading';
 		},
 		logoutSuccess: (state, action) => {
 			localStorage.removeItem('access_token');
 			localStorage.removeItem('refresh_token');
 			state.isAuthenticated = false;
-			toast.update(toastId, {
-				render: 'logout Successfully.',
-				type: 'success',
-				autoClose: 50,
-				isLoading: false,
-			});
+			state.status = 'Logout Success';
 		},
 		logoutFailed: (state, action) => {
 			toast.update(toastId, {
@@ -109,24 +90,33 @@ export const userSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			state.status = 'Logout Failed';
+		},
+		loadImageRequest: (state, action) => {
+			state.image = action.payload;
+			state.status = 'loading';
 		},
 		loadImageSuccess: (state, action) => {
 			state.image = action.payload;
+			state.status = 'success';
 		},
-		loadImageFailed: (state, action) => {},
+		loadImageFailed: (state, action) => {
+			state.status = 'failed';
+		},
 
 		verifyUserRequest: (state, action) => {
-			state.isLoading = true;
+			state.status = 'loading';
 		},
 		verifyUserSuccess: (state, action) => {
 			if (state.user) {
 				state.user.is_verified = true;
 			}
 			alert('Hooray your are now verified!');
-			window.location.href = '/home';
+			state.status = 'success';
 		},
 		verifyUserFailed: (state, action) => {
 			alert('Sorry the verification failed.\n' + action.payload);
+			state.status = 'failed';
 		},
 	},
 });
@@ -135,16 +125,19 @@ const {
 	logoutRequest,
 	logoutSuccess,
 	logoutFailed,
-	loginRequest,
+	userLoadedRequest,
 	userLoadedSuccess,
 	userLoadedFailed,
+	userEditRequest,
 	userEditSuccess,
 	userEditFailed,
 	userRegisteredSuccess,
 	userRegisteredFailed,
-	registerRequest,
+	userRegisteredRequest,
+	userLoggedInRequest,
 	userLoggedInSuccess,
 	userLoggedInFailed,
+	loadImageRequest,
 	loadImageSuccess,
 	loadImageFailed,
 	verifyUserRequest,
@@ -183,7 +176,7 @@ export const login = (email, password) =>
 			client_secret: process.env.REACT_APP_CLIENT_SECRET,
 		},
 		onSuccess: userLoggedInSuccess.type,
-		onStart: loginRequest.type,
+		onStart: userLoggedInRequest.type,
 		onError: userLoggedInFailed.type,
 	});
 
@@ -200,7 +193,7 @@ export const signup = (first_name, last_name, username, email, password) =>
 		},
 		onSuccess: userRegisteredSuccess.type,
 		onError: userRegisteredFailed.type,
-		onStart: registerRequest.type,
+		onStart: userRegisteredRequest.type,
 	});
 export const socialLoginFacebook = (accesstoken) =>
 	apiCallBegan({
@@ -213,7 +206,7 @@ export const socialLoginFacebook = (accesstoken) =>
 			client_id: process.env.REACT_APP_CLIENT_ID,
 			client_secret: process.env.REACT_APP_CLIENT_SECRET,
 		},
-		onStart: loginRequest.type,
+		onStart: userLoggedInRequest.type,
 		onSuccess: userLoggedInSuccess.type,
 		onError: userLoggedInFailed.type,
 	});
@@ -228,7 +221,7 @@ export const socialLoginGoogle = (accesstoken) =>
 			client_id: process.env.REACT_APP_CLIENT_ID,
 			client_secret: process.env.REACT_APP_CLIENT_SECRET,
 		},
-		onStart: loginRequest.type,
+		onStart: userLoggedInRequest.type,
 		onSuccess: userLoggedInSuccess.type,
 		onError: userLoggedInSuccess.type,
 	});
@@ -243,11 +236,12 @@ export const loadUser = () =>
 			accept: 'application/json',
 		},
 		type: 'regular',
+		onStart: userLoadedRequest.type,
 		onSuccess: userLoadedSuccess.type,
 		onError: userLoadedFailed.type,
 	});
 
-export const logout = (req, res) =>
+export const logout = () =>
 	apiCallBegan({
 		url: '/auth/invalidate-sessions',
 		method: 'post',
@@ -279,6 +273,7 @@ export const editProfile = (first_name, last_name, username, email, about, id) =
 			about,
 			username,
 		},
+		onStart: userEditRequest.type,
 		onSuccess: userEditSuccess.type,
 		onError: userEditFailed.type,
 	});
@@ -293,6 +288,7 @@ export const editProfileImage = (id, form_data) =>
 		},
 		type: 'regular',
 		data: form_data,
+		onStart: userEditRequest.type,
 		onSuccess: userEditSuccess.type,
 		onError: userEditFailed.type,
 	});
@@ -308,6 +304,7 @@ export const loadImageUser = (id) =>
 		},
 		type: 'regular',
 
+		onStart: loadImageRequest.type,
 		onSuccess: loadImageSuccess.type,
 		onError: loadImageFailed.type,
 	});

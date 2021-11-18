@@ -13,10 +13,10 @@ function App() {
 			<Switch>
 				{outsideRoutes}
 				<ThemeProvider theme={theme}>
-					{/* <Authentication> */}
-					<MiniDrawer>{insideRoutes}</MiniDrawer>
+					<Authentication>
+						<MiniDrawer>{insideRoutes}</MiniDrawer>
+					</Authentication>
 				</ThemeProvider>
-				{/* </Authentication> */}
 			</Switch>
 		</>
 	);
