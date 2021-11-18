@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const baseURL = 'http://127.0.0.1:8000';
+const baseURL = process.env.REACT_APP_BACKEND_API_URL;
 
 const axiosInstance = axios.create({
 	baseURL: baseURL,
@@ -26,6 +26,7 @@ axiosInstance.interceptors.response.use(
 			// 		'Looks like CORS might be the problem. ' +
 			// 		'Sorry about this - we will get it fixed shortly.'
 			// );
+			debugger;
 			return Promise.reject(error);
 		}
 
@@ -51,18 +52,18 @@ axiosInstance.interceptors.response.use(
 					return axiosInstance
 						.post('/auth/token/', {
 							grant_type: 'refresh_token',
-							client_id: 'yLTdx3Jt1ljCwzNyawYjrMmrtg5jBUJylEikrVQ9',
-							client_secret:
-								'FvelivkuTgUj2axbJdfvPrBL2sBpE2dM7QNobXLotYPr83xisf6LSR4TbE3828CmYo7qTzqFijpkkmBs8WcVRY5LzKXnclKzOFaCnkrVjxU2ndAYN6yZbXBvHhkYC9ET',
+							client_id: process.env.REACT_APP_CLIENT_ID,
+							client_secret: process.env.REACT_APP_CLIENT_SECRET,
 							refresh_token: refreshToken,
 						})
 						.then((response) => {
-							localStorage.setItem('access_token', response.data.access);
-							localStorage.setItem('refresh_token', response.data.refresh);
+							localStorage.setItem('access_token', response.data.access_token);
+							localStorage.setItem('refresh_token', response.data.refresh_token);
 
 							axiosInstance.defaults.headers['Authorization'] =
-								'Bearer ' + response.data.access;
-							originalRequest.headers['Authorization'] = 'Bearer ' + response.data.access;
+								'Bearer ' + response.data.access_token;
+							originalRequest.headers['Authorization'] =
+								'Bearer ' + response.data.access_token;
 
 							return axiosInstance(originalRequest);
 						})

@@ -16,23 +16,23 @@ const api =
 
 		try {
 			let response;
-			if (type) {
-				response = await axiosInstance.request({
-					baseURL: process.env.REACT_APP_BACKEND_API_URL,
-					url,
-					headers,
-					method,
-					data,
-				});
-			} else {
-				response = await axios.request({
-					baseURL: process.env.REACT_APP_BACKEND_API_URL,
-					url,
-					headers,
-					method,
-					data,
-				});
-			}
+			// if (type) {
+			// 	response = await axiosInstance.request({
+			// 		baseURL: process.env.REACT_APP_BACKEND_API_URL,
+			// 		url,
+			// 		headers,
+			// 		method,
+			// 		data,
+			// 	});
+			// } else {
+			response = await axios.request({
+				baseURL: process.env.REACT_APP_BACKEND_API_URL,
+				url,
+				headers,
+				method,
+				data,
+			});
+			// }
 
 			//general
 			// dispatch(actions.apiCallSuccess(response.data));
