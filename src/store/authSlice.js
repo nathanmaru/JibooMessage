@@ -29,7 +29,7 @@ export const userSlice = createSlice({
 				autoClose: 1000,
 				isLoading: false,
 			});
-			window.location.href = '/home'; //alisdan ni para dili mu whole page refresh
+			// window.location.href = '/home'; //alisdan ni para dili mu whole page refresh
 		},
 		userLoggedInFailed: (state, action) => {
 			console.log();
@@ -58,7 +58,7 @@ export const userSlice = createSlice({
 				isLoading: false,
 			});
 			alert('Sign up success you can now login! ');
-			window.location.href = '/login/';
+			// window.location.href = '/login/';
 		},
 		userRegisteredFailed: (state, action) => {
 			alert('Sign up failed! ');
@@ -77,7 +77,7 @@ export const userSlice = createSlice({
 		},
 		userLoadedFailed: (state, action) => {
 			// state.user = null;
-			window.location.href = '/login/';
+			// window.location.href = '/login/';
 		},
 		userEditSuccess: (state, action) => {
 			console.log(action.payload, 'payload');

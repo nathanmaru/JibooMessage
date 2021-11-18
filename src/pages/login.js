@@ -34,6 +34,7 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		debugger;
 		dispatch(login(email, password));
 	};
 	const history = useHistory();
@@ -131,43 +132,46 @@ const Login = () => {
 									</button>
 								</div>
 							</div>
+							<div className='flex flex-row justify-between mb-12 px-10'>
+								<div className='text-gray-500'>Continue with: </div>
+								<div class='flex flex-row space-x-6 pr-10'>
+									<div>
+										<FacebookLogin
+											appId='564451954655803'
+											autoLoad={false}
+											fields='name,email,picture'
+											callback={responseFacebook}
+											render={(renderProps) => (
+												<button
+													onClick={renderProps.onClick}
+													className='text-purple-400'
+												>
+													Facebook
+												</button>
+											)}
+										/>
+									</div>
+									<div>
+										<GoogleLogin
+											clientId='1090422806656-3gpck8pb13jj38c9bp25pmuqe6scgsb1.apps.googleusercontent.com'
+											render={(renderProps) => (
+												<button
+													onClick={renderProps.onClick}
+													disabled={renderProps.disabled}
+													className='text-purple-400'
+												>
+													Google
+												</button>
+											)}
+											onSuccess={responseGoogle}
+											onFailure={responseGoogle}
+										/>
+									</div>
+								</div>
+							</div>
 						</Box>
 						{/* <form class='flex flex-col pt-3 md:pt-8 space-y-2'>
 						</form> */}
-					</div>
-					<div className='flex flex-row justify-between mb-12 px-10'>
-						<div className='text-gray-500'>Continue with: </div>
-						<div class='flex flex-row space-x-6 pr-10'>
-							<div>
-								<FacebookLogin
-									appId='564451954655803'
-									autoLoad={false}
-									fields='name,email,picture'
-									callback={responseFacebook}
-									render={(renderProps) => (
-										<button onClick={renderProps.onClick} className='text-purple-400'>
-											Facebook
-										</button>
-									)}
-								/>
-							</div>
-							<div>
-								<GoogleLogin
-									clientId='1090422806656-3gpck8pb13jj38c9bp25pmuqe6scgsb1.apps.googleusercontent.com'
-									render={(renderProps) => (
-										<button
-											onClick={renderProps.onClick}
-											disabled={renderProps.disabled}
-											className='text-purple-400'
-										>
-											Google
-										</button>
-									)}
-									onSuccess={responseGoogle}
-									onFailure={responseGoogle}
-								/>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class='w-1/2 shadow-2xl'>
