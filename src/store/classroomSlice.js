@@ -329,7 +329,7 @@ export default classroomSlice.reducer;
 // };
 export const getStudentClassroom = () =>
 	apiCallBegan({
-		url: '/classroom/myclass',
+		url: '/classroom/my-class/',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -343,7 +343,7 @@ export const getStudentClassroom = () =>
 	});
 export const getClassroom = () =>
 	apiCallBegan({
-		url: '/classroom/list',
+		url: '/classroom/',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -355,16 +355,16 @@ export const getClassroom = () =>
 		onSuccess: loadSuccess.type,
 		onError: loadFailed.type,
 	});
-export const createClassroom = (name, subject, owner) =>
+export const createClassroom = (name, description, privacy, subject) =>
 	apiCallBegan({
-		url: '/classroom/create',
+		url: '/classroom/',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, subject, owner },
+		data: { name, description, privacy, subject },
 		type: 'regular',
 		onStart: loadRequest.type,
 		onSuccess: addSuccess.type,
@@ -373,7 +373,7 @@ export const createClassroom = (name, subject, owner) =>
 // For Resources
 export const loadResources = () =>
 	apiCallBegan({
-		url: '/classroom/resources-list/' + localStorage.getItem('currentClassroom') + '/',
+		url: '/resource/classroom/' + localStorage.getItem('currentClassroom') + '/',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -387,7 +387,7 @@ export const loadResources = () =>
 	});
 export const getCurrentResource = () =>
 	apiCallBegan({
-		url: '/classroom/resources-modify/' + localStorage.getItem('currentResource') + '/',
+		url: '/resource/classroom/change/' + localStorage.getItem('currentResource') + '/',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -399,16 +399,16 @@ export const getCurrentResource = () =>
 		onSuccess: loadCurrentResourceSuccess.type,
 		onError: loadCurrentResourceFailed.type,
 	});
-export const updateCurrentResource = (name, description, status) =>
+export const updateCurrentResource = (name, description, status, institution) =>
 	apiCallBegan({
-		url: '/classroom/resources-modify/' + localStorage.getItem('currentResource') + '/',
+		url: '/resource/classroom/change/' + localStorage.getItem('currentResource') + '/',
 		method: 'put',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, description, status },
+		data: { name, description, status, institution },
 		type: 'regular',
 		onStart: updateResourceRequest.type,
 		onSuccess: updateResourceSuccess.type,
@@ -416,7 +416,7 @@ export const updateCurrentResource = (name, description, status) =>
 	});
 export const deleteCurrentResource = () =>
 	apiCallBegan({
-		url: '/classroom/resources-modify/' + localStorage.getItem('currentResource') + '/',
+		url: '/resource/classroom/change/' + localStorage.getItem('currentResource') + '/',
 		method: 'delete',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -429,9 +429,9 @@ export const deleteCurrentResource = () =>
 		onError: deleteResourceFailed.type,
 	});
 
-export const createResources = (name, description, classroom) =>
+export const createResources = (id, name, description, classroom) =>
 	apiCallBegan({
-		url: '/classroom/resources-create/',
+		url: '/resource/classroom/' + id,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -447,7 +447,7 @@ export const createResources = (name, description, classroom) =>
 
 export const loadFolders = () =>
 	apiCallBegan({
-		url: '/classroom/resources-folder/' + localStorage.getItem('currentResource'),
+		url: '/resource​/classroom​/folder​/' + localStorage.getItem('currentResource'),
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -461,7 +461,7 @@ export const loadFolders = () =>
 	});
 export const createFolder = (name) =>
 	apiCallBegan({
-		url: '/classroom/resources-folder/',
+		url: '/resource​/classroom​/folder​/',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -476,7 +476,7 @@ export const createFolder = (name) =>
 	});
 export const loadFiles = () =>
 	apiCallBegan({
-		url: '/classroom/resources-files/' + localStorage.getItem('currentFolder'),
+		url: '/resource/classroom/file/' + localStorage.getItem('currentFolder'),
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -491,7 +491,7 @@ export const loadFiles = () =>
 
 export const createFiles = (name) =>
 	apiCallBegan({
-		url: '/classroom/resources-files/',
+		url: '/resource/classroom/file/',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
