@@ -13,6 +13,11 @@ const Authentication = (props) => {
 	const user = useSelector((state) => state.auth.user);
 
 	useEffect(() => {
+		if (localStorage.getItem('access_token') == undefined) {
+			alert('Undefined access token');
+			localStorage.removeItem('access_token');
+			localStorage.removeItem('refresh_token');
+		}
 		if (!localStorage.getItem('access_token') || !localStorage.getItem('refresh_token')) {
 			history.push('/login');
 		} else {
