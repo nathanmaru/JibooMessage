@@ -35,18 +35,18 @@ const Login = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		debugger;
-		dispatch(login(email, password));
+		// dispatch(login(email, password));
 	};
 	const history = useHistory();
 
 	const responseGoogle = (response) => {
 		console.log(response);
-		dispatch(socialLoginGoogle(response.accessToken));
+		// dispatch(socialLoginGoogle(response.accessToken));
 	};
 
 	const responseFacebook = (response) => {
 		console.log(response);
-		dispatch(socialLoginFacebook(response.accessToken));
+		// dispatch(socialLoginFacebook(response.accessToken));
 	};
 
 	return (
