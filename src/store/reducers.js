@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import authReducer from './authSlice';
 import worksReducer from './workspaceSlice';
 import classReducer from './classroomSlice';
+import newClassReducer from './newClassroomSlice';
 import classMemberReducer from './classroomMemberSlice';
 import noteReducer from './noteSlice';
 import classResourceReducer from './classResourceSlice';
@@ -17,6 +18,7 @@ export default combineReducers({
 	auth: authReducer,
 	works: worksReducer,
 	class: classReducer,
+	newClass: newClassReducer,
 	classMember: classMemberReducer,
 	note: noteReducer,
 	resource: classResourceReducer,

@@ -209,19 +209,17 @@ export const checkVerification = (institution) =>
 		onError: verificationCheckFailed.type,
 	});
 
-// //subscription
-// export const buyPlan = (institution, plan, payerName, payerEmail) =>
-// apiCallBegan({
-// 	url: '/institution/subscribe',
-// 	method: 'post',
-// 	headers: {
-// 		Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-// 		'Content-Type': 'application/json',
-// 		accept: 'application/json',
-// 	},
-// 	type: 'regular',
-// 	data: {institution, plan, payerName, payerEmail},
-// 	onStart: verificationCheckRequest.type,
-// 	onSuccess: verificationCheckSuccess.type,
-// 	onError: verificationCheckFailed.type,
-// });
+export const staffInstitutionList = () =>
+	apiCallBegan({
+		url: '/institution/sharedInstitution',
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: institutionLoadRequest.type,
+		onSuccess: institutionLoadSuccess.type,
+		onError: institutionLoadFailed.type,
+	});

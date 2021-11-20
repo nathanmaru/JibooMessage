@@ -14,15 +14,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { useParams } from 'react-router';
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useLocation } from 'react-router-dom';
 
 const ClassroomDashboard = () => {
 	const dispatch = useDispatch();
 	const [inputForm, setInputForm] = useState({
-		classroom_name: '',
+		name: '',
+		description: '',
+		privacy: '',
 		code: '',
 		subject: '',
 	});
@@ -30,7 +29,7 @@ const ClassroomDashboard = () => {
 	useEffect(() => {
 		dispatch(loadCurrentClassroom(id));
 	}, []);
-	const [status, setStatus] = React.useState('');
+	const [privacy, setprivacy] = React.useState('');
 
 	const currentClassroom = useSelector((state) => state.class.currentClassroom);
 	useEffect(() => {
@@ -39,22 +38,23 @@ const ClassroomDashboard = () => {
 				classroom_name: currentClassroom.name,
 				code: currentClassroom.code,
 				subject: currentClassroom.subject,
+
 				description: currentClassroom.description,
 			});
-			setStatus(currentClassroom.status);
+			setprivacy(currentClassroom.privacy);
 		}
 	}, [currentClassroom]);
 
 	const handleChange = (event) => {
-		setStatus(event.target.value);
+		setprivacy(event.target.value);
 	};
 
-	const { classroom_name, code, subject } = inputForm;
+	const { name, code, subject } = inputForm;
 
 	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
 
 	const editClassroom = () => {
-		dispatch(editCurrentClassroom(classroom_name, status, code, subject));
+		dispatch(editCurrentClassroom(name, privacy, code, subject));
 	};
 	const deleteClassroom = () => {
 		dispatch(deleteCurrentClassroom());
@@ -65,17 +65,6 @@ const ClassroomDashboard = () => {
 
 	return (
 		<>
-			{/* <ToastContainer
-				position='top-center'
-				autoClose={3000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/> */}
 			<Paper variant='outlined' elevation={6} className='w-3/4 h-2/4 grid grid-rows-5 p-4 gap-2'>
 				<Typography
 					variant='h4'
@@ -85,16 +74,16 @@ const ClassroomDashboard = () => {
 				>
 					Classroom Information:
 				</Typography>
-
+				<b>Thania please ko design ani... please consult me on this</b>
 				<div className=' row-span-3 grid grid-cols-2 gap-4'>
 					<div className='space-y-4 '>
 						<TextField
 							fullWidth
 							required
-							id='classroom_name'
+							id='name'
 							label='Classroom Name'
-							name='classroom_name'
-							value={classroom_name}
+							name='name'
+							value={name}
 							onChange={(e) => onChange(e)}
 							InputProps={{
 								readOnly: isResearcher,
@@ -114,14 +103,14 @@ const ClassroomDashboard = () => {
 						{location.pathname.includes('researcher') ? null : (
 							<>
 								<FormControl fullWidth sx={{ minWidth: 80 }}>
-									<InputLabel id='status-label'>Status</InputLabel>
+									<InputLabel id='privacy-label'>Privacy</InputLabel>
 									<Select
 										labelId='demo-simple-select-autowidth-label'
-										id='status'
-										value={status}
-										name='status'
+										id='privacy'
+										value={privacy}
+										name='privacy'
 										onChange={handleChange}
-										label='Status'
+										label='Privacy'
 									>
 										<MenuItem value={'draft'}>Draft</MenuItem>
 										<MenuItem value={'published'}>Published</MenuItem>

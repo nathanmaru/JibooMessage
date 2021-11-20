@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const DialogStepperComponent = (props) => {
-	const { title, steps, actionWhenComplete, context, name, button } = props;
+	const { title, steps, context, name, button, maxWidth } = props;
 
 	// dialog component
 	const [open, setOpen] = useState(false);
@@ -64,19 +64,17 @@ const DialogStepperComponent = (props) => {
 		newCompleted[activeStep] = true;
 		setCompleted(newCompleted);
 		handleNext();
+		console.log('step complete');
+
+		if (allStepsCompleted()) {
+			handleReset();
+			handleClose();
+		}
 	};
 
 	const handleReset = () => {
 		setActiveStep(0);
 		setCompleted({});
-	};
-
-	const checkValue = (e) => {
-		e.preventDefault();
-		steps[activeStep].stepComplete();
-		if (e.target.value == 'done') {
-			actionWhenComplete();
-		}
 	};
 
 	return (
@@ -88,7 +86,7 @@ const DialogStepperComponent = (props) => {
 				component='div'
 				fullWidth={true}
 				name={name}
-				maxWidth='lg'
+				maxWidth={maxWidth ? maxWidth : 'lg'}
 				open={open}
 				onClose={handleClose}
 			>
@@ -127,24 +125,6 @@ const DialogStepperComponent = (props) => {
 								<div style={{ minHeight: '300px' }}>{steps[activeStep].component}</div>
 
 								<Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-									{activeStep !== steps.length &&
-										(completed[activeStep] ? null : (
-											<>
-												{completedSteps() !== totalSteps() - 1 ? (
-													<Button
-														value={
-															completedSteps() === totalSteps() - 1 ? 'done' : 'Skip'
-														}
-														onClick={(e) => {
-															handleComplete();
-															checkValue(e);
-														}}
-													>
-														Skip
-													</Button>
-												) : null}
-											</>
-										))}
 									<Button
 										color='inherit'
 										disabled={activeStep === 0}
@@ -154,29 +134,25 @@ const DialogStepperComponent = (props) => {
 										Back
 									</Button>
 									<Box sx={{ flex: '1 1 auto' }} />
-									<Button onClick={handleNext} sx={{ mr: 1 }}>
+									{/* <Button onClick={handleNext} sx={{ mr: 1 }}>
 										Next
-									</Button>
+									</Button> */}
+									{/* {activeStep !== steps.length &&
+										(completed[activeStep] ? null : (
+											<>
+												{completedSteps() !== totalSteps() - 1 ? (
+													<Button onClick={handleComplete}>Skip</Button>
+												) : null}
+											</>
+										))} */}
 									{activeStep !== steps.length &&
 										(completed[activeStep] ? (
 											<Typography variant='caption' sx={{ display: 'inline-block' }}>
 												Step {activeStep + 1} already completed
 											</Typography>
 										) : (
-											<Button
-												value={
-													completedSteps() === totalSteps() - 1
-														? 'done'
-														: 'Complete Step'
-												}
-												onClick={(e) => {
-													handleComplete();
-													checkValue(e);
-												}}
-											>
-												{completedSteps() === totalSteps() - 1
-													? 'done'
-													: 'Complete Step'}
+											<Button onClick={handleComplete}>
+												{completedSteps() === totalSteps() - 1 ? 'Finish' : 'Next'}
 											</Button>
 										))}
 								</Box>

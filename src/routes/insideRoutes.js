@@ -10,7 +10,7 @@ import NewLibrary from '../materialUI/pages/NewLibrary';
 import Notes from '../materialUI/pages/notes/Notes';
 import ProjectManager from '../materialUI/pages/workspaceModule/pageManagers/projectManager';
 import WorkspaceFileEditor from '../materialUI/pages/workspaceModule/workspaceFileEditor';
-import Classroom from '../pages/classroom';
+import Classroom from '../classroomModule/classroom';
 import FileViewer from '../pages/fileViewer';
 import Home from '../pages/home';
 import OldInstitution from '../pages/institution';
@@ -32,7 +32,7 @@ export default [
 	<Route exact path='/fileViewer' component={FileViewer} />,
 	<Route exact path='/works' component={WorkSpace} />,
 	<Route exact path='/messages' component={NewMesssages} />,
-	<Route exact path='/classroom/researcher/:id' component={ClassroomManagerResearcher} />,
+	// <Route exact path='/classroom/researcher/:id' component={ClassroomManagerResearcher} />,
 	<Route exact path='/classroom/adviser/:id' component={ClassroomManager} />,
 	<Route exact path='/classroom' component={Classroom} />,
 	<Route path='/library' component={NewLibrary} />,

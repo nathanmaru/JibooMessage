@@ -60,7 +60,21 @@ export default subscriptionSlice.reducer;
 
 export const getInstitutionPlans = () =>
 	apiCallBegan({
-		url: '/subcription/institution',
+		url: '/subscription/institution',
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: planLoadRequest.type,
+		onSuccess: planLoadSuccess.type,
+		onError: planLoadFailed.type,
+	});
+export const getClassroomPlans = () =>
+	apiCallBegan({
+		url: '/subscription/classroom',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

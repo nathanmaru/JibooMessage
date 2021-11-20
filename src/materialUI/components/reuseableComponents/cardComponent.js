@@ -5,14 +5,14 @@ import CardMedia from '@mui/material/CardMedia';
 import { Link } from 'react-router-dom';
 
 const CardComponent = (props) => {
-	const { item, link, image, height, width, onClick } = props;
+	const { item, link, image, height, width, onClick, useDefaultImage } = props;
 	const defaultImage =
 		'https://images.unsplash.com/photo-1536164261511-3a17e671d380?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fHByb2ZpbGV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60';
-	console.log(props.children);
+
 	return (
 		<>
 			<Card
-				key={item.id}
+				key={item ? item.id : null}
 				component={link ? Link : 'div'}
 				to={link ? link : null}
 				sx={{
@@ -35,7 +35,16 @@ const CardComponent = (props) => {
 					/>
 				) : null}
 
-				<CardContent>{props.children}</CardContent>
+				<CardContent>
+					{item ? (
+						<>
+							<h1>{item.name}</h1>
+							<p>{item.description}</p>
+						</>
+					) : (
+						<>{props.children}</>
+					)}
+				</CardContent>
 			</Card>
 		</>
 	);

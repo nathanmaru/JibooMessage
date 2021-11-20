@@ -19,6 +19,7 @@ export const classroomSlice = createSlice({
 		isLoading: false,
 		loadingFolders: false,
 		loadingFiles: false,
+		status: 'idle',
 	},
 	reducers: {
 		//actions => action handlers
@@ -85,32 +86,17 @@ export const classroomSlice = createSlice({
 				isLoading: false,
 			});
 		},
+		addRequest: (state, action) => {
+			state.status = 'Add classroom loading';
+		},
 
 		addSuccess: (state, action) => {
-			state.classes.unshift({
-				id: action.payload.id,
-				name: action.payload.name,
-				subject: action.payload.subject,
-				code: action.payload.code,
-				owner: action.payload.owner,
-			});
-			toast.update(toastId, {
-				render: 'Classroom Added!',
-				type: 'success',
-				autoClose: 2000,
-				isLoading: false,
-			});
+			state.classes.unshift(action.payload);
+			state.currentClassroom = action.payload;
+			state.status = 'Add classroom success';
 		},
 		addFailed: (state, action) => {
-			toast.update(toastId, {
-				render: 'Classroom Added Failed!',
-				type: 'error',
-				autoClose: 3000,
-				isLoading: false,
-			});
-		},
-		addRequest: (state, action) => {
-			toastId = toast.loading('Adding Classrooms...');
+			state.status = 'Add classroom failed';
 		},
 		updateSuccess: (state, action) => {},
 		deleteSuccess: (state, action) => {},
@@ -299,6 +285,8 @@ const {
 	loadSuccess,
 	loadFailed,
 	addSuccess,
+	addRequest,
+	addFailed,
 	updateSuccess,
 	deleteSuccess,
 	loadResourcesRequest,
@@ -355,7 +343,7 @@ export const getClassroom = () =>
 		onSuccess: loadSuccess.type,
 		onError: loadFailed.type,
 	});
-export const createClassroom = (name, description, privacy, subject) =>
+export const createClassroom = (form_data) =>
 	apiCallBegan({
 		url: '/classroom/',
 		method: 'post',
@@ -364,10 +352,11 @@ export const createClassroom = (name, description, privacy, subject) =>
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, description, privacy, subject },
+		data: form_data,
 		type: 'regular',
-		onStart: loadRequest.type,
+		onStart: addRequest.type,
 		onSuccess: addSuccess.type,
+		onError: addFailed.type,
 	});
 
 // For Resources
