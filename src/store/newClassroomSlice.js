@@ -58,6 +58,17 @@ export const newClassroomSlice = createSlice({
 		classroomEditFailed: (state, action) => {
 			state.status = 'Classroom edit failed';
 		},
+		deleteClassroomRequest: (state, action) => {
+			state.status = 'Classroom delete loading';
+		},
+		deleteClassroomSuccess: (state, action) => {
+			const filtered = state.classes.filter((val) => val.id != action.payload.id);
+			state.classes = filtered;
+			state.status = 'Classroom delete success';
+		},
+		deleteClassroomFailed: (state, action) => {
+			state.status = 'Classroom delete failed';
+		},
 	},
 });
 
@@ -74,6 +85,9 @@ const {
 	classroomEditRequest,
 	classroomEditSuccess,
 	classroomEditFailed,
+	deleteClassroomRequest,
+	deleteClassroomSuccess,
+	deleteClassroomFailed,
 } = newClassroomSlice.actions;
 
 export default newClassroomSlice.reducer;
@@ -121,4 +135,33 @@ export const editAdviserClassroom = (classroom, form_data) =>
 		onStart: classroomEditRequest.type,
 		onSuccess: classroomEditSuccess.type,
 		onError: classroomEditFailed.type,
+	});
+export const deleteAdviserClassroom = (classroom) =>
+	apiCallBegan({
+		url: '/classroom/' + classroom,
+		method: 'delete',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: deleteClassroomRequest.type,
+		onSuccess: deleteClassroomSuccess.type,
+		onError: deleteClassroomFailed.type,
+	});
+
+export const getCurrentClassroom = (classroom) =>
+	apiCallBegan({
+		url: '/classroom/' + classroom,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadCurrentClassroomRequest.type,
+		onSuccess: loadCurrentClassroomSuccess.type,
+		onError: loadCurrentClassroomFailed.type,
 	});

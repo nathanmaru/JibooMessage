@@ -9,7 +9,11 @@ const PageManagerComponent = ({ tabs, value, handleChange }) => {
 	return (
 		<>
 			<TabContext value={value}>
-				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+				<Box
+					component='div'
+					className='sticky top-0'
+					sx={{ position: 'sticky', top: '60px', borderBottom: 1, borderColor: 'divider' }}
+				>
 					<TabList onChange={handleChange} aria-label='lab API tabs example'>
 						{tabs.map((tab) => (
 							<Tab component={Link} to={tab.link} label={tab.label} value={tab.value} />

@@ -21,7 +21,7 @@ const ProfileCardComponent = ({ item, setItem, dispatchAction, editButton }) => 
 	};
 	return (
 		<>
-			<Card sx={{ maxWidth: '100%' }}>
+			<Card variant='outlined' sx={{ maxWidth: '100%' }}>
 				<CardMedia
 					component='div'
 					height='140'

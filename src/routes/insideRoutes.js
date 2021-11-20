@@ -21,6 +21,7 @@ import WorkSpace from '../pages/workspace';
 import JoinProfile from '../materialUI/pages/JoinedInstitution/JoinProfile';
 import Institution from '../materialUI/pages/institutionModule/newInstitution';
 import MyInstitutionManager from '../materialUI/pages/institutionModule/pageManager/myInstitutionManager';
+import AdviserClassroomManager from '../classroomModule/classroomUser/classroomAdviser/classroomManager/adviserClassroomManager';
 
 export default [
 	<Route exact path='/classroom/adviser/resources/:id' component={ClassroomResourceManager} />,
@@ -33,7 +34,7 @@ export default [
 	<Route exact path='/works' component={WorkSpace} />,
 	<Route exact path='/messages' component={NewMesssages} />,
 	// <Route exact path='/classroom/researcher/:id' component={ClassroomManagerResearcher} />,
-	<Route exact path='/classroom/adviser/:id' component={ClassroomManager} />,
+	<Route exact path='/classroom/adviser/:id' component={AdviserClassroomManager} />,
 	<Route exact path='/classroom' component={Classroom} />,
 	<Route path='/library' component={NewLibrary} />,
 	<Route exact path='/notes' component={Notes} />,
