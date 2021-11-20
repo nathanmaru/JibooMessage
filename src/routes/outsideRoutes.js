@@ -1,6 +1,7 @@
 import { Route } from "react-router";
 import Dummy from "../experiments/Dummy";
 import DummyDashboard from "../experiments/DummyDashboard";
+import Subscription from "../experiments/Subscription";
 import ArticleCards from "../materialUI/components/articlecards";
 import AboutArticles from "../materialUI/pages/AboutArticles";
 import Experiment from "../pages/experiment";
@@ -22,4 +23,5 @@ export default [
 	<Route path="/chatExp" component={ArticleCards} />,
 	<Route path="/dummy" component={Dummy} />,
 	<Route path="/dummy-dashboard" component={DummyDashboard} />,
+	<Route path="/subscription" component={Subscription} />,
 ];
