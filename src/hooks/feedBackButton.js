@@ -46,12 +46,12 @@ const FeedBackButton = ({ button, status, actionSuccess, actionFailed, actionDes
 
 			<Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleSuccessClose}>
 				<Alert onClose={handleSuccessClose} severity='success' sx={{ width: '100%' }}>
-					{actionDescription} Success
+					{status}
 				</Alert>
 			</Snackbar>
 			<Snackbar open={openFailed} autoHideDuration={6000} onClose={handleFailedClose}>
 				<Alert onClose={handleFailedClose} severity='error' sx={{ width: '100%' }}>
-					{actionDescription} Failed
+					{status}
 				</Alert>
 			</Snackbar>
 		</>

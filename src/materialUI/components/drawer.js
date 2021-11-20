@@ -150,16 +150,6 @@ export default function MiniDrawer(props) {
 			selected: 'library',
 		},
 		{
-			text: 'Workspace',
-			icon: <FaPencilAlt className='w-6 h-6 ' />,
-			toolTip: 'Workspace',
-			onClick: () => {
-				history.push('/works?navTab=works');
-				setPageTitle('Workspace');
-			},
-			selected: 'works',
-		},
-		{
 			text: 'Notes',
 			icon: <CgNotes className='w-6 h-6 ' />,
 			toolTip: 'Notes',

@@ -26,7 +26,6 @@ const ProfileCardComponent = ({ item, setItem, dispatchAction, editButton }) => 
 					component='div'
 					height='140'
 					image={item.cover}
-					alt='green iguana'
 					className='flex justify-end items-center'
 					sx={{
 						minHeight: '300px',

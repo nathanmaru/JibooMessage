@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ClassroomCards from '../../../../../../components/classroomCards';
 import BGImg from '../../../../../../assets/img/temp_bg.jpg';
 import { createClassroom, getClassroom } from '../../../../../../store/classroomSlice';
-import Banner from '../../../../../../components/Banner';
 import BannerComponent from '../../../../../components/reuseableComponents/bannerComponent';
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import DialogStepperComponent from '../../../../../components/reuseableComponents/dialogStepperComponent';
 import CardHolder from '../../../../../components/reuseableComponents/cardHolder';
 import CardComponent from '../../../../../components/reuseableComponents/cardComponent';
@@ -24,13 +22,19 @@ const ClassroomAdviser = () => {
 	const { user } = useSelector((state) => state.auth);
 
 	const { items: classrooms, setItems: setClassrooms } = useFetch(classes);
-	const [inputForm, setInputForm] = useState({ name: '', subject: '' });
+	const [inputForm, setInputForm] = useState({
+		name: '',
+		subject: '',
+		privacy: 'public',
+		description: '',
+	});
 	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
 
 	// stepper
 	const handleClassroomDetail = () => {
-		const { name, subject } = inputForm;
-		dispatch(createClassroom(name, subject, user.id));
+		const { name, description, privacy, subject } = inputForm;
+		// name, description, privacy, subject
+		dispatch(createClassroom(name, description, privacy, subject));
 		// alert('handleClassroomDetail');
 	};
 	const handleAffliate = () => {
@@ -44,7 +48,7 @@ const ClassroomAdviser = () => {
 			label: 'Classroom Details',
 			component: (
 				<>
-					<div className='flex flex-col w-full justify-center items-center'>
+					<div className='flex flex-col w-full justify-center '>
 						<TextField
 							label='Classroom Name'
 							variant='outlined'
@@ -123,8 +127,9 @@ const ClassroomAdviser = () => {
 							{classrooms.map((item) => (
 								<CardComponent
 									item={item}
+									image={item.cover}
 									link={`/classroom/adviser/${item.id}?classTab=dashboard`}
-								/>
+								></CardComponent>
 							))}
 						</>
 					) : (
@@ -132,8 +137,6 @@ const ClassroomAdviser = () => {
 					)}
 				</CardHolder>
 			</div>
-
-			{/* Stepper */}
 		</>
 	);
 };
