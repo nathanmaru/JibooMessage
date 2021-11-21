@@ -4,8 +4,12 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import { useLocation, useParams } from 'react-router';
+import queryString from 'query-string';
 
-const FolderList = ({ folders, folder, resource, link }) => {
+const FolderList = ({ folders, link }) => {
+	const location = useLocation();
+	const { folder } = queryString.parse(location.search);
 	return (
 		<>
 			{folders.length > 0 ? (
@@ -24,7 +28,7 @@ const FolderList = ({ folders, folder, resource, link }) => {
 								display: 'flex',
 								justifyContent: 'center',
 							}}
-							to={`${link}&folder=${val.id}`}
+							to={`${link}?folder=${val.id}`}
 						>
 							<ListItemIcon>
 								<FolderIcon />

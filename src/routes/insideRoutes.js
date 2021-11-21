@@ -1,10 +1,7 @@
 import { Route } from 'react-router';
 import StepperExp from '../experiments/stepperExp';
 import AboutArticles from '../materialUI/pages/AboutArticles';
-import ClassroomManager from '../materialUI/pages/classroomModule/pageManagers/classroomManager';
-import ClassroomManagerResearcher from '../materialUI/pages/classroomModule/pageManagers/classroomManagerResearcher';
-import ClassroomResourceManager from '../materialUI/pages/classroomModule/pageManagers/resourceManager';
-import ManageProfile from '../materialUI/pages/ManageInstitution/ManageProfile';
+
 import NewMesssages from '../materialUI/pages/messages/NewMesssages';
 import NewLibrary from '../materialUI/pages/NewLibrary';
 import Notes from '../materialUI/pages/notes/Notes';
@@ -22,18 +19,34 @@ import JoinProfile from '../materialUI/pages/JoinedInstitution/JoinProfile';
 import Institution from '../materialUI/pages/institutionModule/newInstitution';
 import MyInstitutionManager from '../materialUI/pages/institutionModule/pageManager/myInstitutionManager';
 import AdviserClassroomManager from '../classroomModule/classroomUser/classroomAdviser/classroomManager/adviserClassroomManager';
+import AdviserResourceManager from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/resources/resourceManager/adviserResourceManager';
+import AdviserResourceFileViewer from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/resources/resourceManager/fileViewers/file/adviserResourceFileViewer';
+import ResearcherClassroomManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/researcherClassroomManager';
+import ResearcherResourceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/researcherResourceManager';
+import ResearcherResourceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/fileViewer/file/resourceFileViewer';
 
 export default [
-	<Route exact path='/classroom/adviser/resources/:id' component={ClassroomResourceManager} />,
+	<Route exact path='/classroom/adviser/resources/:id' component={AdviserResourceManager} />,
+	<Route exact path='/classroom/researcher/resources/:id' component={ResearcherResourceManager} />,
 	<Route path='/about-article/:id' component={AboutArticles} />,
 	<Route exact path='/temp' component={TempFile} />,
 	<Route exact path='/experiments' component={StepperExp} />,
 	<Route exact path='/works/fileEditor/:id' component={WorkspaceFileEditor} />,
+	<Route
+		exact
+		path='/classroom/adviser/resources/file/:id'
+		component={AdviserResourceFileViewer}
+	/>,
+	<Route
+		exact
+		path='/classroom/researcher/resources/file/:id'
+		component={ResearcherResourceFileViewer}
+	/>,
 	<Route exact path='/works/:id' component={ProjectManager} />,
 	<Route exact path='/fileViewer' component={FileViewer} />,
 	<Route exact path='/works' component={WorkSpace} />,
 	<Route exact path='/messages' component={NewMesssages} />,
-	// <Route exact path='/classroom/researcher/:id' component={ClassroomManagerResearcher} />,
+	<Route exact path='/classroom/researcher/:id' component={ResearcherClassroomManager} />,
 	<Route exact path='/classroom/adviser/:id' component={AdviserClassroomManager} />,
 	<Route exact path='/classroom' component={Classroom} />,
 	<Route path='/library' component={NewLibrary} />,
