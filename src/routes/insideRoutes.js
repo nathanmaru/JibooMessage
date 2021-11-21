@@ -1,3 +1,4 @@
+
 import { Route } from 'react-router';
 import StepperExp from '../experiments/stepperExp';
 import AboutArticles from '../materialUI/pages/AboutArticles';
@@ -24,7 +25,7 @@ import AdviserResourceFileViewer from '../classroomModule/classroomUser/classroo
 import ResearcherClassroomManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/researcherClassroomManager';
 import ResearcherResourceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/researcherResourceManager';
 import ResearcherResourceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/fileViewer/file/resourceFileViewer';
-
+import Intro from "../experiments/shepherd/Intro";
 export default [
 	<Route exact path='/classroom/adviser/resources/:id' component={AdviserResourceManager} />,
 	<Route exact path='/classroom/researcher/resources/:id' component={ResearcherResourceManager} />,
@@ -37,6 +38,7 @@ export default [
 		path='/classroom/adviser/resources/file/:id'
 		component={AdviserResourceFileViewer}
 	/>,
+      <Route path="/intro" component={Intro} />,
 	<Route
 		exact
 		path='/classroom/researcher/resources/file/:id'
@@ -58,4 +60,5 @@ export default [
 	<Route path='/institutions' component={Institution} />,
 	<Route path='/old-institutions' component={OldInstitution} />,
 	<Route path='/logout' component={Logout} />,
+
 ];
