@@ -24,6 +24,7 @@ import MyInstitutionManager from "../materialUI/pages/institutionModule/pageMana
 import AdviserClassroomManager from "../classroomModule/classroomUser/classroomAdviser/classroomManager/adviserClassroomManager";
 
 import Intro from "../experiments/shepherd/Intro";
+import Notifications from "../experiments/Notifications";
 
 export default [
 	<Route
@@ -32,6 +33,7 @@ export default [
 		component={ClassroomResourceManager}
 	/>,
 	<Route path="/about-article/:id" component={AboutArticles} />,
+	<Route path="/notif" component={Notifications} />,
 	<Route path="/intro" component={Intro} />,
 	<Route exact path="/temp" component={TempFile} />,
 	<Route exact path="/experiments" component={StepperExp} />,
