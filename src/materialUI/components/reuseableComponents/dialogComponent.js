@@ -32,9 +32,10 @@ const DialogComponent = (props) => {
 					<DialogContentText>{context}</DialogContentText>
 					{props.children}
 				</DialogContent>
-				{action ? (
-					<DialogActions sx={{ marginBottom: '20px', marginRight: '20px' }}>
-						<Button onClick={handleClose}>Cancel</Button>
+
+				<DialogActions sx={{ marginBottom: '20px', marginRight: '20px' }}>
+					<Button onClick={handleClose}>Cancel</Button>
+					{action ? (
 						<Button
 							onClick={() => {
 								handleClose();
@@ -43,8 +44,8 @@ const DialogComponent = (props) => {
 						>
 							{action.label}
 						</Button>
-					</DialogActions>
-				) : null}
+					) : null}
+				</DialogActions>
 			</Dialog>
 		</>
 	);

@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const FileTable = ({ files, uploadFiles, handMeID, delete_File }) => {
 	const contents = [...files, ...uploadFiles];
-	console.log(contents.length);
+
 	return (
 		<>
 			<TableContainer component={'div'}>
@@ -39,10 +39,12 @@ const FileTable = ({ files, uploadFiles, handMeID, delete_File }) => {
 												onClick={() => handMeID(val)}
 												className='cursor-pointer hover:text-purple-400'
 											/>{' '}
-											<DeleteIcon
-												onClick={() => delete_File(val)}
-												className='cursor-pointer hover:text-purple-400'
-											/>
+											{delete_File ? (
+												<DeleteIcon
+													onClick={() => delete_File(val)}
+													className='cursor-pointer hover:text-purple-400'
+												/>
+											) : null}
 										</TableCell>
 									</TableRow>
 								))}

@@ -61,7 +61,7 @@ const ClassroomAdviser = () => {
 									key={item.id}
 									item={item}
 									image={item.cover}
-									link={`/classroom/adviser/${item.id}?classTab=dashboard`}
+									link={`/classroom/adviser/${item.id}?tab=dashboard`}
 								></CardComponent>
 							))}
 						</>

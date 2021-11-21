@@ -31,7 +31,7 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		debugger;
+
 		dispatch(login(email, password));
 	};
 	const history = useHistory();
