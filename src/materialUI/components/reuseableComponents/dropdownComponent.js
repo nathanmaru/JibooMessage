@@ -7,6 +7,7 @@ const DropDownComponent = ({ label, value, name, options, handleChange }) => {
 	return (
 		<>
 			<FormControl fullWidth>
+				<InputLabel id='demo-simple-select-label'>{label}</InputLabel>
 				<Select
 					name={name}
 					value={value}

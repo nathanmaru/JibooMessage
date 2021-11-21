@@ -1,20 +1,14 @@
-import TabContext from "@mui/lab/TabContext";
-import Box from "@mui/material/Box";
-import TabList from "@mui/lab/TabList";
-import Tab from "@mui/material/Tab";
-import TabPanel from "@mui/lab/TabPanel";
-import { useState, useEffect } from "react";
-import { Link, Switch, useLocation } from "react-router-dom";
-import { useParams, Route } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import queryString from "query-string";
 
-//tabs
-import ClassroomDashboard from "./tabs/dashboard/classroomAdviserDashboard";
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useParams, Route } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import queryString from 'query-string';
+import ClassroomDashboard from './tabs/dashboard/classroomAdviserDashboard';
+import PageManagerComponent from '../../../../materialUI/components/reuseableComponents/pageManagerComponent';
+import ProductDetailComponent from '../../../../materialUI/components/reuseableComponents/dashboardComponent';
 import ClassroomSubmission from "./tabs/submissions/classroomAdviserSubmission";
 
-import PageManagerComponent from "../../../../materialUI/components/reuseableComponents/pageManagerComponent";
-import ProductDetailComponent from "../../../../materialUI/components/reuseableComponents/dashboardComponent";
 import {
 	deleteAdviserClassroom,
 	editAdviserClassroom,
@@ -30,11 +24,14 @@ import {
 	MenuItem,
 	Select,
 	TextField,
-} from "@mui/material";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { styled } from "@mui/material/styles";
-const Input = styled("input")({
-	display: "none",
+
+} from '@mui/material';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { styled } from '@mui/material/styles';
+import AdviserResourceTab from './tabs/resources/adviserResourceTab';
+const Input = styled('input')({
+	display: 'none',
+
 });
 
 const AdviserClassroomManager = () => {
@@ -112,16 +109,18 @@ const AdviserClassroomManager = () => {
 		{
 			label: "Resources",
 			link: `/classroom/adviser/${id}?tab=resources`,
-			value: "resources",
-			component: <div className="min-h-screen">Resources</div>,
-			// <ClassroomResources />,
+
+			value: 'resources',
+			component: <AdviserResourceTab />,
+
 		},
 		{
 			label: "Students",
 			link: `/classroom/adviser/${id}?tab=students`,
-			value: "students",
-			component: "Resources",
-			// <ClassroomStudents id={id} isResearcher={true} />,
+
+			value: 'students',
+			component: <div className='min-h-screen'>Students</div>,
+
 		},
 		{
 			label: "Submissions",

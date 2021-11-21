@@ -212,6 +212,8 @@ export default classResourceSlice.reducer;
 
 //action creators
 
+// Resources CRUD Operations
+
 /// Files CRUD Operations
 
 export const getFiles = (folder) =>
@@ -251,12 +253,12 @@ export const uploadFile = (formData, folder) =>
 			'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
 			accept: '*/*',
 		},
-		data: formData ,
+		data: formData,
 		onStart: fileUploadRequest.type,
 		onSuccess: fileUploadSuccess.type,
 		onError: fileUploadFailed.type,
 	});
-export const createFile = ( name ) =>
+export const createFile = (name) =>
 	apiCallBegan({
 		url: '/resource/classroom/file',
 		method: 'post',

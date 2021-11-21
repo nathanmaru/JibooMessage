@@ -165,3 +165,34 @@ export const getCurrentClassroom = (classroom) =>
 		onSuccess: loadCurrentClassroomSuccess.type,
 		onError: loadCurrentClassroomFailed.type,
 	});
+
+export const getStudentClassroom = () =>
+	apiCallBegan({
+		url: '/classroom/my-class',
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadClassroomRequest.type,
+		onSuccess: loadClassroomSuccess.type,
+		onError: loadClassroomFailed.type,
+	});
+
+export const joinClassroom = (classroom) =>
+	apiCallBegan({
+		url: '/classroom/join',
+		method: 'post',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		data: { classroom },
+		type: 'regular',
+		onStart: createClassroomLoadRequest.type,
+		onSuccess: createClassroomSuccess.type,
+		onError: createClassroomFailed.type,
+	});

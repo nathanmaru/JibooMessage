@@ -14,7 +14,7 @@ const Input = styled('input')({
 	display: 'none',
 });
 const ProductDetailComponent = (props) => {
-	const { product, productType, setProduct, dialogTitle, isEdit } = props;
+	const { product, dialogTitle, isEdit, actionButtons } = props;
 	const defaultImage =
 		'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80';
 
@@ -65,7 +65,8 @@ const ProductDetailComponent = (props) => {
 						</div>
 
 						<div className='w-2/5 py-6'>
-							<div className='flex flex-row items-center px-4 float-right mb-2 mt-2'>
+							{actionButtons}
+							{/* <div className='flex flex-row items-center px-4 float-right mb-2 mt-2'>
 								<p className='text-sm text-gray-400 mr-3'>Update</p>
 								<p className='text-sm text-gray-400 mr-3'>━━━━━━━━━━━━━━━━━━━━━</p>
 								<Chip
@@ -93,7 +94,7 @@ const ProductDetailComponent = (props) => {
 									variant='outlined'
 									sx={{ mr: 1, height: '20px', color: '#97a0a8' }}
 								/>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</CardContent>

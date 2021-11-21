@@ -6,6 +6,7 @@ import newClassReducer from './newClassroomSlice';
 import classMemberReducer from './classroomMemberSlice';
 import noteReducer from './noteSlice';
 import classResourceReducer from './classResourceSlice';
+import resourceReducer from './newResourceSlice';
 import messageReducer from './messageSlice';
 import worksMemberReducer from './workspaceMemberSlice';
 import articleReducer from './articleSlice';
@@ -13,6 +14,8 @@ import libraryReducer from './librarySlice';
 import fileManagerReducer from './fileManagerSlice';
 import institutionReducer from './newInstitutionSlice';
 import subscriptionReducer from './subscriptionSlice';
+import folderReducer from './newFolderSlice';
+import fileReducer from './newFileSlice';
 
 export default combineReducers({
 	auth: authReducer,
@@ -22,9 +25,12 @@ export default combineReducers({
 	classMember: classMemberReducer,
 	note: noteReducer,
 	resource: classResourceReducer,
+	newResource: resourceReducer,
 	message: messageReducer,
 	worksMember: worksMemberReducer,
 	article: articleReducer,
+	folder: folderReducer,
+	file: fileReducer,
 	library: libraryReducer,
 	fileManager: fileManagerReducer,
 	institution: institutionReducer,
