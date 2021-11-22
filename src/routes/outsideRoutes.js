@@ -11,6 +11,8 @@ import NewPassword from "../pages/newPassword";
 import ResetPassword from "../pages/resetPassword";
 import Signup from "../pages/signup";
 
+import Tour from "../experiments/intro/Tour";
+
 export default [
 	<Route path="/login" component={Login} />,
 	<Route path="/signup" component={Signup} />,
@@ -24,4 +26,5 @@ export default [
 	<Route path="/dummy" component={Dummy} />,
 	<Route path="/dummy-dashboard" component={DummyDashboard} />,
 	<Route path="/subscription" component={Subscription} />,
+	<Route path="/tour" component={Tour} />,
 ];
