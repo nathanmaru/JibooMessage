@@ -24,33 +24,42 @@ export const workspaceSlice = createSlice({
 		},
 		workspaceLoadFailed: (state, action) => {
 			state.status = 'workspace load failed';
+			alert('Workspace Load Failed!');
 		},
 		currentWorkspaceLoadRequest: (state, action) => {},
 		currentWorkspaceLoadSuccess: (state, action) => {
 			state.currentWorkspace = action.payload;
+			alert('Current Workspace Load Success!');
 		},
-		currentWorkspaceLoadFailed: (state, action) => {},
+		currentWorkspaceLoadFailed: (state, action) => {
+			alert('Current Workspace Load Failed!');
+		},
 		workspaceAddRequest: (state, action) => {},
 		workspaceAddSuccess: (state, action) => {
 			state.workspaces.unshift(action.payload);
 			state.currentWorkspace = action.payload;
+			alert('Workspace Create Success!');
 		},
 		workspaceAddFailed: (state, action) => {
-			alert('Adding Failed');
+			alert('Workspace Create Failed!');
 		},
 
 		worksUpdateRequest: (state, action) => {},
 		worksUpdateSuccess: (state, action) => {
 			state.currentWorkspace = action.payload;
+			alert('Workspace Update Success!');
 		},
 		worksUpdateFailed: (state, action) => {
-			alert('Failed');
+			alert('Workspace Update Failed!');
 		},
 		worksDeleteRequest: (state, action) => {},
 		worksDeleteSuccess: (state, action) => {
 			state.currentWorkspace = null;
+			alert('Workspace Delete Success!');
 		},
-		worksDeleteFailed: (state, action) => {},
+		worksDeleteFailed: (state, action) => {
+			alert('Workspace Update Failed!');
+		},
 
 		worksDeleted: (state, action) => {},
 	},

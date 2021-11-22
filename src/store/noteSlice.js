@@ -18,7 +18,8 @@ export const noteSlice = createSlice({
 		},
 		noteLoadFailed: (state, action) => {
 			state.isLoading = false;
-			state.notes = [];
+			state.notes = []; 
+			alert('Notes Load Failed!');
 		},
 		noteAddRequest: (state, action) => {
 			state.isLoading = true;
@@ -26,20 +27,22 @@ export const noteSlice = createSlice({
 		noteAddSuccess: (state, action) => {
 			state.isLoading = false;
 			state.notes.unshift(action.payload);
+			alert('Notes Create Success!');
 		},
 		noteAddFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Adding note failed');
+			alert('Notes Create Failed!');
 		},
 		noteUpdateRequest: (state, action) => {
 			state.isLoading = true;
 		},
 		noteUpdateSuccess: (state, action) => {
 			state.isLoading = false;
+			alert('Notes Update Success!');
 		},
 		noteUpdateFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Update note failed');
+			alert('Notes Update Failed!');
 		},
 		noteDeleteRequest: (state, action) => {
 			state.isLoading = true;
@@ -50,7 +53,7 @@ export const noteSlice = createSlice({
 		},
 		noteDeleteFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Delete note failed');
+			alert('Delete Note Failed!');
 		},
 	},
 });

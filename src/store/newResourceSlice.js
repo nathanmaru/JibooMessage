@@ -18,7 +18,7 @@ export const newResourceSlice = createSlice({
 		},
 		loadResourcesFailed: (state, action) => {
 			state.status = 'Resources Load failed';
-			alert('Resources load failed');
+			alert('Resources Load Failed!');
 		},
 		retrieveResourcesRequest: (state, action) => {
 			state.status = 'loading';
@@ -26,10 +26,11 @@ export const newResourceSlice = createSlice({
 		retrieveResourcesSuccess: (state, action) => {
 			state.status = 'Resources Retrieve success';
 			state.currentResource = action.payload;
+			alert('Resources Load Success!');
 		},
 		retrieveResourcesFailed: (state, action) => {
 			state.status = 'Resources Retrieve failed';
-			alert('Resources Retrieve failed');
+			alert('Resources Load Failed!');
 		},
 		addResourcesRequest: (state, action) => {
 			state.status = 'loading';
@@ -37,10 +38,11 @@ export const newResourceSlice = createSlice({
 		addResourcesSuccess: (state, action) => {
 			state.status = 'Resources Create success';
 			state.resources.unshift(action.payload);
+			alert('Resources Create Success!');
 		},
 		addResourcesFailed: (state, action) => {
 			state.status = 'Resources Create failed';
-			alert('Resources Create failed');
+			alert('Resources Create Failed!');
 		},
 		editResourcesRequest: (state, action) => {
 			state.status = 'loading';
@@ -48,10 +50,11 @@ export const newResourceSlice = createSlice({
 		editResourcesSuccess: (state, action) => {
 			state.status = 'Resources Edit success';
 			state.currentResource = action.payload;
+			alert('Resources Edit Success!');
 		},
 		editResourcesFailed: (state, action) => {
-			state.status = 'Resources Edit failed';
-			alert('Resources Edit failed');
+			state.status = 'Resources Edit failed'; 
+			alert('Resources Edit Failed!');
 		},
 		deleteResourcesRequest: (state, action) => {
 			state.status = 'loading';
@@ -59,10 +62,11 @@ export const newResourceSlice = createSlice({
 		deleteResourcesSuccess: (state, action) => {
 			state.status = 'Resources Delete success';
 			state.currentResource = null;
+			alert('Resources Delete Success!');
 		},
 		deleteResourcesFailed: (state, action) => {
 			state.status = 'Resources Delete failed';
-			alert('Resources Delete failed');
+			alert('Resources Edit Failed!'); 
 		},
 	},
 });

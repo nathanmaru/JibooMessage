@@ -14,10 +14,10 @@ export const librarySlice = createSlice({
 		},
 		articleLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.articles = action.payload;
+			state.articles = action.payload; 
 		},
 		articleLoadFailed: (state, action) => {
-			alert('Articles load failed');
+			alert('Articles Load Failed!');
 		},
 		articleDeleteRequest: (state, action) => {
 			state.isLoading = true;
@@ -26,9 +26,10 @@ export const librarySlice = createSlice({
 			state.isLoading = false;
 			const filtered = state.articles.filter((val) => val.id == action.payload.id);
 			state.articles = filtered;
+			alert('Articles Delete Success!');
 		},
 		articleDeleteFailed: (state, action) => {
-			alert('Articles delete failed');
+			alert('Articles Delete Failed!');
 		},
 	},
 });

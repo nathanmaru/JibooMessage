@@ -17,7 +17,7 @@ export const folderSlice = createSlice({
 			state.folders = action.payload;
 		},
 		loadFolderFailed: (state, action) => {
-			alert('Folders load failed');
+			alert('Folders Load Failed!');
 		},
 		retrieveFolderRequest: (state, action) => {
 			state.status = 'loading';
@@ -25,9 +25,10 @@ export const folderSlice = createSlice({
 		retrieveFolderSuccess: (state, action) => {
 			state.status = 'Folder retrieve success';
 			state.currentFolder = action.payload;
+			alert('Folders Retrieve Success!');
 		},
 		retrieveFolderFailed: (state, action) => {
-			alert('Folders retrieve failed');
+			alert('Folders Retrieve Failed!'); 
 		},
 		addFolderRequest: (state, action) => {
 			state.status = 'loading';
@@ -35,10 +36,11 @@ export const folderSlice = createSlice({
 		addFolderSuccess: (state, action) => {
 			state.status = 'Folder add success';
 			state.folders.push(action.payload);
+			alert('Folders Add Success!');
 		},
 		addFolderFailed: (state, action) => {
 			state.status = 'Folder add failed';
-			alert('Folders add failed');
+			alert('Folders Add Failed!');
 		},
 		editFolderRequest: (state, action) => {
 			state.status = 'loading';
@@ -47,10 +49,11 @@ export const folderSlice = createSlice({
 			const index = state.folders.findIndex((item) => item.id === action.payload.id);
 			state.folders[index] = action.payload;
 			state.status = 'Folder edit success';
+			alert('Folders Edit Success!');
 		},
 		editFolderFailed: (state, action) => {
 			state.status = 'Folder edit failed';
-			alert('Folders edit failed');
+			alert('Folders Add Failed!');
 		},
 		deleteFolderRequest: (state, action) => {
 			state.status = 'loading';
@@ -61,10 +64,12 @@ export const folderSlice = createSlice({
 			console.log(filtered);
 			state.folders = filtered;
 			state.status = 'Folder delete success';
+			alert('Folders Delete Success!');
 		},
 		deleteFolderFailed: (state, action) => {
 			state.status = 'Folder delete failed';
 			alert('Folders delete failed');
+			alert('Folders Delete Failed!');
 		},
 	},
 });

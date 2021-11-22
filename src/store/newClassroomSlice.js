@@ -15,11 +15,12 @@ export const newClassroomSlice = createSlice({
 
 		loadClassroomSuccess: (state, action) => {
 			state.classes = action.payload;
-			state.status = 'Classroom load success';
+			state.status = 'Classroom load success';  
 		},
 		loadClassroomFailed: (state, action) => {
 			state.classes = null;
 			state.status = 'Classroom load failed';
+			alert('Classroom Load Failed!');
 		},
 
 		loadCurrentClassroomRequest: (state, action) => {
@@ -28,10 +29,11 @@ export const newClassroomSlice = createSlice({
 
 		loadCurrentClassroomSuccess: (state, action) => {
 			state.currentClassroom = action.payload;
-			state.status = 'Classroom load success';
+			state.status = 'Classroom load success'; 
 		},
 		loadCurrentClassroomFailed: (state, action) => {
 			state.status = 'Classroom load failed';
+			alert('Current Classroom Load Failed!');
 		},
 
 		createClassroomLoadRequest: (state, action) => {
@@ -42,9 +44,11 @@ export const newClassroomSlice = createSlice({
 			state.classes.unshift(action.payload);
 			state.currentClassroom = action.payload;
 			state.status = 'Classroom add success';
+			alert('Classroom Create Success!');
 		},
 		createClassroomFailed: (state, action) => {
 			state.status = 'Classroom add failed';
+			alert('Classroom Create Failed!');
 		},
 
 		classroomEditRequest: (state, action) => {
@@ -54,9 +58,11 @@ export const newClassroomSlice = createSlice({
 			const index = state.classes.findIndex((item) => item.id === action.payload.id);
 			state.classes[index] = action.payload;
 			state.status = 'Classroom edit success';
+			alert('Classroom Edit Success!');
 		},
 		classroomEditFailed: (state, action) => {
 			state.status = 'Classroom edit failed';
+			alert('Classroom Edit Failed!');
 		},
 		deleteClassroomRequest: (state, action) => {
 			state.status = 'Classroom delete loading';
@@ -65,9 +71,11 @@ export const newClassroomSlice = createSlice({
 			const filtered = state.classes.filter((val) => val.id != action.payload.id);
 			state.classes = filtered;
 			state.status = 'Classroom delete success';
+			alert('Classroom Delete Success!');
 		},
 		deleteClassroomFailed: (state, action) => {
 			state.status = 'Classroom delete failed';
+			alert('Classroom Delete Failed!');
 		},
 	},
 });

@@ -15,22 +15,22 @@ export const messageSlice = createSlice({
 		},
 		messagesLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.messages = action.payload;
+			state.messages = action.payload; 
 		},
 		messagesLoadFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Load Message Error');
+			alert('Load Message Failed!');
 		},
 		roomsLoadRequest: (state, action) => {
 			state.isLoading = true;
 		},
 		roomsLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.rooms = action.payload;
+			state.rooms = action.payload; 
 		},
 		roomsLoadFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Load Message Error');
+			alert('Load Message Failed!');
 		},
 		roomCreateRequest: (state, action) => {
 			state.isLoading = true;
@@ -42,20 +42,22 @@ export const messageSlice = createSlice({
 				messages: '',
 				title: action.payload.title,
 			});
+			alert('Create Message Success!');
 		},
 		roomCreateFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Load Message Error');
+			alert('Create Message Failed!');
 		},
 		sendMessageRequest: (state, action) => {
 			state.isLoading = true;
 		},
 		sendMessageSuccess: (state, action) => {
 			state.isLoading = false;
+			alert('Sending Message Success!');
 		},
 		sendMessageFailed: (state, action) => {
 			state.isLoading = false;
-			alert('send Message Error');
+			alert('Sending Message Failed!');
 		},
 	},
 });

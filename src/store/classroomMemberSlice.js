@@ -20,14 +20,16 @@ export const classroomMemberSlice = createSlice({
 		},
 		memberListLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.members = action.payload;
+			state.members = action.payload; 
 		},
 		memberListLoadFailed: (state, action) => {},
 		findClassroomRequest: (state, action) => {
 			state.classroom = null;
+			alert('Members Load Failed!');
 		},
 		findClassroomSucess: (state, action) => {
 			state.classroom = action.payload;
+			alert('Classroom Found Success!');
 		},
 		findClassroomFailed: (state, action) => {
 			alert('No class found with code provided');
@@ -37,6 +39,7 @@ export const classroomMemberSlice = createSlice({
 		},
 		joinClassroomSucess: (state, action) => {
 			window.location.href = `classroom/researcher/${action.payload.classroom}?classroom=${action.payload.classroom}`;
+			alert('Classroom Joined Success!');
 		},
 		joinClassroomFailed: (state, action) => {
 			alert('No class found with code provided');

@@ -17,11 +17,11 @@ export const fileManagerSlice = createSlice({
 		},
 		folderLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.folders = action.payload;
+			state.folders = action.payload; 
 		},
 		folderLoadFailed: (state, action) => {
 			console.log(action.error);
-			alert('Folders Load Failed');
+			alert('Folders Load Failed!');
 		},
 		folderCreateRequest: (state, action) => {
 			state.isLoading = true;
@@ -29,10 +29,11 @@ export const fileManagerSlice = createSlice({
 		folderCreateSuccess: (state, action) => {
 			state.isLoading = false;
 			state.folders.push(action.payload);
+			alert('Folders Create Success!');
 		},
 		folderCreateFailed: (state, action) => {
 			console.log(action.error);
-			alert('Folders Create Failed');
+			alert('Folders Create Failed!');
 		},
 		folderEditRequest: (state, action) => {
 			state.isLoading = true;
@@ -41,10 +42,11 @@ export const fileManagerSlice = createSlice({
 			state.isLoading = false;
 			const index = state.folders.findIndex((val) => val.id == action.payload.id);
 			state.folders[index] = action.payload;
+			alert('Folders Edit Success!');
 		},
 		folderEditFailed: (state, action) => {
 			console.log(action.error);
-			alert('Folders Edit Failed');
+			alert('Folders Edit Failed!');
 		},
 		folderDeleteRequest: (state, action) => {
 			state.isLoading = true;
@@ -53,10 +55,11 @@ export const fileManagerSlice = createSlice({
 			state.isLoading = false;
 			const filtered = state.folders.filter((val) => val.id !== action.payload.id);
 			state.folders = filtered;
+			alert('Folders Delete Success!');
 		},
 		folderDeleteFailed: (state, action) => {
 			console.log(action.error);
-			alert('Folders Delete Failed');
+			alert('Folders Delete Failed!');
 		},
 		// uploaded files CRUD
 		uploadFileLoadRequest: (state, action) => {
@@ -64,11 +67,11 @@ export const fileManagerSlice = createSlice({
 		},
 		uploadFileLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.uploadedFiles = action.payload;
+			state.uploadedFiles = action.payload; 
 		},
 		uploadFileLoadFailed: (state, action) => {
 			console.log(action.error);
-			alert('Files load Failed');
+			alert('Files Load Failed!');
 		},
 		uploadFileCreateRequest: (state, action) => {
 			state.isLoading = true;
@@ -76,10 +79,11 @@ export const fileManagerSlice = createSlice({
 		uploadFileCreateSuccess: (state, action) => {
 			state.isLoading = false;
 			state.uploadedFiles.push(action.payload);
+			alert('File Upload Success!');
 		},
 		uploadFileCreateFailed: (state, action) => {
 			console.log(action.error);
-			alert('File Upload Failed');
+			alert('File Upload Failed!');
 		},
 		uploadFileDeleteRequest: (state, action) => {
 			state.isLoading = true;
@@ -88,10 +92,11 @@ export const fileManagerSlice = createSlice({
 			state.isLoading = false;
 			const filtered = state.uploadedFiles.filter((val) => val.id !== action.payload.id);
 			state.uploadedFiles = filtered;
+			alert('File Upload Success!');
 		},
 		uploadFileDeleteFailed: (state, action) => {
 			console.log(action.error);
-			alert('File Upload Failed');
+			alert('File Upload Failed!');
 		},
 
 		// quill files
@@ -101,10 +106,11 @@ export const fileManagerSlice = createSlice({
 		quillFileLoadSuccess: (state, action) => {
 			state.isLoading = false;
 			state.quillFiles = action.payload;
+			alert('Files Load Success!');
 		},
 		quillFileLoadFailed: (state, action) => {
 			console.log(action.error);
-			alert('Files load Failed');
+			alert('Files Load Failed!');
 		},
 		quillFileRetrieveRequest: (state, action) => {
 			state.isLoading = true;
@@ -112,10 +118,11 @@ export const fileManagerSlice = createSlice({
 		quillFileRetrieveSuccess: (state, action) => {
 			state.isLoading = false;
 			state.currentQuillFile = action.payload;
+			alert('Files Load Success!');
 		},
 		quillFileRetrieveFailed: (state, action) => {
 			console.log(action.error);
-			alert('Files load Failed');
+			alert('Files Load Failed!');
 		},
 		quillFileCreateRequest: (state, action) => {
 			state.isLoading = true;
@@ -123,10 +130,11 @@ export const fileManagerSlice = createSlice({
 		quillFileCreateSuccess: (state, action) => {
 			state.isLoading = false;
 			state.quillFiles.push(action.payload);
+			alert('File Create Success!');
 		},
 		quillFileCreateFailed: (state, action) => {
 			console.log(action.error);
-			alert('File Create Failed');
+			alert('File Create Failed!');
 		},
 		quillFileDeleteRequest: (state, action) => {
 			state.isLoading = true;
@@ -135,10 +143,11 @@ export const fileManagerSlice = createSlice({
 			state.isLoading = false;
 			const filtered = state.quillFiles.filter((val) => val.id !== action.payload.id);
 			state.quillFiles = filtered;
+			alert('File Delete Success!');
 		},
 		quillFileDeleteFailed: (state, action) => {
 			console.log(action.error);
-			alert('File Upload Failed');
+			alert('File Delete Failed!');
 		},
 	},
 });

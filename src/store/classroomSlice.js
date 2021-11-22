@@ -32,18 +32,21 @@ export const classroomSlice = createSlice({
 		loadSuccess: (state, action) => {
 			state.classes = action.payload;
 			state.isLoading = false;
+			alert('Classrooms Load Success!');
 		},
 		loadFailed: (state, action) => {
 			state.classes = null;
 			state.isLoading = false;
-			alert('Classrooms Load Failed');
+			alert('Classrooms Load Failed!');
 		},
 		loadCurrentClassroomRequest: (state, action) => {},
 		loadCurrentClassroomSuccess: (state, action) => {
 			state.currentClassroom = action.payload;
+			alert('Current Classroom Load Success!');
 		},
 		loadCurrentClassroomFailed: (state, action) => {
 			// window.location.href = '/classroom';
+			alert('Current Classroom Load Failed!');
 		},
 		editCurrentClassroomRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -56,6 +59,7 @@ export const classroomSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Edit Current Classroom Success!');
 		},
 		editCurrentClassroomFailed: (state, action) => {
 			toast.update(toastId, {
@@ -64,6 +68,7 @@ export const classroomSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Edit Current Classroom Failed!');
 		},
 		deleteCurrentClassroomRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -77,6 +82,7 @@ export const classroomSlice = createSlice({
 				isLoading: false,
 			});
 			window.location.href = '/classroom';
+			alert('Delete Current Classroom Success!');
 		},
 		deleteCurrentClassroomFailed: (state, action) => {
 			toast.update(toastId, {
@@ -85,6 +91,7 @@ export const classroomSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Delete Current Classroom Failed!');
 		},
 		addRequest: (state, action) => {
 			state.status = 'Add classroom loading';
@@ -94,31 +101,37 @@ export const classroomSlice = createSlice({
 			state.classes.unshift(action.payload);
 			state.currentClassroom = action.payload;
 			state.status = 'Add classroom success';
+			alert('Adding Classroom Success!');
 		},
 		addFailed: (state, action) => {
 			state.status = 'Add classroom failed';
+			alert('Adding Classroom Failed!');
 		},
 		updateSuccess: (state, action) => {},
 		deleteSuccess: (state, action) => {},
 		// For Resources
 		loadResourcesRequest: (state, action) => {
-			state.isLoading = true;
+			state.isLoading = true; 
 		},
 		loadResourcesSuccess: (state, action) => {
 			state.isLoading = false;
 			console.log(action.payload);
-			state.resources = action.payload;
+			state.resources = action.payload; 
 		},
-		loadResourcesFailed: (state, action) => {},
+		loadResourcesFailed: (state, action) => {
+			alert('Load Resource Failed!');
+		},
 		loadCurrentResourceRequest: (state, action) => {
 			state.isLoading = true;
 		},
 		loadCurrentResourceSuccess: (state, action) => {
 			state.isLoading = false;
 			console.log(action.payload);
-			state.currentResource = action.payload;
+			state.currentResource = action.payload; 
 		},
-		loadCurrentResourceFailed: (state, action) => {},
+		loadCurrentResourceFailed: (state, action) => {
+			alert('Load Current Resource Failed!');
+		},
 
 		createResourcesRequest: (state, action) => {
 			toastId = toast.loading('Adding Resource...');
@@ -139,6 +152,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Create Current Resource Success!');
 		},
 		createResourcesFailed: (state, action) => {
 			toast.update(toastId, {
@@ -147,6 +161,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Create Current Resource Failed!');
 		},
 		updateResourceRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -159,6 +174,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Update Current Resource Success!');
 		},
 		updateResourceFailed: (state, action) => {
 			toast.update(toastId, {
@@ -167,6 +183,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Update Current Resource Failed!');
 		},
 		deleteResourceRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -180,6 +197,7 @@ export const classroomSlice = createSlice({
 				isLoading: false,
 			});
 			window.location.href = '/classroom/' + localStorage.getItem('currentClassroom');
+			alert('Delete Current Resource Success!');
 		},
 		deleteResourceFailed: (state, action) => {
 			toast.update(toastId, {
@@ -188,16 +206,18 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Delete Current Resource Failed!');
 		},
 		loadFolderRequest: (state, action) => {
 			state.loadingFolders = true;
 		},
 		loadFolderSuccess: (state, action) => {
 			state.resourceFolder = action.payload;
-			state.loadingFolders = false;
+			state.loadingFolders = false; 
 		},
 		loadFolderFailed: (state, action) => {
 			state.loadingFolders = false;
+			alert('Load Folder Failed!');
 		},
 		createFolderRequest: (state, action) => {
 			toastId = toast.loading('Adding Folder...');
@@ -214,6 +234,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Create Folder Success!');
 		},
 		createFolderFailed: (state, action) => {
 			toast.update(toastId, {
@@ -222,6 +243,7 @@ export const classroomSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Create Folder Failed!');
 		},
 
 		loadFilesRequest: (state, action) => {
@@ -229,10 +251,11 @@ export const classroomSlice = createSlice({
 		},
 		loadFilesSuccess: (state, action) => {
 			state.loadingFiles = false;
-			state.files = action.payload;
+			state.files = action.payload; 
 		},
 		loadFilesFailed: (state, action) => {
 			state.loadingFiles = false;
+			alert('Load Files Failed!');
 		},
 
 		createFilesRequest: (state, action) => {},
@@ -245,14 +268,19 @@ export const classroomSlice = createSlice({
 				status: action.payload.status,
 				dateUpdated: action.payload.dateUpdated,
 			});
+			alert('Create Files Success!');
 		},
-		createFilesFailed: (state, action) => {},
+		createFilesFailed: (state, action) => {
+			alert('Load Files Failed!');
+		},
 		joinClassroomRequest: (state, action) => {},
 		joinClassroomSuccess: (state, action) => {
 			state.classes.unshift(action.payload);
-			alert('Join success');
+			alert('Join Classroom Success!');
 		},
-		joinClassroomFailed: (state, action) => {},
+		joinClassroomFailed: (state, action) => {
+			alert('Join Classroom Failed!');
+		},
 	},
 });
 

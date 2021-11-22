@@ -18,7 +18,8 @@ export const institutionSlice = createSlice({
 			state.institutions = action.payload;
 		},
 		institutionLoadFailed: (state, action) => {
-			state.status = 'failed';
+			state.status = 'failed'; 
+			alert('Institution Load Failed!');
 		},
 		institutionCreateRequest: (state, action) => {
 			state.status = 'loading';
@@ -26,10 +27,12 @@ export const institutionSlice = createSlice({
 		institutionCreateSuccess: (state, action) => {
 			state.status = 'success';
 			state.institutions.unshift(action.payload);
-			state.currentInstitution = action.payload;
+			state.currentInstitution = action.payload; 
+			alert('Folders Create Success!');
 		},
 		institutionCreateFailed: (state, action) => {
 			state.status = 'failed';
+			alert('Folders Delete Failed!');
 		},
 		institutionRetrieveRequest: (state, action) => {
 			state.status = 'loading';
@@ -37,10 +40,11 @@ export const institutionSlice = createSlice({
 		institutionRetrieveSuccess: (state, action) => {
 			state.status = 'success';
 			state.currentInstitution = action.payload;
+			alert('Folders Retrieve Success!');
 		},
 		institutionRetrieveFailed: (state, action) => {
 			state.status = 'failed';
-			alert('action Failed');
+			alert('Folders Delete Failed!');
 		},
 		// verification
 		verificationApplyRequest: (state, action) => {
@@ -49,10 +53,11 @@ export const institutionSlice = createSlice({
 		verificationApplySuccess: (state, action) => {
 			state.status = 'success';
 			state.verification = action.payload;
+			alert('Verification Success!');
 		},
 		verificationApplyFailed: (state, action) => {
 			state.status = 'failed';
-			alert('action Failed');
+			alert('Verification Failed!');
 		},
 		verificationEditRequest: (state, action) => {
 			state.status = 'loading';
@@ -60,10 +65,11 @@ export const institutionSlice = createSlice({
 		verificationEditSuccess: (state, action) => {
 			state.status = 'success';
 			state.verification = action.payload;
+			alert('Verification Edit Success!');
 		},
 		verificationEditFailed: (state, action) => {
 			state.status = 'failed';
-			alert('action Failed');
+			alert('Verification Edit Failed!');
 		},
 		verificationCheckRequest: (state, action) => {
 			state.status = 'loading';
@@ -71,10 +77,11 @@ export const institutionSlice = createSlice({
 		verificationCheckSuccess: (state, action) => {
 			state.status = 'success';
 			state.verification = action.payload;
+			alert('Verification Check Success!');
 		},
 		verificationCheckFailed: (state, action) => {
 			state.status = 'failed';
-			alert('action Failed');
+			alert('Verification Check Failed!');
 		},
 	},
 });

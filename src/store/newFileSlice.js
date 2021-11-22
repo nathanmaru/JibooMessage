@@ -28,7 +28,7 @@ export const fileSlice = createSlice({
 		loadFileFailed: (state, action) => {
 			// state.files = [];
 			// state.uploadFiles = [];
-			alert('files load failed');
+			alert('Files Load Failed!');
 		},
 		retrieveFileRequest: (state, action) => {
 			state.status = 'loading';
@@ -36,9 +36,10 @@ export const fileSlice = createSlice({
 		retrieveFileSuccess: (state, action) => {
 			state.status = 'file retrieve success';
 			state.currentFile = action.payload;
+			alert('Files Retrieve Success!');
 		},
 		retrieveFileFailed: (state, action) => {
-			alert('files retrieve failed');
+			alert('Files Retrieve Failed!');
 		},
 		addFileRequest: (state, action) => {
 			state.status = 'loading';
@@ -46,10 +47,11 @@ export const fileSlice = createSlice({
 		addFileSuccess: (state, action) => {
 			state.status = 'file add success';
 			state.files.push(action.payload);
+			alert('Files Add Success!');
 		},
 		addFileFailed: (state, action) => {
 			state.status = 'file add failed';
-			alert('files add failed');
+			alert('Files Add Failed!');
 		},
 		editFileRequest: (state, action) => {
 			state.status = 'loading';
@@ -58,10 +60,11 @@ export const fileSlice = createSlice({
 			const index = state.files.findIndex((item) => item.id === action.payload.id);
 			state.files[index] = action.payload;
 			state.status = 'file edit success';
+			alert('Files Edit Success!');
 		},
 		editFileFailed: (state, action) => {
 			state.status = 'file edit failed';
-			alert('files edit failed');
+			alert('Files Edit Failed!');
 		},
 		deleteFileRequest: (state, action) => {
 			state.status = 'loading';
@@ -77,10 +80,12 @@ export const fileSlice = createSlice({
 			}
 
 			state.status = 'file delete success';
+			alert('Files Delete Success!');
 		},
 		deleteFileFailed: (state, action) => {
 			state.status = 'file delete failed';
 			alert('files delete failed');
+			alert('Files Delete Failed!');
 		},
 	},
 });
