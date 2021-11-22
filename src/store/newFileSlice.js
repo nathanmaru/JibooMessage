@@ -26,6 +26,8 @@ export const fileSlice = createSlice({
 			}
 		},
 		loadFileFailed: (state, action) => {
+			// state.files = [];
+			// state.uploadFiles = [];
 			alert('files load failed');
 		},
 		retrieveFileRequest: (state, action) => {

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useParams, Route } from 'react-router';
@@ -7,14 +6,14 @@ import queryString from 'query-string';
 import ClassroomDashboard from './tabs/dashboard/classroomAdviserDashboard';
 import PageManagerComponent from '../../../../materialUI/components/reuseableComponents/pageManagerComponent';
 import ProductDetailComponent from '../../../../materialUI/components/reuseableComponents/dashboardComponent';
-import ClassroomSubmission from "./tabs/submissions/classroomAdviserSubmission";
+import ClassroomSubmission from './tabs/submissions/classroomAdviserSubmission';
 
 import {
 	deleteAdviserClassroom,
 	editAdviserClassroom,
 	getCurrentClassroom,
-} from "../../../../store/newClassroomSlice";
-import useFetch from "../../../../hooks/useFetch";
+} from '../../../../store/newClassroomSlice';
+import useFetch from '../../../../hooks/useFetch';
 import {
 	Button,
 	Card,
@@ -24,14 +23,13 @@ import {
 	MenuItem,
 	Select,
 	TextField,
-
 } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
 import AdviserResourceTab from './tabs/resources/adviserResourceTab';
+import AdviserWorkspaceTab from './tabs/workspaces/adviserWorkspaceTab';
 const Input = styled('input')({
 	display: 'none',
-
 });
 
 const AdviserClassroomManager = () => {
@@ -50,9 +48,7 @@ const AdviserClassroomManager = () => {
 	useEffect(() => {
 		dispatch(getCurrentClassroom(id));
 	}, []);
-	const currentClassroom = useSelector(
-		(state) => state.newClass.currentClassroom
-	);
+	const currentClassroom = useSelector((state) => state.newClass.currentClassroom);
 	const [classroom, setClassroom] = useState({});
 	useEffect(() => {
 		if (currentClassroom) {
@@ -62,7 +58,7 @@ const AdviserClassroomManager = () => {
 
 	const onChange = (e) => {
 		e.preventDefault();
-		if (e.target.name == "cover") {
+		if (e.target.name == 'cover') {
 			let reader = new FileReader();
 			let file = e.target.files[0];
 
@@ -81,17 +77,16 @@ const AdviserClassroomManager = () => {
 
 	const handleEdit = () => {
 		let form_data = new FormData();
-		const { name, description, privacy, subject, cover, coverFile, code } =
-			classroom;
+		const { name, description, privacy, subject, cover, coverFile, code } = classroom;
 		console.log(coverFile, cover);
 		if (coverFile != cover) {
-			form_data.append("cover", coverFile, coverFile.name);
+			form_data.append('cover', coverFile, coverFile.name);
 		}
-		form_data.append("name", name);
-		form_data.append("code", code);
-		form_data.append("description", description);
-		form_data.append("privacy", privacy);
-		form_data.append("subject", subject);
+		form_data.append('name', name);
+		form_data.append('code', code);
+		form_data.append('description', description);
+		form_data.append('privacy', privacy);
+		form_data.append('subject', subject);
 		dispatch(editAdviserClassroom(classroom.id, form_data));
 	};
 
@@ -101,31 +96,36 @@ const AdviserClassroomManager = () => {
 
 	const tabs = [
 		{
-			label: "Dashboard",
+			label: 'Dashboard',
 			link: `/classroom/adviser/${id}?tab=dashboard`,
-			value: "dashboard",
+			value: 'dashboard',
 			component: <ClassroomDashboard id={id} />,
 		},
 		{
-			label: "Resources",
+			label: 'Resources',
 			link: `/classroom/adviser/${id}?tab=resources`,
 
 			value: 'resources',
 			component: <AdviserResourceTab />,
-
 		},
 		{
-			label: "Students",
+			label: 'Students',
 			link: `/classroom/adviser/${id}?tab=students`,
 
 			value: 'students',
 			component: <div className='min-h-screen'>Students</div>,
-
 		},
 		{
-			label: "Submissions",
+			label: 'Workspaces',
+			link: `/classroom/adviser/${id}?tab=workspaces`,
+
+			value: 'workspaces',
+			component: <AdviserWorkspaceTab />,
+		},
+		{
+			label: 'Submissions',
 			link: `/classroom/adviser/${id}?tab=submissions`,
-			value: "submissions",
+			value: 'submissions',
 			// component: <div className="min-h-screen">submissions</div>,
 			component: <ClassroomSubmission />,
 			// <ClassroomResources />,
@@ -134,46 +134,46 @@ const AdviserClassroomManager = () => {
 
 	return (
 		<>
-			<div className="flex flex-col space-y-4">
+			<div className='flex flex-col space-y-4'>
 				<ProductDetailComponent
-					dialogTitle="Edit Classroom Detail"
+					dialogTitle='Edit Classroom Detail'
 					isEdit={true}
-					productType="Classroom"
+					productType='Classroom'
 					setProduct={setClassroom}
 					product={classroom}
 				>
-					<div className="flex flex-col space-y-4 ">
-						<Card sx={{ maxWidth: "100%" }}>
+					<div className='flex flex-col space-y-4 '>
+						<Card sx={{ maxWidth: '100%' }}>
 							<CardMedia
-								component="div"
+								component='div'
 								image={classroom.cover}
-								className="flex justify-end items-center"
+								className='flex justify-end items-center'
 								sx={{
-									height: "120px",
-									display: "flex",
-									justifyContent: "flex-end",
-									alignItems: "end",
+									height: '120px',
+									display: 'flex',
+									justifyContent: 'flex-end',
+									alignItems: 'end',
 								}}
 							>
-								<label htmlFor="contained-button-file">
+								<label htmlFor='contained-button-file'>
 									<Input
-										accept="image/*"
-										id="contained-button-file"
-										name="cover"
+										accept='image/*'
+										id='contained-button-file'
+										name='cover'
 										onChange={onChange}
-										type="file"
+										type='file'
 									/>
 									<Button
-										variant="contained"
+										variant='contained'
 										startIcon={<PhotoCamera />}
 										style={{
-											marginRight: "10px",
-											marginBottom: "10px",
-											backgroundColor: "white",
-											color: "rgba(55, 65, 81, 1)",
-											textTransform: "capitalize",
+											marginRight: '10px',
+											marginBottom: '10px',
+											backgroundColor: 'white',
+											color: 'rgba(55, 65, 81, 1)',
+											textTransform: 'capitalize',
 										}}
-										component="span"
+										component='span'
 									>
 										Change Cover Photo
 									</Button>
@@ -181,66 +181,62 @@ const AdviserClassroomManager = () => {
 							</CardMedia>
 						</Card>
 						<TextField
-							label="Classroom Name"
-							variant="outlined"
-							name="name"
+							label='Classroom Name'
+							variant='outlined'
+							name='name'
 							value={classroom.name}
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-							label="Subject"
-							variant="outlined"
-							name="subject"
+							label='Subject'
+							variant='outlined'
+							name='subject'
 							value={classroom.subject}
 							onChange={(e) => onChange(e)}
 						/>
 						<TextField
-							label="Subject"
-							variant="outlined"
-							name="code"
+							label='Subject'
+							variant='outlined'
+							name='code'
 							value={classroom.code}
 							InputProps={{
 								readOnly: true,
 							}}
 						/>
 						<FormControl fullWidth>
-							<InputLabel id="demo-simple-select-label">Privacy</InputLabel>
+							<InputLabel id='demo-simple-select-label'>Privacy</InputLabel>
 							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
+								labelId='demo-simple-select-label'
+								id='demo-simple-select'
 								value={classroom.privacy}
-								label="Privacy"
-								name="privacy"
+								label='Privacy'
+								name='privacy'
 								onChange={(e) => onChange(e)}
 							>
-								<MenuItem value={"public"}>Public</MenuItem>
-								<MenuItem value={"private"}>Private</MenuItem>
+								<MenuItem value={'public'}>Public</MenuItem>
+								<MenuItem value={'private'}>Private</MenuItem>
 							</Select>
 						</FormControl>
 						<TextField
-							label="Description"
-							variant="outlined"
-							name="description"
+							label='Description'
+							variant='outlined'
+							name='description'
 							value={classroom.description}
 							onChange={(e) => onChange(e)}
 							multiline
 							minRows={4}
 						/>
-						<div className="flex w-full space-x-2">
-							<Button variant="contained" onClick={handleEdit}>
+						<div className='flex w-full space-x-2'>
+							<Button variant='contained' onClick={handleEdit}>
 								Save Changes
 							</Button>
-							<Button color="error" onClick={handleDelete}>
+							<Button color='error' onClick={handleDelete}>
 								Delete
 							</Button>
 						</div>
 					</div>
 				</ProductDetailComponent>
-				<PageManagerComponent
-					value={value}
-					handleChange={handleChange}
-					tabs={tabs}
-				/>
+				<PageManagerComponent value={value} handleChange={handleChange} tabs={tabs} />
 			</div>
 		</>
 	);

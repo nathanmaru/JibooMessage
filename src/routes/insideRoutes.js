@@ -1,4 +1,3 @@
-
 import { Route } from 'react-router';
 import StepperExp from '../experiments/stepperExp';
 import AboutArticles from '../materialUI/pages/AboutArticles';
@@ -17,7 +16,7 @@ import Profile from '../pages/profile';
 import TempFile from '../pages/TempFile';
 import WorkSpace from '../pages/workspace';
 import JoinProfile from '../materialUI/pages/JoinedInstitution/JoinProfile';
-import Institution from '../materialUI/pages/institutionModule/newInstitution';
+import Institution from '../institutionModule/institution';
 import MyInstitutionManager from '../materialUI/pages/institutionModule/pageManager/myInstitutionManager';
 import AdviserClassroomManager from '../classroomModule/classroomUser/classroomAdviser/classroomManager/adviserClassroomManager';
 import AdviserResourceManager from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/resources/resourceManager/adviserResourceManager';
@@ -25,8 +24,16 @@ import AdviserResourceFileViewer from '../classroomModule/classroomUser/classroo
 import ResearcherClassroomManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/researcherClassroomManager';
 import ResearcherResourceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/researcherResourceManager';
 import ResearcherResourceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/resources/resourceManager/fileViewer/file/resourceFileViewer';
-import Intro from "../experiments/shepherd/Intro";
+import Intro from '../experiments/shepherd/Intro';
+import ResearcherWorkspaceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/researcherWorkspaceManager';
+import ResearcherWorkspaceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/tabs/files/fileViewer/file/researcherWorkspaceFileViewer';
+import ModeratorInstitutionPageManager from '../institutionModule/institutionModerator/pageManager/moderatorInstitutionManager';
 export default [
+	<Route
+		exact
+		path='/classroom/researcher/workspace/:id'
+		component={ResearcherWorkspaceManager}
+	/>,
 	<Route exact path='/classroom/adviser/resources/:id' component={AdviserResourceManager} />,
 	<Route exact path='/classroom/researcher/resources/:id' component={ResearcherResourceManager} />,
 	<Route path='/about-article/:id' component={AboutArticles} />,
@@ -38,11 +45,16 @@ export default [
 		path='/classroom/adviser/resources/file/:id'
 		component={AdviserResourceFileViewer}
 	/>,
-      <Route path="/intro" component={Intro} />,
+	<Route path='/intro' component={Intro} />,
 	<Route
 		exact
 		path='/classroom/researcher/resources/file/:id'
 		component={ResearcherResourceFileViewer}
+	/>,
+	<Route
+		exact
+		path='/classroom/researcher/workspace/file/:id'
+		component={ResearcherWorkspaceFileViewer}
 	/>,
 	<Route exact path='/works/:id' component={ProjectManager} />,
 	<Route exact path='/fileViewer' component={FileViewer} />,
@@ -56,9 +68,9 @@ export default [
 	<Route path='/profile' component={Profile} />,
 	<Route path='/home' component={Home} />,
 	<Route path='/joined/:id' component={JoinProfile} />,
-	<Route path='/myinstitution/:id' component={MyInstitutionManager} />,
-	<Route path='/institutions' component={Institution} />,
-	<Route path='/old-institutions' component={OldInstitution} />,
+	// <Route path='/myinstitution/:id' component={MyInstitutionManager} />,
+	<Route exact path='/institutions' component={Institution} />,
+	<Route exact path='/institutions/moderator/:id' component={ModeratorInstitutionPageManager} />,
+	// <Route path='/old-institutions' component={OldInstitution} />,
 	<Route path='/logout' component={Logout} />,
-
 ];

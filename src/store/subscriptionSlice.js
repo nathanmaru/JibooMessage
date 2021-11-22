@@ -14,6 +14,7 @@ export const subscriptionSlice = createSlice({
 		},
 		planLoadSuccess: (state, action) => {
 			state.status = 'success';
+			console.log(action.payload);
 			state.plans = action.payload;
 		},
 		planLoadFailed: (state, action) => {

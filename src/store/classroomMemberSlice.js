@@ -17,26 +17,12 @@ export const classroomMemberSlice = createSlice({
 	reducers: {
 		memberListLoadRequest: (state, action) => {
 			toastId = toast.loading('Loading Members...');
-			state.isLoading = true;
 		},
 		memberListLoadSuccess: (state, action) => {
-			toast.update(toastId, {
-				render: 'Members Loaded!',
-				type: 'success',
-				autoClose: 1000,
-				isLoading: false,
-			});
 			state.isLoading = false;
 			state.members = action.payload;
 		},
-		memberListLoadFailed: (state, action) => {
-			toast.update(toastId, {
-				render: 'Members Loaded Failed!',
-				type: 'error',
-				autoClose: 1000,
-				isLoading: false,
-			});
-		},
+		memberListLoadFailed: (state, action) => {},
 		findClassroomRequest: (state, action) => {
 			state.classroom = null;
 		},
@@ -76,7 +62,7 @@ export default classroomMemberSlice.reducer;
 
 export const getMembers = (classroom) =>
 	apiCallBegan({
-		url: '/classroom/members/' + String(classroom),
+		url: '/classroom/members/' + classroom,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -88,7 +74,9 @@ export const getMembers = (classroom) =>
 		onSuccess: memberListLoadSuccess.type,
 		onError: memberListLoadFailed.type,
 	});
-export const findClassroom = (code) => //outdated?
+export const findClassroom = (
+	code //outdated?
+) =>
 	apiCallBegan({
 		url: '/classroom/find/' + code,
 		method: 'get',
