@@ -30,19 +30,21 @@ export const institutionSlice = createSlice({
 
 		loadSuccess: (state, action) => {
 			state.classes = action.payload;
-			state.isLoading = false;
+			state.isLoading = false; 
 		},
 		loadFailed: (state, action) => {
 			state.classes = null;
 			state.isLoading = false;
-			alert('Institution Load Failed');
+			alert('Institution Load Failed!');
 		},
 		loadCurrentInstitutionRequest: (state, action) => {},
 		loadCurrentInstitutionSuccess: (state, action) => {
 			state.currentInstitution = action.payload;
+			alert('Current Institution Load Success!');
 		},
 		loadCurrentInstitutionFailed: (state, action) => {
 			window.location.href = '/institutions';
+			alert('Current Institution Load Failed!');
 		},
 		editCurrentInstitutionRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -55,6 +57,7 @@ export const institutionSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Current Institution Edit Success!');
 		},
 		editCurrentInstitutionFailed: (state, action) => {
 			toast.update(toastId, {
@@ -63,6 +66,7 @@ export const institutionSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Current Institution Edit Failed!');
 		},
 		deleteCurrentInstitutionRequest: (state, action) => {
 			toastId = toast.loading('Saving Changes...');
@@ -76,6 +80,7 @@ export const institutionSlice = createSlice({
 				isLoading: false,
 			});
 			window.location.href = '/institutions';
+			alert('Current Institution Delete Success!');
 		},
 		deleteCurrentInstitutionFailed: (state, action) => {
 			toast.update(toastId, {
@@ -84,6 +89,7 @@ export const institutionSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Current Institution Delete Failed!');
 		},
 
 		addSuccess: (state, action) => {
@@ -100,6 +106,7 @@ export const institutionSlice = createSlice({
 				autoClose: 2000,
 				isLoading: false,
 			});
+			alert('Create Institution Success!');
 		},
 		addFailed: (state, action) => {
 			toast.update(toastId, {
@@ -108,12 +115,17 @@ export const institutionSlice = createSlice({
 				autoClose: 3000,
 				isLoading: false,
 			});
+			alert('Create Institution Failed!');
 		},
 		addRequest: (state, action) => {
 			toastId = toast.loading('Adding Institution...');
 		},
-		updateSuccess: (state, action) => {},
-		deleteSuccess: (state, action) => {},
+		updateSuccess: (state, action) => {
+			alert('Update Institution Success!');
+		},
+		deleteSuccess: (state, action) => {
+			alert('Delete Institution Success!');
+		},
 		// For Resources
 	},
 });

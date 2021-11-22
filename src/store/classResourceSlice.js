@@ -23,11 +23,12 @@ export const classResourceSlice = createSlice({
 		},
 		folderLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.folders = action.payload;
+			state.folders = action.payload; 
 		},
 		folderLoadFailed: (state, action) => {
 			state.isLoading = false;
 			state.folders = [];
+			alert('Folder Load Failed!');
 		},
 		folderCreateRequest: (state, action) => {
 			state.isLoading = true;
@@ -35,6 +36,7 @@ export const classResourceSlice = createSlice({
 		folderCreateSuccess: (state, action) => {
 			state.isLoading = false;
 			state.folders.push(action.payload);
+			alert('Adding Folder Success!');
 		},
 		folderCreateFailed: (state, action) => {
 			state.isLoading = false;
@@ -47,6 +49,7 @@ export const classResourceSlice = createSlice({
 			state.isLoading = false;
 			const index = state.folders.findIndex((folder) => folder.id === action.payload.id);
 			state.folders[index].name = action.payload.name;
+			alert('Edit Folder Success!');
 		},
 		folderEditFailed: (state, action) => {
 			state.isLoading = false;
@@ -58,6 +61,7 @@ export const classResourceSlice = createSlice({
 		folderDeleteSuccess: (state, action) => {
 			state.isLoading = false;
 			state.folders = state.folders.filter((val) => val.id !== action.payload.id);
+			alert('Delete Folder Success!');
 		},
 		folderDeleteFailed: (state, action) => {
 			state.isLoading = false;
@@ -69,10 +73,11 @@ export const classResourceSlice = createSlice({
 		uploadedFileLoadSuccess: (state, action) => {
 			state.isLoading = false;
 			state.uploadFiles = action.payload;
+			alert('Files Upload Success!');
 		},
 		uploadedFileLoadFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Files Load Failed!');
+			alert('Files Upload Failed!');
 		},
 		// Quill File CRUD
 		quillLoadRequest: (state, action) => {
@@ -80,7 +85,7 @@ export const classResourceSlice = createSlice({
 		},
 		quillLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.files = action.payload;
+			state.files = action.payload; 
 		},
 		quillLoadFailed: (state, action) => {
 			state.isLoading = false;
@@ -102,6 +107,7 @@ export const classResourceSlice = createSlice({
 				folder: action.payload.folder,
 				assignee: action.payload.assignee,
 			});
+			alert('Files Upload Success!');
 		},
 		fileUploadFailed: (state, action) => {
 			state.isLoading = false;
@@ -123,6 +129,7 @@ export const classResourceSlice = createSlice({
 				folder: action.payload.folder,
 				assignee: action.payload.assignee,
 			});
+			alert('Files Upload Success!');
 		},
 		createFileFailed: (state, action) => {
 			state.isLoading = false;
@@ -134,7 +141,7 @@ export const classResourceSlice = createSlice({
 		},
 		retrieveFileSuccess: (state, action) => {
 			state.isLoading = false;
-			state.currentFile = action.payload;
+			state.currentFile = action.payload; 
 		},
 		retrieveFileFailed: (state, action) => {
 			state.isLoading = false;
@@ -145,6 +152,7 @@ export const classResourceSlice = createSlice({
 		},
 		editFileSuccess: (state, action) => {
 			state.isLoading = false;
+			alert('File Saved Success!');
 		},
 		editFileFailed: (state, action) => {
 			state.isLoading = false;
@@ -164,6 +172,7 @@ export const classResourceSlice = createSlice({
 				state.files = filtered;
 			}
 			state.isLoading = false;
+			alert('File Delete Success!');
 		},
 		deleteFileFailed: (state, action) => {
 			state.isLoading = false;

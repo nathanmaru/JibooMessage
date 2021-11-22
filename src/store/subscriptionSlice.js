@@ -19,6 +19,7 @@ export const subscriptionSlice = createSlice({
 		},
 		planLoadFailed: (state, action) => {
 			state.status = 'failed';
+			alert('Plan Load Failed!');
 		},
 		subscriptionLoadRequest: (state, action) => {
 			state.status = 'loading';
@@ -26,9 +27,11 @@ export const subscriptionSlice = createSlice({
 		subscriptionLoadSuccess: (state, action) => {
 			state.status = 'success';
 			state.subscriptions = action.payload;
+			alert('Subscription Load Success!');
 		},
 		subscriptionLoadFailed: (state, action) => {
 			state.status = 'failed';
+			alert('Subscription Load Failed!');
 		},
 		subscriptionAddRequest: (state, action) => {
 			state.status = 'loading';
@@ -36,9 +39,11 @@ export const subscriptionSlice = createSlice({
 		subscriptionAddSuccess: (state, action) => {
 			state.status = 'success';
 			state.subscriptions.unshift(action.payload);
+			alert('Subscription Create Success!');
 		},
 		subscriptionAddFailed: (state, action) => {
 			state.status = 'failed';
+			alert('Subscription Create Failed!');
 		},
 	},
 });

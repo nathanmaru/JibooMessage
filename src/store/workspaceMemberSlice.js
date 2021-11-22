@@ -25,7 +25,7 @@ export const workspaceMemberSlice = createSlice({
 		},
 		memberLoadFailed: (state, action) => {
 			console.log(action.error);
-			alert('Member Load Failed');
+			alert('Member Load Failed!');
 		},
 
 		memberJoinRequest: (state, action) => {
@@ -34,9 +34,10 @@ export const workspaceMemberSlice = createSlice({
 		memberJoinSuccess: (state, action) => {
 			state.isLoading = false;
 			state.sharedWorkspace.unshift(action.payload);
+			alert('Member Join Success!');
 		},
 		memberJoinFailed: (state, action) => {
-			alert('Join Failed');
+			alert('Member Join Failed!');
 		},
 		sharedWorkspaceRequest: (state, action) => {
 			state.isLoading = true;
@@ -44,10 +45,11 @@ export const workspaceMemberSlice = createSlice({
 		sharedWorkspaceSuccess: (state, action) => {
 			state.isLoading = false;
 			state.sharedWorkspace = action.payload;
+			alert('Shared Workspace Load Success!');
 		},
 		sharedWorkspaceFailed: (state, action) => {
 			state.isLoading = false;
-			alert('Shared Workspace Load Failed');
+			alert('Shared Workspace Load Failed!');
 		},
 	},
 });

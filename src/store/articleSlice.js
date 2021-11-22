@@ -14,20 +14,20 @@ export const articleSlice = createSlice({
 		},
 		articleLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.articles = action.payload;
+			state.articles = action.payload; 
 		},
 		articleLoadFailed: (state, action) => {
-			alert('Articles load failed');
+			alert('Articles Load Failed!');
 		},
 		articleRetrieveRequest: (state, action) => {
 			state.isLoading = true;
 		},
 		articleRetrieveSuccess: (state, action) => {
 			state.isLoading = false;
-			state.currentArticle = action.payload;
+			state.currentArticle = action.payload; 
 		},
 		articleRetrieveFailed: (state, action) => {
-			alert('Article load failed');
+			alert('Article Load Failed!');
 		},
 	},
 });
