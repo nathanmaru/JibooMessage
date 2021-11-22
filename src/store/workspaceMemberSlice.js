@@ -112,3 +112,34 @@ export const getSharedWorkspace = () =>
 		onSuccess: sharedWorkspaceSuccess.type,
 		onError: sharedWorkspaceFailed.type,
 	});
+
+export const getAvailableMember = (classroom) =>
+	apiCallBegan({
+		url: '/workspace/members/available/' + classroom,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: memberLoadRequest.type,
+		onSuccess: memberLoadSuccess.type,
+		onError: memberLoadFailed.type,
+	});
+
+export const addWorkspaceMember = (workspace, user) =>
+	apiCallBegan({
+		url: '/workspace/members/' + workspace,
+		method: 'post',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		data: { user },
+		type: 'regular',
+		onStart: memberJoinRequest.type,
+		onSuccess: memberJoinSuccess.type,
+		onError: memberJoinFailed.type,
+	});

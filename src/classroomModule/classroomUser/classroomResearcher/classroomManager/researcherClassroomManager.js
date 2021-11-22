@@ -8,6 +8,7 @@ import queryString from 'query-string';
 import { getCurrentClassroom } from '../../../../store/newClassroomSlice';
 import useFetch from '../../../../hooks/useFetch';
 import ResearcherResourceTab from './tabs/resources/researcherResourceTab';
+import ResearcherWorkspaceTab from './tabs/workspaces/researcherWorkspaceTab';
 const ResearcherClassroomManager = () => {
 	const dispatch = useDispatch();
 
@@ -49,7 +50,7 @@ const ResearcherClassroomManager = () => {
 			label: 'Workspaces',
 			link: `/classroom/researcher/${id}?tab=workspaces`,
 			value: 'workspaces',
-			component: 'Workspaces',
+			component: <ResearcherWorkspaceTab />,
 		},
 	];
 	return (

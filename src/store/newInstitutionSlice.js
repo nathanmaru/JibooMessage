@@ -26,6 +26,7 @@ export const institutionSlice = createSlice({
 		institutionCreateSuccess: (state, action) => {
 			state.status = 'success';
 			state.institutions.unshift(action.payload);
+			state.currentInstitution = action.payload;
 		},
 		institutionCreateFailed: (state, action) => {
 			state.status = 'failed';
@@ -105,7 +106,7 @@ export default institutionSlice.reducer;
 
 export const getMyInstitutions = () =>
 	apiCallBegan({
-		url: '/institution/list',
+		url: '/institution/',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -117,16 +118,16 @@ export const getMyInstitutions = () =>
 		onSuccess: institutionLoadSuccess.type,
 		onError: institutionLoadFailed.type,
 	});
-export const createInstitution = (name) =>
+export const createInstitution = (formdata) =>
 	apiCallBegan({
-		url: '/institution/create',
+		url: '/institution/',
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name },
+		data: formdata,
 		type: 'regular',
 		onStart: institutionCreateRequest.type,
 		onSuccess: institutionCreateSuccess.type,
@@ -134,7 +135,7 @@ export const createInstitution = (name) =>
 	});
 export const retrieveInstitution = (id) =>
 	apiCallBegan({
-		url: '/institution/' + id,
+		url: '/institution/change/' + id,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -148,7 +149,7 @@ export const retrieveInstitution = (id) =>
 	});
 export const editInstitution = (id, form_data) =>
 	apiCallBegan({
-		url: '/institution/' + id,
+		url: '/institution/change/' + id,
 		method: 'patch',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -164,9 +165,9 @@ export const editInstitution = (id, form_data) =>
 
 // Verification
 
-export const applyVerification = (form_data) =>
+export const applyVerification = (institution, form_data) =>
 	apiCallBegan({
-		url: '/institution/verify',
+		url: '/institution/verify/' + institution,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

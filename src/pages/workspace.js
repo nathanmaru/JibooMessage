@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { getMyWorkspaces, createWorkspace } from '../store/workspaceSlice';
+import { getWorkspaces, createWorkspace } from '../store/workspaceSlice';
 import { joinWorkspace, getSharedWorkspace } from '../store/workspaceMemberSlice';
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
@@ -8,7 +8,6 @@ import CardComponent from '../materialUI/components/reuseableComponents/cardComp
 import CardHolder from '../materialUI/components/reuseableComponents/cardHolder';
 import BannerComponent from '../materialUI/components/reuseableComponents/bannerComponent';
 import DialogComponent from '../materialUI/components/reuseableComponents/dialogComponent';
-import DialogStepperComponent from '../materialUI/components/reuseableComponents/dialogStepperComponent';
 
 const WorkSpace = () => {
 	// hooks
@@ -57,7 +56,7 @@ const WorkSpace = () => {
 	const fetchSharedWorkspace = useSelector((state) => state.worksMember.sharedWorkspace);
 	const owner = useSelector((state) => state.auth.user);
 	useEffect(() => {
-		dispatch(getMyWorkspaces());
+		dispatch(getWorkspaces());
 		dispatch(getSharedWorkspace());
 	}, []);
 

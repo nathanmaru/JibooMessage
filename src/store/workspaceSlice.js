@@ -11,18 +11,20 @@ export const workspaceSlice = createSlice({
 	name: 'works',
 	initialState: {
 		currentWorkspace: null,
-		workspace: [],
-		isLoading: false,
+		workspaces: [],
+		status: 'idle',
 	},
 	reducers: {
 		workspaceLoadRequest: (state, action) => {
-			state.isLoading = true;
+			state.status = 'loading';
 		},
 		workspaceLoadSuccess: (state, action) => {
-			state.isLoading = false;
-			state.workspace = action.payload;
+			state.status = 'workspace load success';
+			state.workspaces = action.payload;
 		},
-		workspaceLoadFailed: (state, action) => {},
+		workspaceLoadFailed: (state, action) => {
+			state.status = 'workspace load failed';
+		},
 		currentWorkspaceLoadRequest: (state, action) => {},
 		currentWorkspaceLoadSuccess: (state, action) => {
 			state.currentWorkspace = action.payload;
@@ -30,57 +32,25 @@ export const workspaceSlice = createSlice({
 		currentWorkspaceLoadFailed: (state, action) => {},
 		workspaceAddRequest: (state, action) => {},
 		workspaceAddSuccess: (state, action) => {
-			state.workspace.unshift({
-				id: action.payload.id,
-				name: action.payload.name,
-				description: action.payload.description,
-			});
+			state.workspaces.unshift(action.payload);
+			state.currentWorkspace = action.payload;
 		},
 		workspaceAddFailed: (state, action) => {
 			alert('Adding Failed');
 		},
 
-		worksUpdateRequest: (state, action) => {
-			toastId = toast.loading('Saving Changes...');
-		},
+		worksUpdateRequest: (state, action) => {},
 		worksUpdateSuccess: (state, action) => {
-			toast.update(toastId, {
-				render: 'Workspace Updated!',
-				type: 'success',
-				autoClose: 1000,
-				isLoading: false,
-			});
 			state.currentWorkspace = action.payload;
 		},
 		worksUpdateFailed: (state, action) => {
-			toast.update(toastId, {
-				render: 'Workspace Updated Failed!',
-				type: 'error',
-				autoClose: 1000,
-				isLoading: false,
-			});
+			alert('Failed');
 		},
-		worksDeleteRequest: (state, action) => {
-			toastId = toast.loading('Saving Changes...');
-		},
+		worksDeleteRequest: (state, action) => {},
 		worksDeleteSuccess: (state, action) => {
-			toast.update(toastId, {
-				render: 'Workspace Deleted!',
-				type: 'success',
-				autoClose: 1000,
-				isLoading: false,
-			});
 			state.currentWorkspace = null;
-			window.location.href = '/works';
 		},
-		worksDeleteFailed: (state, action) => {
-			toast.update(toastId, {
-				render: 'Workspace Deleted Failed!',
-				type: 'error',
-				autoClose: 1000,
-				isLoading: false,
-			});
-		},
+		worksDeleteFailed: (state, action) => {},
 
 		worksDeleted: (state, action) => {},
 	},
@@ -109,9 +79,9 @@ export default workspaceSlice.reducer;
 
 //action creators
 
-export const getMyWorkspaces = () =>
+export const getWorkspaces = (link) =>
 	apiCallBegan({
-		url: '/workspace/my-list',
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -125,7 +95,7 @@ export const getMyWorkspaces = () =>
 	});
 export const getCurrentWorkspace = (id) =>
 	apiCallBegan({
-		url: '/workspace/' + id,
+		url: '/workspace/change/' + id,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -137,31 +107,31 @@ export const getCurrentWorkspace = (id) =>
 		onSuccess: currentWorkspaceLoadSuccess.type,
 		onError: currentWorkspaceLoadFailed.type,
 	});
-export const createWorkspace = (name, description, owner) =>
+export const createWorkspace = (classroom, formdata) =>
 	apiCallBegan({
-		url: '/workspace/create',
+		url: '/workspace/' + classroom,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, description, owner },
+		data: formdata,
 		type: 'regular',
 		onStart: workspaceAddRequest.type,
 		onSuccess: workspaceAddSuccess.type,
 		onError: workspaceAddFailed.type,
 	});
-export const updateWorkspace = (name, description, status, id) =>
+export const updateWorkspace = (id, formdata) =>
 	apiCallBegan({
-		url: '/workspace/' + id,
+		url: '/workspace/change/' + id,
 		method: 'put',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, description, status },
+		data: formdata,
 		type: 'regular',
 		onStart: worksUpdateRequest.type,
 		onSuccess: worksUpdateSuccess.type,
@@ -169,7 +139,7 @@ export const updateWorkspace = (name, description, status, id) =>
 	});
 export const deleteWorkspace = (id) =>
 	apiCallBegan({
-		url: '/workspace/' + id,
+		url: '/workspace/change/' + id,
 		method: 'delete',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
