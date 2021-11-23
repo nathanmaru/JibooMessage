@@ -28,11 +28,11 @@ export const institutionSlice = createSlice({
 			state.status = 'success';
 			state.institutions.unshift(action.payload);
 			state.currentInstitution = action.payload; 
-			alert('Folders Create Success!');
+			alert('Institution Create Success!');
 		},
 		institutionCreateFailed: (state, action) => {
 			state.status = 'failed';
-			alert('Folders Delete Failed!');
+			alert('Institution Delete Failed!');
 		},
 		institutionRetrieveRequest: (state, action) => {
 			state.status = 'loading';
@@ -40,11 +40,11 @@ export const institutionSlice = createSlice({
 		institutionRetrieveSuccess: (state, action) => {
 			state.status = 'success';
 			state.currentInstitution = action.payload;
-			alert('Folders Retrieve Success!');
+			alert('Institution Retrieve Success!');
 		},
 		institutionRetrieveFailed: (state, action) => {
 			state.status = 'failed';
-			alert('Folders Delete Failed!');
+			alert('Institution Delete Failed!');
 		},
 		// verification
 		verificationApplyRequest: (state, action) => {
