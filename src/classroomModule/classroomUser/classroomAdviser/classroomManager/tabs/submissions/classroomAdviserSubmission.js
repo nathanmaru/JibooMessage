@@ -20,18 +20,26 @@ import {
 	MdOutlineSpeakerNotes,
 	MdRecommend,
 } from "react-icons/md";
+import { CgFileDocument } from "react-icons/cg";
 import { BiLike } from "react-icons/bi";
+import { HiOutlineClock } from "react-icons/hi";
 
 const items = [
 	{
 		id: 1,
 		title: "Capstone 2",
+		date: "MM-DD-YYYY",
+		workspace: "Thania",
+		status: "Draft",
 		abstract:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed risus euismod, vestibulum nunc sit amet, fringilla mauris. Etiam hendrerit velit vitae sollicitudin pulvinar.",
 	},
 	{
 		id: 2,
 		title: "Capstone 2",
+		date: "MM-DD-YYYY",
+		workspace: "Thania",
+		status: "Draft",
 		abstract:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed risus euismod, vestibulum nunc sit amet, fringilla mauris. Etiam hendrerit velit vitae sollicitudin pulvinar.",
 	},
@@ -60,8 +68,8 @@ const ClassroomSubmission = ({ item }) => {
 					<Card
 						item={item}
 						sx={{
-							maxHeight: 150,
-							minHeight: 150,
+							maxHeight: 180,
+							minHeight: 180,
 							border: 1,
 							borderColor: "#d4d4d4",
 							mb: 1,
@@ -73,10 +81,12 @@ const ClassroomSubmission = ({ item }) => {
 								View Submission
 							</Button>
 						</div>
-
-						<p className="text-3xl tracking-wider font-semibold">
-							{item.title}
-						</p>
+						<div className="flex justify-between items-center">
+							<p className="text-3xl tracking-wider font-semibold">
+								{item.title}
+							</p>
+							<p className="text-xs text-gray-400">{item.date}</p>
+						</div>
 						<p
 							className="text-sm tracking-wider truncate"
 							style={{
@@ -89,6 +99,18 @@ const ClassroomSubmission = ({ item }) => {
 						>
 							{item.abstract}
 						</p>
+						<div className="mt-2 px-2 flex space-x-2">
+							<div className="flex items-center space-x-1">
+								<CgFileDocument className="text-gray-500" />
+								<p className="text-sm text-gray-500">Workspace Name ●</p>
+								<p className="text-xs text-purple-500">{item.workspace} </p>
+							</div>
+							<div className="flex items-center space-x-1">
+								<HiOutlineClock className="text-gray-500" />
+								<p className="text-sm text-gray-500">Status ●</p>
+								<p className="text-xs text-purple-500">{item.status} </p>
+							</div>
+						</div>
 					</Card>
 				))}
 				{/* <Card
