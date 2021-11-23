@@ -28,6 +28,7 @@ import Intro from '../experiments/shepherd/Intro';
 import ResearcherWorkspaceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/researcherWorkspaceManager';
 import ResearcherWorkspaceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/tabs/files/fileViewer/file/researcherWorkspaceFileViewer';
 import ModeratorInstitutionPageManager from '../institutionModule/institutionModerator/pageManager/moderatorInstitutionManager';
+import DataGridExp from '../experiments/dataGrid';
 export default [
 	<Route
 		exact
@@ -70,6 +71,7 @@ export default [
 	<Route path='/joined/:id' component={JoinProfile} />,
 	// <Route path='/myinstitution/:id' component={MyInstitutionManager} />,
 	<Route exact path='/institutions' component={Institution} />,
+	<Route exact path='/data-table' component={DataGridExp} />,
 	<Route exact path='/institutions/moderator/:id' component={ModeratorInstitutionPageManager} />,
 	// <Route path='/old-institutions' component={OldInstitution} />,
 	<Route path='/logout' component={Logout} />,

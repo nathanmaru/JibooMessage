@@ -51,6 +51,9 @@ const ResearcherWorkspaceManager = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
+	// useEffect(() => {
+	// 	setValue(tab);
+	// }, [tab]);
 
 	useEffect(() => {
 		dispatch(getCurrentWorkspace(id));
@@ -116,7 +119,6 @@ const ResearcherWorkspaceManager = () => {
 		{
 			label: 'Submissions',
 			link: `/classroom/researcher/workspace/${id}?tab=submissions`,
-
 			value: 'Submissions',
 			component: 'Submissions',
 		},

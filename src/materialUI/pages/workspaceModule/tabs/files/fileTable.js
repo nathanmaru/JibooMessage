@@ -6,8 +6,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import PublishIcon from '@mui/icons-material/Publish';
+import Tooltip from '@mui/material/Tooltip';
 
-const FileTable = ({ files, uploadFiles, handMeID, delete_File }) => {
+const FileTable = ({ files, uploadFiles, handMeID, delete_File, handleSubmit, submitButton }) => {
 	const contents = [...files, ...uploadFiles];
 
 	return (
@@ -35,16 +38,29 @@ const FileTable = ({ files, uploadFiles, handMeID, delete_File }) => {
 										<TableCell align='center'>{val.tags}</TableCell>
 										<TableCell align='center'>{val.assignee_name}</TableCell>
 										<TableCell align='center'>
-											<OpenInNewIcon
-												onClick={() => handMeID(val)}
-												className='cursor-pointer hover:text-purple-400'
-											/>{' '}
-											{delete_File ? (
-												<DeleteIcon
-													onClick={() => delete_File(val)}
-													className='cursor-pointer hover:text-purple-400'
-												/>
-											) : null}
+											<div className='flex space-x-4 justify-center '>
+												<Tooltip title='Open File'>
+													<OpenInNewIcon
+														onClick={() => handMeID(val)}
+														className='cursor-pointer hover:text-purple-400'
+													/>
+												</Tooltip>{' '}
+												{delete_File ? (
+													<Tooltip title='Delete'>
+														<DeleteIcon
+															onClick={() => delete_File(val)}
+															className='cursor-pointer hover:text-purple-400'
+														/>
+													</Tooltip>
+												) : null}
+												{handleSubmit ? (
+													<Tooltip title='Make Submission'>
+														<span onClick={() => handleSubmit(val)}>
+															{submitButton ? submitButton : null}
+														</span>
+													</Tooltip>
+												) : null}
+											</div>
 										</TableCell>
 									</TableRow>
 								))}
