@@ -16,6 +16,7 @@ import institutionReducer from './newInstitutionSlice';
 import subscriptionReducer from './subscriptionSlice';
 import folderReducer from './newFolderSlice';
 import fileReducer from './newFileSlice';
+import submissionReducer from './submissionSlice';
 
 export default combineReducers({
 	auth: authReducer,
@@ -35,4 +36,5 @@ export default combineReducers({
 	fileManager: fileManagerReducer,
 	institution: institutionReducer,
 	subscription: subscriptionReducer,
+	submission: submissionReducer,
 });

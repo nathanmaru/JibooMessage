@@ -16,7 +16,6 @@ import { useLocation, useParams } from 'react-router';
 import useFetch from '../../../hooks/useFetch';
 import ProductDetailComponent from '../../../materialUI/components/reuseableComponents/dashboardComponentCopy';
 import DialogComponent from '../../../materialUI/components/reuseableComponents/dialogComponent';
-import ProfileCardComponent from '../../../materialUI/components/reuseableComponents/profileCardComponent';
 import { editInstitution, retrieveInstitution } from '../../../store/newInstitutionSlice';
 import queryString from 'query-string';
 
@@ -49,9 +48,6 @@ const ModeratorInstitutionPageManager = () => {
 	const [institution, setInstitution] = useState({});
 	const [defaultImage, setDefaultImage] = useState();
 
-	const handleSubmit = (form_data) => {
-		// dispatch(editProfileImage(user.id, form_data));
-	};
 	useEffect(() => {
 		if (fetchProfile) {
 			setInstitution({ ...fetchProfile, coverFile: fetchProfile.cover });
