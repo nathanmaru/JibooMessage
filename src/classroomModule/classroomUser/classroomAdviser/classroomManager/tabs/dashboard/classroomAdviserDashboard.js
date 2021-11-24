@@ -47,9 +47,66 @@ const ClassroomDashboard = () => {
 				</div>
 				<div
 					class="col-span-3 px-1 overflow-y-auto"
-					style={{ maxHeight: "350px", minHeight: "350px" }}
+					style={{ maxHeight: "650px", minHeight: "650px" }}
 				>
 					{/* Activity Log starts here */}
+					<Card
+						sx={{
+							maxHeight: 150,
+							minHeight: 150,
+							border: 1,
+							borderColor: "#d4d4d4",
+							mb: 2,
+						}}
+					>
+						{/* Top Part */}
+						<div className="flex items-center px-2" style={{ height: 50 }}>
+							<div className="flex flex-row bg-white w-full flex flex-row justify-between items-center">
+								<div className="flex items-center">
+									<FaRegCommentAlt className="text-xl text-gray-400 mr-2" />
+
+									<p className="text-sm text-purple-400 mr-1">
+										Name here dili username
+									</p>
+									<p className="text-sm text-gray-400 mr-1">commented on</p>
+									<p className="text-sm text-gray-400">/* Title Here */</p>
+								</div>
+
+								<div className="flex items-center">
+									<p className="text-xs text-gray-400 mr-2">●</p>
+									<p className="text-sm text-gray-400 mr-1">Date</p>
+								</div>
+							</div>
+						</div>
+
+						<Divider sx={{ m: 1 }} />
+						{/* Bottom Part */}
+						<div className="flex flex-row" style={{ height: 100 }}>
+							{/* Vertical Line */}
+							<div className="w-10 flex flex-col justify-center py-1">
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+								<p className="text-gray-400 text-sm flex justify-center -mt-1">
+									┆
+								</p>
+							</div>
+							<div className="bg-gray-200 w-full p-1">sdg</div>
+						</div>
+					</Card>
+
 					<Card
 						sx={{
 							maxHeight: 150,
