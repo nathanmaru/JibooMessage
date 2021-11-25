@@ -30,11 +30,17 @@ import ResearcherWorkspaceManager from '../classroomModule/classroomUser/classro
 import ResearcherWorkspaceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/tabs/files/fileViewer/file/researcherWorkspaceFileViewer';
 import ModeratorInstitutionPageManager from '../institutionModule/institutionModerator/pageManager/moderatorInstitutionManager';
 import DataGridExp from '../experiments/dataGrid';
+import ModeratorInstitutionDepartmentManager from '../institutionModule/institutionModerator/pageManager/tabs/departments/pageManager/moderatorInstitutionDepartmentManager';
 export default [
 	<Route
 		exact
 		path='/classroom/researcher/workspace/:id'
 		component={ResearcherWorkspaceManager}
+	/>,
+	<Route
+		exact
+		path='/institutions/moderator/department/:id'
+		component={ModeratorInstitutionDepartmentManager}
 	/>,
 	<Route exact path='/classroom/adviser/resources/:id' component={AdviserResourceManager} />,
 	<Route exact path='/classroom/researcher/resources/:id' component={ResearcherResourceManager} />,

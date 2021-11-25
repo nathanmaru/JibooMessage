@@ -94,12 +94,10 @@ const DialogStepperComponent = (props) => {
 				<DialogContent>
 					<DialogContentText>{context}</DialogContentText>
 					<div class='flex flex-col p-4 space-y-4'>
-						<Stepper nonLinear activeStep={activeStep}>
+						<Stepper activeStep={activeStep}>
 							{steps.map((step, index) => (
 								<Step key={step.label} completed={completed[index]}>
-									<StepButton color='inherit' onClick={handleStep(index)}>
-										{step.label}
-									</StepButton>
+									<StepButton color='inherit'>{step.label}</StepButton>
 								</Step>
 							))}
 						</Stepper>

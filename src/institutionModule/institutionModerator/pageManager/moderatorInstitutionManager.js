@@ -21,6 +21,8 @@ import queryString from 'query-string';
 
 import { styled } from '@mui/material/styles';
 import PageManagerComponent from '../../../materialUI/components/reuseableComponents/pageManagerComponent';
+import ModeratorInstitutionDepartmentTab from './tabs/departments/moderatorInstitutionDepartmentTab';
+import ModeratorInstitutionStaff from './tabs/staffs/moderatorInstitutionStaffTab';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -93,10 +95,16 @@ const ModeratorInstitutionPageManager = () => {
 
 	const tabs = [
 		{
-			label: 'Dashboard',
-			link: `/institutions/moderator/${id}?tab=dashboard`,
-			value: 'dashboard',
-			component: 'Dashboard',
+			label: 'Wall',
+			link: `/institutions/moderator/${id}?tab=wall`,
+			value: 'wall',
+			component: 'Institution Wall',
+		},
+		{
+			label: 'Departments',
+			link: `/institutions/moderator/${id}?tab=department`,
+			value: 'department',
+			component: <ModeratorInstitutionDepartmentTab />,
 		},
 		{
 			label: 'Articles',
@@ -108,7 +116,7 @@ const ModeratorInstitutionPageManager = () => {
 			label: 'Staff',
 			link: `/institutions/moderator/${id}?tab=staff`,
 			value: 'staff',
-			component: 'Staff',
+			component: <ModeratorInstitutionStaff />,
 		},
 		{
 			label: 'Resources',

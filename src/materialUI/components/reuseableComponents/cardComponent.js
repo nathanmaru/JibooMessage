@@ -38,7 +38,7 @@ const CardComponent = (props) => {
 				<CardContent>
 					{item ? (
 						<>
-							<h1>{item.name}</h1>
+							<h1 className='font-bold text-lg'>{item.name}</h1>
 							<p>{item.description}</p>
 						</>
 					) : (

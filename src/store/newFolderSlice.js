@@ -25,10 +25,9 @@ export const folderSlice = createSlice({
 		retrieveFolderSuccess: (state, action) => {
 			state.status = 'Folder retrieve success';
 			state.currentFolder = action.payload;
-			alert('Folders Retrieve Success!');
 		},
 		retrieveFolderFailed: (state, action) => {
-			alert('Folders Retrieve Failed!'); 
+			alert('Folders Retrieve Failed!');
 		},
 		addFolderRequest: (state, action) => {
 			state.status = 'loading';
@@ -69,7 +68,6 @@ export const folderSlice = createSlice({
 		deleteFolderFailed: (state, action) => {
 			state.status = 'Folder delete failed';
 			alert('Folders delete failed');
-			alert('Folders Delete Failed!');
 		},
 	},
 });

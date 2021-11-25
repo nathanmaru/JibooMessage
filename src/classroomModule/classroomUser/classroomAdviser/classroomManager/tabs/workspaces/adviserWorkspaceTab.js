@@ -26,6 +26,7 @@ const AdviserWorkspaceTab = () => {
 					{workspaces.map((item) => (
 						<CardComponent
 							item={item}
+							image={item.cover}
 							link={`/classroom/adviser/workspace/${item.id}?tab=dashboard`}
 						/>
 					))}
