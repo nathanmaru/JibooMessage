@@ -29,7 +29,7 @@ const WorkspaceDetail = () => {
 	const [inputForm, setInputForm] = useState({
 		name: '',
 		subject: '',
-		privacy: 'public',
+		privacy: 'private',
 		description: '',
 		cover: defaultImage,
 		coverFile: defaultImage,
@@ -146,7 +146,7 @@ const WorkspaceDetail = () => {
 
 				<div className='flex justify-end'>
 					<Button variant='contained' onClick={handleClassroomDetail}>
-						Create Classroom
+						Create Workspace
 					</Button>
 					{/* <FeedBackButton
 						button={

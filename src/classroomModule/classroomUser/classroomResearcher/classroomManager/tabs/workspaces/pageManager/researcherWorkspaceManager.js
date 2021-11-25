@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import queryString from 'query-string';
 import useFetch from '../../../../../../../hooks/useFetch';
 
@@ -34,6 +34,8 @@ import ProductDetailComponent from '../../../../../../../materialUI/components/r
 import DialogComponent from '../../../../../../../materialUI/components/reuseableComponents/dialogComponent';
 import FolderMenu from './tabs/files/component/folderMenu';
 import FileMenu from './tabs/files/component/fileMenu';
+import ResearcherWorkspaceSubmissions from './tabs/submissions/researcherWorkspacesubmissions';
+import ResearcherWorkspaceMemberTab from './tabs/members/ResearcherWorkspaceMemberTab';
 
 const Input = styled('input')({
 	display: 'none',
@@ -42,6 +44,7 @@ const Input = styled('input')({
 const ResearcherWorkspaceManager = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const { tab } = queryString.parse(location.search);
 	const { id } = useParams();
 	const fetchClassroom = useFetch;
@@ -101,6 +104,7 @@ const ResearcherWorkspaceManager = () => {
 
 	const handleDelete = () => {
 		dispatch(deleteWorkspace(id));
+		history.replace(`/classroom/researcher/${workspace.classroom}?tab=workspaces`);
 	};
 
 	const tabs = [
@@ -119,15 +123,15 @@ const ResearcherWorkspaceManager = () => {
 		{
 			label: 'Submissions',
 			link: `/classroom/researcher/workspace/${id}?tab=submissions`,
-			value: 'Submissions',
-			component: 'Submissions',
+			value: 'submissions',
+			component: <ResearcherWorkspaceSubmissions />,
 		},
 		{
 			label: 'Members',
-			link: `/classroom/researcher/workspace/${id}?tab=sembers`,
+			link: `/classroom/researcher/workspace/${id}?tab=members`,
 
-			value: 'Members',
-			component: 'Members',
+			value: 'members',
+			component: <ResearcherWorkspaceMemberTab />,
 		},
 	];
 

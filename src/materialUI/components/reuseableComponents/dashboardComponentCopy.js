@@ -6,7 +6,7 @@ const Input = styled('input')({
 	display: 'none',
 });
 const ProductDetailComponent = (props) => {
-	const { product } = props;
+	const { product, cover } = props;
 	const defaultImage =
 		'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80';
 
@@ -16,7 +16,7 @@ const ProductDetailComponent = (props) => {
 			<Card variant='outlined' sx={{ maxWidth: '100%' }}>
 				<CardMedia
 					component='div'
-					image={product.cover}
+					image={cover ? cover : product.cover}
 					sx={{
 						height: '190px',
 						display: 'flex',

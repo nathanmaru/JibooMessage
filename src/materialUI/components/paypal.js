@@ -12,7 +12,7 @@ export default function Paypal({ item, productlabel, productID, dispatchLink }) 
 		form_data.append('payer_Email', currentUser.email);
 		form_data.append('payer_FullName', currentUser.name);
 		form_data.append('plan', item.id);
-		form_data.append('classroom', productID);
+		form_data.append(productlabel, productID);
 		dispatch(buyPlan(dispatchLink, form_data));
 	};
 

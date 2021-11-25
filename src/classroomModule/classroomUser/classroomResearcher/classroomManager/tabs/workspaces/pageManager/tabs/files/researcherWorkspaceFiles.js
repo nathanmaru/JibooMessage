@@ -79,7 +79,8 @@ const ResearcherWorkspaceFiles = () => {
 	};
 	const handleMakeSubmmision = () => {
 		const { title, description } = inputForm;
-		dispatch(createSubmission(id, title, description, selectedFile));
+		console.log(id, title, description, selectedFile);
+		dispatch(createSubmission(id, title, description, selectedFile.id));
 	};
 	return (
 		<div className='grid grid-rows-7 grid-flow-row gap-2  min-w-full'>

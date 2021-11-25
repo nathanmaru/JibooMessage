@@ -13,6 +13,7 @@ export const classroomMemberSlice = createSlice({
 		members: [],
 		classroom: null,
 		isLoading: false,
+		status: 'idle',
 	},
 	reducers: {
 		memberListLoadRequest: (state, action) => {
@@ -20,7 +21,7 @@ export const classroomMemberSlice = createSlice({
 		},
 		memberListLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.members = action.payload; 
+			state.members = action.payload;
 		},
 		memberListLoadFailed: (state, action) => {},
 		findClassroomRequest: (state, action) => {
@@ -44,6 +45,33 @@ export const classroomMemberSlice = createSlice({
 		joinClassroomFailed: (state, action) => {
 			alert('No class found with code provided');
 		},
+
+		// from revamp
+		addStudentRequest: (state, action) => {
+			state.status = 'loading';
+		},
+		addStudentSucess: (state, action) => {
+			state.status = 'Adding student success';
+			state.members.unshift(action.payload);
+			alert('Adding student Success!');
+		},
+		addStudentFailed: (state, action) => {
+			state.status = 'Adding student failed';
+			alert('Adding student failed');
+		},
+		removeStudentRequest: (state, action) => {
+			state.status = 'loading';
+		},
+		removeStudentSucess: (state, action) => {
+			state.status = 'Removing student success';
+			const filtered = state.members.filter((val) => val.id !== action.payload.id);
+			state.members = filtered;
+			alert('Removing student Success!');
+		},
+		removeStudentFailed: (state, action) => {
+			state.status = 'Removing student failed';
+			alert('Removing student failed');
+		},
 	},
 });
 
@@ -57,6 +85,12 @@ const {
 	joinClassroomRequest,
 	joinClassroomSucess,
 	joinClassroomFailed,
+	addStudentRequest,
+	addStudentSucess,
+	addStudentFailed,
+	removeStudentRequest,
+	removeStudentSucess,
+	removeStudentFailed,
 } = classroomMemberSlice.actions;
 
 export default classroomMemberSlice.reducer;
@@ -77,6 +111,37 @@ export const getMembers = (classroom) =>
 		onSuccess: memberListLoadSuccess.type,
 		onError: memberListLoadFailed.type,
 	});
+
+export const addStudent = (classroom, username) =>
+	apiCallBegan({
+		url: '/classroom/members/' + classroom,
+		method: 'post',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		data: { username },
+		onStart: addStudentRequest.type,
+		onSuccess: addStudentSucess.type,
+		onError: addStudentFailed.type,
+	});
+export const removeStudent = (student) =>
+	apiCallBegan({
+		url: '/classroom/members/change/' + student,
+		method: 'delete',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: removeStudentRequest.type,
+		onSuccess: removeStudentSucess.type,
+		onError: removeStudentFailed.type,
+	});
+
 export const findClassroom = (
 	code //outdated?
 ) =>

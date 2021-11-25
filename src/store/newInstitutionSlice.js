@@ -18,7 +18,7 @@ export const institutionSlice = createSlice({
 			state.institutions = action.payload;
 		},
 		institutionLoadFailed: (state, action) => {
-			state.status = 'failed'; 
+			state.status = 'failed';
 			alert('Institution Load Failed!');
 		},
 		institutionCreateRequest: (state, action) => {
@@ -27,12 +27,12 @@ export const institutionSlice = createSlice({
 		institutionCreateSuccess: (state, action) => {
 			state.status = 'success';
 			state.institutions.unshift(action.payload);
-			state.currentInstitution = action.payload; 
-			alert('Folders Create Success!');
+			state.currentInstitution = action.payload;
+			alert('Institution Create Success!');
 		},
 		institutionCreateFailed: (state, action) => {
 			state.status = 'failed';
-			alert('Folders Delete Failed!');
+			alert('Institution Delete Failed!');
 		},
 		institutionRetrieveRequest: (state, action) => {
 			state.status = 'loading';
@@ -40,11 +40,10 @@ export const institutionSlice = createSlice({
 		institutionRetrieveSuccess: (state, action) => {
 			state.status = 'success';
 			state.currentInstitution = action.payload;
-			alert('Folders Retrieve Success!');
 		},
 		institutionRetrieveFailed: (state, action) => {
 			state.status = 'failed';
-			alert('Folders Delete Failed!');
+			alert('Institution Retrieve Failed!');
 		},
 		// verification
 		verificationApplyRequest: (state, action) => {
