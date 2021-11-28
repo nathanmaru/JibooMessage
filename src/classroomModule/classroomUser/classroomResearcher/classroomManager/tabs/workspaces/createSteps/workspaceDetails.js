@@ -37,11 +37,10 @@ const WorkspaceDetail = () => {
 		"https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
 	const dispatch = useDispatch();
 	const [inputForm, setInputForm] = useState({
-
-		name: '',
-		subject: '',
-		privacy: 'private',
-		description: '',
+		name: "",
+		subject: "",
+		privacy: "private",
+		description: "",
 		cover: defaultImage,
 		coverFile: defaultImage,
 	});
@@ -96,6 +95,17 @@ const WorkspaceDetail = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+
+		let form_data = new FormData();
+		const { description, privacy, subject, cover, coverFile } = inputForm;
+		if (coverFile != defaultImage) {
+			form_data.append("cover", coverFile, coverFile.name);
+		}
+		form_data.append("name", data.name);
+		form_data.append("description", description);
+		form_data.append("privacy", privacy);
+		form_data.append("subject", subject);
+		dispatch(createWorkspace(id, form_data));
 	};
 
 	return (

@@ -57,6 +57,8 @@ const AdviserResourceTab = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		const { description } = inputForm;
+		dispatch(addResource(`resource/classroom/${id}`, data.name, description));
 	};
 
 	return (

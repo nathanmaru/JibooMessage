@@ -82,6 +82,7 @@ const FolderMenu = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		dispatch(addFolder(`/resource/classroom/folder/${id}`, data.name));
 	};
 
 	return (

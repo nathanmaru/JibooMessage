@@ -91,6 +91,17 @@ const ClassroomDetail = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+
+		let form_data = new FormData();
+		const { name, description, privacy, subject, cover, coverFile } = inputForm;
+		if (coverFile != defaultImage) {
+			form_data.append("cover", coverFile, coverFile.name);
+		}
+		form_data.append("name", data.name);
+		form_data.append("description", description);
+		form_data.append("privacy", privacy);
+		form_data.append("subject", data.subject);
+		dispatch(addAdviserClassroom(form_data));
 	};
 
 	return (

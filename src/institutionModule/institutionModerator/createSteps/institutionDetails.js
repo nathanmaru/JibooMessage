@@ -129,10 +129,10 @@ const InstitutionDetails = () => {
 			.required("Email is required.")
 			.email("Email is invalid."),
 		contact: Yup.string().matches(new RegExp("[0-9]{11}")),
-		website: Yup.string().matches(
-			/((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-			"Please enter correct URL format"
-		),
+		// website: Yup.string().matches(
+		// 	/((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+		// 	"Please enter correct URL format"
+		// ),
 	});
 
 	const {
@@ -145,6 +145,20 @@ const InstitutionDetails = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+
+		let form_data = new FormData();
+		const { website, privacy, description, cover, coverFile } = inputForm;
+		if (coverFile != defaultImage) {
+			form_data.append("cover", coverFile, coverFile.name);
+		}
+		form_data.append("name", data.name);
+		form_data.append("address", data.address);
+		form_data.append("contact", data.contact);
+		form_data.append("email", data.email);
+		form_data.append("website", website);
+		form_data.append("privacy", privacy);
+		form_data.append("description", description);
+		dispatch(createInstitution(form_data));
 	};
 
 	//contact-no
@@ -278,16 +292,16 @@ const InstitutionDetails = () => {
 						label="Institution Website (Optional)"
 						variant="outlined"
 						name="website"
-						// value={inputForm.website}
-						// onChange={(e) => onChange(e)}
-						{...register("website")}
-						error={errors.website ? true : false}
+						value={inputForm.website}
+						onChange={(e) => onChange(e)}
+						// {...register("website")}
+						// error={errors.website ? true : false}
 					/>
-					<Typography
+					{/* <Typography
 						sx={{ fontSize: "12px", color: "red", fontStyle: "italic", mb: 1 }}
 					>
 						{errors.website?.message}
-					</Typography>
+					</Typography> */}
 
 					<FormControl fullWidth>
 						<InputLabel id="demo-simple-select-label">Privacy</InputLabel>
