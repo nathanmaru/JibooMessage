@@ -31,7 +31,15 @@ const ClassroomSubscriptionPlan = () => {
 					{plans.map((item) => (
 						<DialogComponent
 							title='Pay Thru:'
-							button={<CardComponent key={item.id} item={item} />}
+							button={
+								<CardComponent image={item.cover} key={item.id}>
+									<h1 className='font-bold text-lg'>{item.name}</h1>
+									<p>{item.description}</p>
+									<p>
+										<b>{item.price}</b>
+									</p>
+								</CardComponent>
+							}
 						>
 							{currentClassroom ? (
 								<Paypal

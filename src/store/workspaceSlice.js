@@ -29,7 +29,6 @@ export const workspaceSlice = createSlice({
 		currentWorkspaceLoadRequest: (state, action) => {},
 		currentWorkspaceLoadSuccess: (state, action) => {
 			state.currentWorkspace = action.payload;
-			alert('Current Workspace Load Success!');
 		},
 		currentWorkspaceLoadFailed: (state, action) => {
 			alert('Current Workspace Load Failed!');

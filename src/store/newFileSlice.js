@@ -36,7 +36,6 @@ export const fileSlice = createSlice({
 		retrieveFileSuccess: (state, action) => {
 			state.status = 'file retrieve success';
 			state.currentFile = action.payload;
-			alert('Files Retrieve Success!');
 		},
 		retrieveFileFailed: (state, action) => {
 			alert('Files Retrieve Failed!');
@@ -60,7 +59,7 @@ export const fileSlice = createSlice({
 			const index = state.files.findIndex((item) => item.id === action.payload.id);
 			state.files[index] = action.payload;
 			state.status = 'file edit success';
-			alert('Files Edit Success!');
+			// alert('Files Edit Success!');
 		},
 		editFileFailed: (state, action) => {
 			state.status = 'file edit failed';

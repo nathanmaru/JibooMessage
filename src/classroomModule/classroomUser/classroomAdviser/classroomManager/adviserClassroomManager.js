@@ -28,6 +28,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { styled } from '@mui/material/styles';
 import AdviserResourceTab from './tabs/resources/adviserResourceTab';
 import AdviserWorkspaceTab from './tabs/workspaces/adviserWorkspaceTab';
+import AdviserClassroomStudents from './tabs/students/adviserClassroomStudents';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -113,7 +114,7 @@ const AdviserClassroomManager = () => {
 			link: `/classroom/adviser/${id}?tab=students`,
 
 			value: 'students',
-			component: <div className='min-h-screen'>Students</div>,
+			component: <AdviserClassroomStudents />,
 		},
 		{
 			label: 'Workspaces',

@@ -62,3 +62,18 @@ export const createSubmission = (workspace, title, description, file) =>
 		onSuccess: addSubmissionSuccess.type,
 		onError: addSubmissionFailed.type,
 	});
+
+export const getSubmissions = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadSubmissionRequest.type,
+		onSuccess: loadSubmissionSuccess.type,
+		onError: loadSubmissionFailed.type,
+	});

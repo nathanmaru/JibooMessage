@@ -41,6 +41,11 @@ export default [
 	/>,
 	<Route
 		exact
+		path='/institutions/moderator/department/:id'
+		component={ModeratorInstitutionDepartmentManager}
+	/>,
+	<Route
+		exact
 		path="/classroom/adviser/resources/:id"
 		component={AdviserResourceManager}
 	/>,
