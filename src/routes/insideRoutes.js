@@ -41,8 +41,8 @@ export default [
 	/>,
 	<Route
 		exact
-		path='/institutions/moderator/department/:id'
-		component={ModeratorInstitutionDepartmentManager}
+		path="/institutions/moderator/department/:id"
+		component={ModeratorInstitutionPageManager}
 	/>,
 	<Route
 		exact

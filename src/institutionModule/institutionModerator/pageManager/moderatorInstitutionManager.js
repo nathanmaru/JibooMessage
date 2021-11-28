@@ -24,15 +24,11 @@ import queryString from "query-string";
 
 import { styled } from "@mui/material/styles";
 import PageManagerComponent from "../../../materialUI/components/reuseableComponents/pageManagerComponent";
-
-import { styled } from '@mui/material/styles';
-import PageManagerComponent from '../../../materialUI/components/reuseableComponents/pageManagerComponent';
-import ModeratorInstitutionDepartmentTab from './tabs/departments/moderatorInstitutionDepartmentTab';
-import ModeratorInstitutionStaff from './tabs/staffs/moderatorInstitutionStaffTab';
+import ModeratorInstitutionDepartmentTab from "./tabs/departments/moderatorInstitutionDepartmentTab";
+import ModeratorInstitutionStaff from "./tabs/staffs/moderatorInstitutionStaffTab";
 import Wall from "../pageManager/tabs/wall/moderatorInstitutionWall";
-const Input = styled('input')({
-	display: 'none',
-
+const Input = styled("input")({
+	display: "none",
 });
 
 const ModeratorInstitutionPageManager = () => {
@@ -114,18 +110,16 @@ const ModeratorInstitutionPageManager = () => {
 
 	const tabs = [
 		{
-
-			label: 'Wall',
+			label: "Wall",
 			link: `/institutions/moderator/${id}?tab=wall`,
-			value: 'wall',
-			component: 'Institution Wall',
+			value: "wall",
+			component: "Institution Wall",
 		},
 		{
-			label: 'Departments',
+			label: "Departments",
 			link: `/institutions/moderator/${id}?tab=department`,
-			value: 'department',
+			value: "department",
 			component: <ModeratorInstitutionDepartmentTab />,
-
 		},
 		{
 			label: "Articles",
@@ -137,9 +131,8 @@ const ModeratorInstitutionPageManager = () => {
 			label: "Staff",
 			link: `/institutions/moderator/${id}?tab=staff`,
 
-			value: 'staff',
+			value: "staff",
 			component: <ModeratorInstitutionStaff />,
-
 		},
 		{
 			label: "Resources",
