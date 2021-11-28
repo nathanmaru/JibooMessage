@@ -49,9 +49,9 @@ const FileMenu = () => {
 
 	const dispatch = useDispatch();
 
-	const handleCreateFile = () => {
-		dispatch(addFile(`/resource/classroom/file/${folder}`, inputForm.name));
-	};
+	// const handleCreateFile = () => {
+	// 	dispatch(addFile(`/resource/classroom/file/${folder}`, inputForm.name));
+	// };
 	const handleUploadFile = () => {};
 
 	//validation
@@ -69,6 +69,7 @@ const FileMenu = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		dispatch(addFile(`/resource/classroom/file/${folder}`, data.name));
 	};
 
 	return (

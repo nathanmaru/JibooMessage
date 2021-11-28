@@ -81,6 +81,7 @@ const Login = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		dispatch(login(data.email, data.password));
 	};
 
 	return (

@@ -34,9 +34,9 @@ const ClassroomResearcher = () => {
 	// const handleSubmit = () => {
 	// 	dispatch(joinClassroom(code));
 	// };
-	const handleSubmitCode = () => {
-		dispatch(joinClassroom(code));
-	};
+	// const handleSubmitCode = () => {
+	// 	dispatch(joinClassroom(code));
+	// };
 
 	//validation
 	const validationMsg = Yup.object().shape({
@@ -56,6 +56,16 @@ const ClassroomResearcher = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		dispatch(joinClassroom(data.code));
+	};
+
+	//dialog-button chuchu
+	const [open, setOpen] = useState(false);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
 	};
 
 	return (
@@ -102,6 +112,7 @@ const ClassroomResearcher = () => {
 						</form>
 					</DialogComponent>
 				</BannerComponent>
+
 				<CardHolder>
 					{classrooms && classrooms.length > 0 ? (
 						<>
