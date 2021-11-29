@@ -1,86 +1,86 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { apiCallBegan } from './actions/api';
+import { createSlice } from "@reduxjs/toolkit";
+import { apiCallBegan } from "./actions/api";
 
 export const institutionSlice = createSlice({
-	name: 'institution',
+	name: "institution",
 	initialState: {
 		currentInstitution: null,
 		verification: null,
 		institutions: [],
-		status: 'idle',
+		status: "idle",
 	},
 	reducers: {
 		institutionLoadRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		institutionLoadSuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.institutions = action.payload;
 		},
 		institutionLoadFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Institution Load Failed!');
+			state.status = "failed";
+			alert("Institution Load Failed!");
 		},
 		institutionCreateRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		institutionCreateSuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.institutions.unshift(action.payload);
 			state.currentInstitution = action.payload;
-			alert('Institution Create Success!');
+			alert("Institution Create Success!");
 		},
 		institutionCreateFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Institution Delete Failed!');
+			state.status = "failed";
+			alert("Institution Delete Failed!");
 		},
 		institutionRetrieveRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		institutionRetrieveSuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.currentInstitution = action.payload;
 		},
 		institutionRetrieveFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Institution Retrieve Failed!');
+			state.status = "failed";
+			alert("Institution Retrieve Failed!");
 		},
 		// verification
 		verificationApplyRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		verificationApplySuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.verification = action.payload;
-			alert('Verification Success!');
+			alert("Verification Success!");
 		},
 		verificationApplyFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Verification Failed!');
+			state.status = "failed";
+			alert("Verification Failed!");
 		},
 		verificationEditRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		verificationEditSuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.verification = action.payload;
-			alert('Verification Edit Success!');
+			alert("Verification Edit Success!");
 		},
 		verificationEditFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Verification Edit Failed!');
+			state.status = "failed";
+			alert("Verification Edit Failed!");
 		},
 		verificationCheckRequest: (state, action) => {
-			state.status = 'loading';
+			state.status = "loading";
 		},
 		verificationCheckSuccess: (state, action) => {
-			state.status = 'success';
+			state.status = "success";
 			state.verification = action.payload;
-			alert('Verification Check Success!');
+			alert("Verification Check Success!");
 		},
 		verificationCheckFailed: (state, action) => {
-			state.status = 'failed';
-			alert('Verification Check Failed!');
+			state.status = "failed";
+			alert("Verification Check Failed!");
 		},
 	},
 });
@@ -112,58 +112,74 @@ export default institutionSlice.reducer;
 
 export const getMyInstitutions = () =>
 	apiCallBegan({
-		url: '/institution/',
-		method: 'get',
+		url: "/institution/",
+		method: "get",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
-		type: 'regular',
+		type: "regular",
 		onStart: institutionLoadRequest.type,
 		onSuccess: institutionLoadSuccess.type,
 		onError: institutionLoadFailed.type,
 	});
+
+export const getInstitutions = (link) =>
+	apiCallBegan({
+		url: link,
+		method: "get",
+		headers: {
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
+		},
+		type: "regular",
+		onStart: institutionLoadRequest.type,
+		onSuccess: institutionLoadSuccess.type,
+		onError: institutionLoadFailed.type,
+	});
+
 export const createInstitution = (formdata) =>
 	apiCallBegan({
-		url: '/institution/',
-		method: 'post',
+		url: "/institution/",
+		method: "post",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
 		data: formdata,
-		type: 'regular',
+		type: "regular",
 		onStart: institutionCreateRequest.type,
 		onSuccess: institutionCreateSuccess.type,
 		onError: institutionCreateFailed.type,
 	});
 export const retrieveInstitution = (id) =>
 	apiCallBegan({
-		url: '/institution/change/' + id,
-		method: 'get',
+		url: "/institution/change/" + id,
+		method: "get",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
-		type: 'regular',
+		type: "regular",
 		onStart: institutionRetrieveRequest.type,
 		onSuccess: institutionRetrieveSuccess.type,
 		onError: institutionRetrieveFailed.type,
 	});
 export const editInstitution = (id, form_data) =>
 	apiCallBegan({
-		url: '/institution/change/' + id,
-		method: 'patch',
+		url: "/institution/change/" + id,
+		method: "patch",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
 		data: form_data,
-		type: 'regular',
+		type: "regular",
 		onStart: institutionRetrieveRequest.type,
 		onSuccess: institutionRetrieveSuccess.type,
 		onError: institutionRetrieveFailed.type,
@@ -173,44 +189,45 @@ export const editInstitution = (id, form_data) =>
 
 export const applyVerification = (institution, form_data) =>
 	apiCallBegan({
-		url: '/institution/verify/' + institution,
-		method: 'post',
+		url: "/institution/verify/" + institution,
+		method: "post",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
-			accept: '*/*',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type":
+				"multipart/form-data; boundary=<calculated when request is sent>",
+			accept: "*/*",
 		},
 		data: form_data,
-		type: 'regular',
+		type: "regular",
 		onStart: verificationApplyRequest.type,
 		onSuccess: verificationApplySuccess.type,
 		onError: verificationApplyFailed.type,
 	});
 export const editVerification = (institution, document) =>
 	apiCallBegan({
-		url: '/institution/verify/' + institution,
-		method: 'patch',
+		url: "/institution/verify/" + institution,
+		method: "patch",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
 		data: { document },
-		type: 'regular',
+		type: "regular",
 		onStart: verificationEditRequest.type,
 		onSuccess: verificationEditSuccess.type,
 		onError: verificationEditFailed.type,
 	});
 export const checkVerification = (institution) =>
 	apiCallBegan({
-		url: '/institution/verify/' + institution,
-		method: 'get',
+		url: "/institution/verify/" + institution,
+		method: "get",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
-		type: 'regular',
+		type: "regular",
 		onStart: verificationCheckRequest.type,
 		onSuccess: verificationCheckSuccess.type,
 		onError: verificationCheckFailed.type,
@@ -218,14 +235,14 @@ export const checkVerification = (institution) =>
 
 export const staffInstitutionList = () =>
 	apiCallBegan({
-		url: '/institution/sharedInstitution',
-		method: 'get',
+		url: "/institution/sharedInstitution",
+		method: "get",
 		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
+			Authorization: "Bearer " + localStorage.getItem("access_token"),
+			"Content-Type": "application/json",
+			accept: "application/json",
 		},
-		type: 'regular',
+		type: "regular",
 		onStart: institutionLoadRequest.type,
 		onSuccess: institutionLoadSuccess.type,
 		onError: institutionLoadFailed.type,
