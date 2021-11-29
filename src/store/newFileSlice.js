@@ -125,7 +125,7 @@ export const getfiles = (link) =>
 		onSuccess: loadFileSuccess.type,
 		onError: loadFileFailed.type,
 	});
-export const addFile = (link, name) =>
+export const addFile = (link, formData) =>
 	apiCallBegan({
 		url: link,
 		method: 'post',
@@ -135,7 +135,7 @@ export const addFile = (link, name) =>
 			accept: 'application/json',
 		},
 		type: 'regular',
-		data: { name },
+		data: formData,
 		onStart: addFileRequest.type,
 		onSuccess: addFileSuccess.type,
 		onError: addFileFailed.type,

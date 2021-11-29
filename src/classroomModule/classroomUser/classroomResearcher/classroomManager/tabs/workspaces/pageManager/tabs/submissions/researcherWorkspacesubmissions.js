@@ -1,4 +1,4 @@
-import { Button, Card, TextField } from '@mui/material';
+import { Button, Card, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
 import { HiOutlineClock } from 'react-icons/hi';
@@ -7,7 +7,11 @@ import { useHistory, useParams } from 'react-router';
 import useFetch from '../../../../../../../../../hooks/useFetch';
 import CardHolder from '../../../../../../../../../materialUI/components/reuseableComponents/cardHolder';
 import DialogComponent from '../../../../../../../../../materialUI/components/reuseableComponents/dialogComponent';
-import { getSubmissions } from '../../../../../../../../../store/submissionSlice';
+import {
+	deleteSubmission,
+	editSubmission,
+	getSubmissions,
+} from '../../../../../../../../../store/submissionSlice';
 
 const ResearcherWorkspaceSubmissions = () => {
 	const { id } = useParams();
@@ -19,10 +23,38 @@ const ResearcherWorkspaceSubmissions = () => {
 	}, []);
 	const fetchedSubmissions = useSelector((state) => state.submission.submissions);
 	const { items: submissions, setItems: setSubmissions } = submissionState(fetchedSubmissions);
+	const [submissionForm, setSubmissionForm] = useState({
+		title: '',
+		description: '',
+		status: '',
+	});
 	const handleCheckup = (item) => {
-		console.log(item);
-		history.push(`/classroom/researcher/workspace/file/${item.file}`);
+		console.log(submissionForm);
+		let formData = new FormData();
+		formData.append('title', submissionForm.title);
+		formData.append('description', submissionForm.description);
+		formData.append('status', submissionForm.status);
+		dispatch(editSubmission(`submission/workspace/change/${item.id}`, formData));
 	};
+
+	const handleClickDialog = (item) => {
+		setSubmissionForm({ title: item.title, description: item.description, status: item.status });
+	};
+	const onChange = (e) => {
+		setSubmissionForm({ ...submissionForm, [e.target.name]: e.target.value });
+	};
+	const handleFileRedirect = (file) => {
+		if (file.file.content) {
+			history.push(`/classroom/researcher/workspace/file/${file.id}`);
+		}
+		if (file.file.file) {
+			alert('is an upload file');
+		}
+	};
+	const handleDelete = (item) => {
+		dispatch(deleteSubmission(`submission/workspace/change/${item.id}`));
+	};
+
 	return (
 		<>
 			<CardHolder>
@@ -41,28 +73,48 @@ const ResearcherWorkspaceSubmissions = () => {
 						<div className='flex justify-end'>
 							<DialogComponent
 								title={item.title}
-								button={<Button variant='contained'>Check Submission</Button>}
+								button={
+									<Button onClick={() => handleClickDialog(item)} variant='contained'>
+										Edit Submission
+									</Button>
+								}
+								secondAction={{ label: 'Delete', handler: handleDelete, param: item }}
+								action={{ label: 'Save Edit', handler: handleCheckup, param: item }}
 							>
 								<div className='flex flex-col space-y-4 mt-4'>
 									<TextField
 										label='Workspace Name'
 										variant='outlined'
 										name='title'
-										value={item.title}
+										value={submissionForm.title}
+										onChange={(e) => onChange(e)}
 									/>
 									<TextField
 										label='Description'
 										variant='outlined'
 										name='description'
-										value={item.description}
+										value={submissionForm.description}
+										onChange={(e) => onChange(e)}
 										multiline
 										minRows={4}
 									/>
-									<div className='flex w-full justify-end'>
-										<Button variant='contained' onClick={() => handleCheckup(item)}>
-											Proceed Chekup File
-										</Button>
-									</div>
+									<FormControl fullWidth>
+										<InputLabel id='demo-simple-select-label'>Status</InputLabel>
+										<Select
+											labelId='demo-simple-select-label'
+											id='demo-simple-select'
+											value={submissionForm.status}
+											label='Status'
+											name='status'
+											onChange={(e) => onChange(e)}
+										>
+											<MenuItem value={'draft'}>Draft</MenuItem>
+											<MenuItem value={'submit'}>Submit</MenuItem>
+										</Select>
+									</FormControl>
+									<Button onClick={() => handleFileRedirect(item)} variant='outlined'>
+										Check File - "{item.file.name}"
+									</Button>
 								</div>
 							</DialogComponent>
 						</div>

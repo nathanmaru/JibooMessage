@@ -33,10 +33,33 @@ import DataGridExp from "../experiments/dataGrid";
 import Validation from "../experiments/validation/Validation";
 import Validate from "../experiments/validation/Validate";
 
+
+import Intro from '../experiments/shepherd/Intro';
+import ResearcherWorkspaceManager from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/researcherWorkspaceManager';
+import ResearcherWorkspaceFileViewer from '../classroomModule/classroomUser/classroomResearcher/classroomManager/tabs/workspaces/pageManager/tabs/files/fileViewer/file/researcherWorkspaceFileViewer';
+import ModeratorInstitutionPageManager from '../institutionModule/institutionModerator/pageManager/moderatorInstitutionManager';
+import DataGridExp from '../experiments/dataGrid';
+import ModeratorInstitutionDepartmentManager from '../institutionModule/institutionModerator/pageManager/tabs/departments/pageManager/moderatorInstitutionDepartmentManager';
+import AdviserSubmissionViewer from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/submissions/fileViewer/adviserSubmissionViewer';
+import ModeratorSubmissionViewerFile from '../institutionModule/institutionModerator/pageManager/tabs/submissions/fileViewer/moderatorSubmissionViewerFile';
+import ModeratorInstitutionArticleViewer from '../institutionModule/institutionModerator/pageManager/tabs/wall/moderatorInstitutionArticleViewer';
 export default [
 	<Route
 		exact
-		path="/classroom/researcher/workspace/:id"
+		path='/institutions/moderator/article/:id'
+		component={ModeratorInstitutionArticleViewer}
+	/>,
+
+	<Route exact path='/classroom/adviser/submission/:id' component={AdviserSubmissionViewer} />,
+	<Route
+		exact
+		path='/institutions/moderator/submission/:id'
+		component={ModeratorSubmissionViewerFile}
+	/>,
+	<Route
+		exact
+		path='/classroom/researcher/workspace/:id'
+
 		component={ResearcherWorkspaceManager}
 	/>,
 	<Route
@@ -80,26 +103,22 @@ export default [
 		path="/classroom/researcher/workspace/file/:id"
 		component={ResearcherWorkspaceFileViewer}
 	/>,
-	<Route exact path="/works/:id" component={ProjectManager} />,
-	<Route exact path="/fileViewer" component={FileViewer} />,
-	<Route exact path="/works" component={WorkSpace} />,
-	<Route exact path="/messages" component={NewMesssages} />,
-	<Route
-		exact
-		path="/classroom/researcher/:id"
-		component={ResearcherClassroomManager}
-	/>,
-	<Route
-		exact
-		path="/classroom/adviser/:id"
-		component={AdviserClassroomManager}
-	/>,
-	<Route exact path="/classroom" component={Classroom} />,
-	<Route path="/library" component={NewLibrary} />,
-	<Route exact path="/notes" component={Notes} />,
-	<Route path="/profile" component={Profile} />,
-	<Route path="/home" component={Home} />,
-	<Route path="/joined/:id" component={JoinProfile} />,
+
+	<Route exact path='/works/:id' component={ProjectManager} />,
+
+	<Route exact path='/fileViewer' component={FileViewer} />,
+	<Route exact path='/works' component={WorkSpace} />,
+	<Route exact path='/messages' component={NewMesssages} />,
+	<Route exact path='/classroom/researcher/:id' component={ResearcherClassroomManager} />,
+	<Route exact path='/classroom/adviser/:id' component={AdviserClassroomManager} />,
+	<Route exact path='/classroom' component={Classroom} />,
+	<Route path='/library' component={NewLibrary} />,
+	<Route exact path='/notes' component={Notes} />,
+	<Route path='/profile' component={Profile} />,
+	<Route path='/home' component={Home} />,
+	<Route path='/joined/:id' component={JoinProfile} />,
+
+
 	// <Route path='/myinstitution/:id' component={MyInstitutionManager} />,
 	<Route exact path="/institutions" component={Institution} />,
 	<Route exact path="/data-table" component={DataGridExp} />,

@@ -12,19 +12,26 @@ import {
 	socialLoginGoogle,
 } from "../store/authSlice";
 // import FacebookLogin from 'react-facebook-login';
-import purple from "../assets/img/Artboard 1.png";
 
-import FeedBackButton from "../hooks/feedBackButton";
-import useStatus from "../hooks/useStatus";
+import { useDispatch, useSelector } from 'react-redux';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import purple from '../assets/img/Artboard 1.png';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
-//mui
-import LoadingButton from "@mui/lab/LoadingButton";
-import { TextField, Box, Typography, Button } from "@mui/material";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LoadingButton from '@mui/lab/LoadingButton';
+import FeedBackButton from '../hooks/feedBackButton';
+import useStatus from '../hooks/useStatus';
+import useForm from '../hooks/useForm';
+import {  Typography, Button } from "@mui/material";
 
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -34,6 +41,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 
 	const { email, password } = formData;
+	// const { errors, showError, setShowError } = useForm(formData);
 
 	const onChange = (e) => {
 		e.preventDefault();
@@ -42,8 +50,10 @@ const Login = () => {
 
 	const handleSubmitLogin = (e) => {
 		e.preventDefault();
-
+		// setShowError(true);
+		// if (!errors) {
 		dispatch(login(email, password));
+		// }
 	};
 	const history = useHistory();
 
@@ -119,11 +129,13 @@ const Login = () => {
 								{...register("email")}
 								error={errors.email ? true : false}
 							/>
+
 							<Typography
 								sx={{ fontSize: "12px", color: "red", fontStyle: "italic" }}
 							>
 								{errors.email?.message}
 							</Typography>
+
 
 							<TextField
 								variant="outlined"
@@ -136,6 +148,7 @@ const Login = () => {
 								{...register("password")}
 								error={errors.password ? true : false}
 							/>
+
 							<Typography
 								sx={{ fontSize: "12px", color: "red", fontStyle: "italic" }}
 							>
@@ -144,6 +157,7 @@ const Login = () => {
 
 							<div className="flex flex-row justify-between">
 								<div class="pt-12 pb-12 text-center justify-start">
+
 									<p>
 										<Link
 											to="/signup"

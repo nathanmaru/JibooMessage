@@ -11,16 +11,21 @@ const Authentication = (props) => {
 	let location = useLocation();
 	const [verify, setVerify] = useState();
 	const user = useSelector((state) => state.auth.user);
+	const { isAuthenticated } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		if (localStorage.getItem('access_token') == undefined) {
-			alert('Undefined access token');
 			localStorage.removeItem('access_token');
 			localStorage.removeItem('refresh_token');
+			history.push('/login');
 		}
 		if (!localStorage.getItem('access_token') || !localStorage.getItem('refresh_token')) {
 			history.push('/login');
-		} else {
+		}
+		// if (!isAuthenticated) {
+		// 	// history.push('/login');
+		// }
+		else {
 			dispatch(loadUser());
 		}
 	}, [location]);

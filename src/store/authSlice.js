@@ -55,9 +55,14 @@ export const userSlice = createSlice({
 		userLoadedSuccess: (state, action) => {
 			state.user = action.payload;
 			state.status = 'success';
+			state.isAuthenticated = true;
 		},
 		userLoadedFailed: (state, action) => {
 			state.status = 'failed';
+			localStorage.removeItem('access_token');
+			localStorage.removeItem('refresh_token');
+			state.isAuthenticated = false;
+			// window.location.href = '/login/';
 		},
 		userEditRequest: (state, action) => {
 			state.status = 'loading';

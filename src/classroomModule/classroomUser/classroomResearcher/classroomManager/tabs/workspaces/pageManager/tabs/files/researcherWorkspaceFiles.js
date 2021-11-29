@@ -11,6 +11,10 @@ import PublishIcon from '@mui/icons-material/Publish';
 import DialogComponent from '../../../../../../../../../materialUI/components/reuseableComponents/dialogComponent';
 import { TextField } from '@mui/material';
 import { createSubmission } from '../../../../../../../../../store/submissionSlice';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const ResearcherWorkspaceFiles = () => {
 	const { id } = useParams();
@@ -24,8 +28,6 @@ const ResearcherWorkspaceFiles = () => {
 	// folder
 	useEffect(() => {
 		dispatch(getFolders(`workspace/folder/${id}`));
-		// dispatch(getfiles(`workspace/file/${folder}`));
-		// dispatch(getfiles(`workspace/upload-file/${folder}`));
 	}, []);
 	const fetchedFolders = useSelector((state) => state.folder.folders);
 	const { items: folders, setItems: setFolders } = folderState(fetchedFolders);
@@ -40,19 +42,13 @@ const ResearcherWorkspaceFiles = () => {
 	const { items: files, setItems: setFiles } = fileState(fetchedFiles);
 	const [selectedFile, setSelectedFile] = useState();
 
-	// Upload Files
-	useEffect(() => {
-		if (folder) {
-			dispatch(getfiles(`workspace/upload-file/${folder}`));
-		}
-	}, [folder]);
-	const fetchedUploadFiles = useSelector((state) => state.file.uploadFiles);
-	const { items: uploadFiles, setItems: setUploadFiles } = fileState(fetchedUploadFiles);
-
 	const handMeID = (item) => {
-		if (item.hasOwnProperty('content')) {
+		if (item.content) {
 			history.push(`/classroom/researcher/workspace/file/${item.id}`);
 			console.log(item);
+		}
+		if (item.file) {
+			alert('Is an upload File');
 		}
 	};
 	const handleSubmit = (item) => {
@@ -63,25 +59,28 @@ const ResearcherWorkspaceFiles = () => {
 		// }
 	};
 	const handleDelete = (item) => {
-		if (item.hasOwnProperty('content')) {
-			dispatch(deletefile(`workspace/file/change/${item.id}`));
-		}
+		dispatch(deletefile(`workspace/file/change/${item.id}`));
 	};
 
 	const [inputForm, setInputForm] = useState({
 		title: '',
 		description: '',
+		status: 'draft',
 	});
 	const onChange = (e) => {
 		e.preventDefault();
-
 		setInputForm({ ...inputForm, [e.target.name]: e.target.value });
 	};
 	const handleMakeSubmmision = () => {
-		const { title, description } = inputForm;
-		console.log(id, title, description, selectedFile);
-		dispatch(createSubmission(id, title, description, selectedFile.id));
+		const { title, description, status } = inputForm;
+		let formData = new FormData();
+		formData.append('title', title);
+		formData.append('description', description);
+		formData.append('status', status);
+		formData.append('file', selectedFile.id);
+		dispatch(createSubmission(id, formData));
 	};
+
 	return (
 		<div className='grid grid-rows-7 grid-flow-row gap-2  min-w-full'>
 			<div className='row-span-4 grid grid-cols-6 gap-4'>
@@ -95,7 +94,6 @@ const ResearcherWorkspaceFiles = () => {
 				<div className=' col-span-5 border-2 rounded-md'>
 					<FileTable
 						files={files}
-						uploadFiles={uploadFiles}
 						handMeID={handMeID}
 						delete_File={handleDelete}
 						handleSubmit={handleSubmit}
@@ -103,28 +101,40 @@ const ResearcherWorkspaceFiles = () => {
 							<>
 								<DialogComponent
 									title='Make Submission'
-									action={{ label: 'Send Submission', handler: handleMakeSubmmision }}
+									action={{ label: 'Create Submission', handler: handleMakeSubmmision }}
 									button={<PublishIcon className='cursor-pointer hover:text-purple-400' />}
 								>
-									<div className='flex w-full pt-4 justify-center items-center'>
-										<div className='flex flex-col w-4/5 space-y-4'>
-											<TextField
-												label='Submission Title'
-												variant='outlined'
-												name='title'
-												value={inputForm.title}
+									<div className='flex flex-col w-full pt-4 space-y-4'>
+										<TextField
+											label='Submission Title'
+											variant='outlined'
+											name='title'
+											value={inputForm.title}
+											onChange={(e) => onChange(e)}
+										/>
+										<TextField
+											label='Description'
+											variant='outlined'
+											name='description'
+											value={inputForm.description}
+											onChange={(e) => onChange(e)}
+											multiline
+											minRows={4}
+										/>
+										<FormControl fullWidth>
+											<InputLabel id='demo-simple-select-label'>Status</InputLabel>
+											<Select
+												labelId='demo-simple-select-label'
+												id='demo-simple-select'
+												value={inputForm.status}
+												label='Status'
+												name='status'
 												onChange={(e) => onChange(e)}
-											/>
-											<TextField
-												label='Description'
-												variant='outlined'
-												name='description'
-												value={inputForm.description}
-												onChange={(e) => onChange(e)}
-												multiline
-												minRows={4}
-											/>
-										</div>
+											>
+												<MenuItem value={'draft'}>Draft</MenuItem>
+												<MenuItem value={'submit'}>Submit</MenuItem>
+											</Select>
+										</FormControl>
 									</div>
 								</DialogComponent>
 							</>
