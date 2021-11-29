@@ -88,6 +88,18 @@ const Signup = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+
+		if (data.password === data.re_password) {
+			dispatch(
+				signup(
+					data.first_name,
+					data.last_name,
+					data.username,
+					data.email,
+					data.password
+				)
+			);
+		}
 	};
 
 	return (
