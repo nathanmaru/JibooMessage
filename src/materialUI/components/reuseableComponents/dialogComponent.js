@@ -1,10 +1,10 @@
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import { useState } from 'react';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import { useState } from "react";
 
 const DialogComponent = (props) => {
 	const { title, context, action, maxWidth, maxHeight, name, button, secondAction, noAction } =
@@ -21,7 +21,7 @@ const DialogComponent = (props) => {
 		<>
 			<div onClick={handleClickOpen}>{button}</div>
 			<Dialog
-				component='div'
+				component="div"
 				fullWidth={true}
 				name={name}
 				maxWidth={maxWidth}
@@ -35,7 +35,9 @@ const DialogComponent = (props) => {
 					{props.children}
 				</DialogContent>
 
+
 				<DialogActions sx={{ marginBottom: '20px', marginRight: '20px' }}>
+
 					{action ? (
 						<Button
 							onClick={() => {

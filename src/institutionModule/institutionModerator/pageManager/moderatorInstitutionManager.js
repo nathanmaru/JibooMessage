@@ -29,6 +29,7 @@ import ModeratorInstitutionPublishingTab from './tabs/publishing/ModeratorInstit
 import ModeratorInstitutionSubmission from './tabs/submissions/moderatorInstitutionSubmission';
 const Input = styled('input')({
 	display: 'none',
+
 });
 
 const ModeratorInstitutionPageManager = () => {
@@ -99,6 +100,7 @@ const ModeratorInstitutionPageManager = () => {
 
 	const tabs = [
 		{
+
 			label: 'Wall',
 			link: `/institutions/moderator/${id}?tab=wall`,
 			value: 'wall',
@@ -109,6 +111,7 @@ const ModeratorInstitutionPageManager = () => {
 			link: `/institutions/moderator/${id}?tab=submissions`,
 			value: 'submissions',
 			component: <ModeratorInstitutionSubmission />,
+
 		},
 		// {
 		// 	label: 'Publishing',
@@ -117,9 +120,9 @@ const ModeratorInstitutionPageManager = () => {
 		// 	component: <ModeratorInstitutionPublishingTab />,
 		// },
 		{
-			label: 'Departments',
+			label: "Departments",
 			link: `/institutions/moderator/${id}?tab=department`,
-			value: 'department',
+			value: "department",
 			component: <ModeratorInstitutionDepartmentTab />,
 		},
 
@@ -127,7 +130,7 @@ const ModeratorInstitutionPageManager = () => {
 			label: 'Staff',
 			link: `/institutions/moderator/${id}?tab=staff`,
 
-			value: 'staff',
+			value: "staff",
 			component: <ModeratorInstitutionStaff />,
 		},
 		{

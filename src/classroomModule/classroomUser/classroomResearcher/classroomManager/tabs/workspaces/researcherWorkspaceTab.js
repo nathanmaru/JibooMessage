@@ -1,17 +1,26 @@
-import { Button, TextField } from '@mui/material';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import useFetch from '../../../../../../hooks/useFetch';
-import BannerComponent from '../../../../../../materialUI/components/reuseableComponents/bannerComponent';
-import CardComponent from '../../../../../../materialUI/components/reuseableComponents/cardComponent';
-import CardHolder from '../../../../../../materialUI/components/reuseableComponents/cardHolder';
-import DialogComponent from '../../../../../../materialUI/components/reuseableComponents/dialogComponent';
-import DialogStepperComponent from '../../../../../../materialUI/components/reuseableComponents/dialogStepperComponent';
-import { getWorkspaces } from '../../../../../../store/workspaceSlice';
-import AddMember from './createSteps/addMember';
-import WorkspaceDetail from './createSteps/workspaceDetails';
+import { useEffect } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+
+import useFetch from "../../../../../../hooks/useFetch";
+import BannerComponent from "../../../../../../materialUI/components/reuseableComponents/bannerComponent";
+import CardComponent from "../../../../../../materialUI/components/reuseableComponents/cardComponent";
+import CardHolder from "../../../../../../materialUI/components/reuseableComponents/cardHolder";
+import DialogComponent from "../../../../../../materialUI/components/reuseableComponents/dialogComponent";
+import DialogStepperComponent from "../../../../../../materialUI/components/reuseableComponents/dialogStepperComponent";
+import { getWorkspaces } from "../../../../../../store/workspaceSlice";
+
+import AddMember from "./createSteps/addMember";
+import WorkspaceDetail from "./createSteps/workspaceDetails";
+
+//mui
+import { Button, TextField, Typography } from "@mui/material";
+
+//validation
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 const ResearcherWorkspaceTab = () => {
 	const dispatch = useDispatch();
@@ -22,62 +31,100 @@ const ResearcherWorkspaceTab = () => {
 		dispatch(getWorkspaces(`/workspace/${id}`));
 	}, []);
 	const fetchedWorkspace = useSelector((state) => state.works.workspaces);
-	const { items: workspaces, setItems: setWorkspaces } = workspaceState(fetchedWorkspace);
+	const { items: workspaces, setItems: setWorkspaces } =
+		workspaceState(fetchedWorkspace);
 	const createProject = () => {};
 	const handleJoinProject = () => {};
 	const [formData, setFormData] = useState({
-		name: '',
-		description: '',
-		code: '',
+		name: "",
+		description: "",
+		code: "",
 	});
 	const onChange = (e) => {};
 
 	const steps = [
 		{
-			label: 'Workspace Details',
+			label: "Workspace Details",
 			component: <WorkspaceDetail />,
 		},
 		{
-			label: 'Add Members',
+			label: "Add Members",
 			component: <AddMember />,
 		},
 	];
 
+	//validation
+	const validationMsg = Yup.object().shape({
+		code: Yup.string()
+			.required("Code is required.")
+			.min(8, "Must only have 8 characters only.")
+			.max(8, "Must only have 8 characters only."),
+	});
+
+	const {
+		register, // register inputs
+		handleSubmit, // handle form submit
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(validationMsg),
+	});
+
+	const onSubmit = (data) => {
+		console.log(JSON.stringify(data, null, 2));
+	};
+
 	return (
 		<>
-			<div class='flex flex-col w-full space-y-4'>
+			<div class="flex flex-col w-full space-y-4">
 				<BannerComponent
-					title='Welcome to Project Workspace!'
-					subtitle='Create and collaborate with your fellow researchers.'
+					title="Welcome to Project Workspace!"
+					subtitle="Create and collaborate with your fellow researchers."
 				>
-					<div className='flex space-x-2'>
+					<div className="flex space-x-2">
 						{/* Create Project */}
 						<DialogStepperComponent
-							button='Create Project'
-							title='Create Project Workspace'
-							context='Start your research journey today!'
-							maxWidth='md'
+							button="Create Project"
+							title="Create Project Workspace"
+							context="Start your research journey today!"
+							maxWidth="md"
 							steps={steps}
 						></DialogStepperComponent>
 						{/* Join Project */}
 						<DialogComponent
-							button={<Button variant='contained'>Join Project</Button>}
-							title='Join Project Workspace'
-							maxWidth='sm'
-							action={{ label: 'Join', handler: handleJoinProject }}
+							button={<Button variant="contained">Join Project</Button>}
+							title="Join Project Workspace"
+							maxWidth="sm"
+							// action={{ label: 'Join', handler: handleJoinProject }}
 						>
-							<div class='flex flex-col p-4 space-y-4'>
-								<TextField
-									required
-									label='Workspace Code'
-									type='text'
-									fullWidth
-									variant='outlined'
-									name='code'
-									value={formData.code}
-									onChange={(e) => onChange(e)}
-								/>
-							</div>
+							<form
+								onSubmit={handleSubmit(onSubmit)}
+								className="flex flex-col space-y-4"
+							>
+								<div class="flex flex-col p-4 space-y-4">
+									<TextField
+										label="Workspace Code"
+										type="text"
+										fullWidth
+										variant="outlined"
+										name="code"
+										// value={formData.code}
+										// onChange={(e) => onChange(e)}
+										{...register("code")}
+										error={errors.code ? true : false}
+									/>
+									<Typography
+										sx={{ fontSize: "12px", color: "red", fontStyle: "italic" }}
+									>
+										{errors.code?.message}
+									</Typography>
+								</div>
+
+								<div>
+									<Button type="submit" variant="contained">
+										Join Project
+									</Button>
+								</div>
+							</form>
 						</DialogComponent>
 					</div>
 				</BannerComponent>
