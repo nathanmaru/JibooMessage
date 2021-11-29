@@ -26,7 +26,7 @@ const ResearcherClassroomStudentTab = () => {
 								src={member.image}
 								sx={{ height: '100px', width: '100px', border: '1px solid #808080' }}
 							/>
-							<div>
+							<div className='flex flex-col w-full space-y-1'>
 								<Typography
 									className='text-gray-800'
 									gutterBottom
@@ -35,9 +35,12 @@ const ResearcherClassroomStudentTab = () => {
 								>
 									{member.name}
 								</Typography>
+								<Typography variant='body2' color='text.secondary'>
+									@{member.username}
+								</Typography>
 							</div>
-							<Typography variant='body2' color='text.secondary'>
-								@{member.username}
+							<Typography variant='body1' color='text.primary'>
+								{member.role}
 							</Typography>
 						</CardContent>
 					</Card>

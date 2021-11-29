@@ -26,11 +26,25 @@ const ResearcherWorkspaceMemberTab = () => {
 								src={member.image}
 								sx={{ height: '100px', width: '100px', border: '1px solid #808080' }}
 							/>
-							<div>
-								<p className='text-gray-800 font-semibold text-lg'>{member.name}</p>
+							<div className='flex flex-col justify-center items-center w-full space-y-1'>
+								<Typography
+									className='text-gray-800'
+									gutterBottom
+									variant='h6'
+									component='div'
+								>
+									{member.name}
+								</Typography>
+								<Typography
+									className='font-semibold'
+									variant='body2'
+									color='text.secondary'
+								>
+									@{member.username}
+								</Typography>
 							</div>
-							<Typography variant='body2' color='text.secondary'>
-								@{member.username}
+							<Typography variant='body1' color='text.primary'>
+								{member.role}
 							</Typography>
 						</CardContent>
 					</Card>

@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
 import DialogComponent from '../../../../../../../../../../materialUI/components/reuseableComponents/dialogComponent';
 import { TextField } from '@mui/material';
-import { useParams, useLocation } from 'react-router';
+import { useParams, useLocation, useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addFolder,
@@ -19,6 +19,7 @@ import useFetch from '../../../../../../../../../../hooks/useFetch';
 
 const FolderMenu = () => {
 	const [anchorEl, setAnchorEl] = useState(null);
+	const history = useHistory();
 	const location = useLocation();
 	const { folder } = queryString.parse(location.search);
 	const folderState = useFetch;
@@ -39,7 +40,7 @@ const FolderMenu = () => {
 	const [inputForm, setInputForm] = useState({
 		name: '',
 	});
-	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
+	const onChange = (e) => setInputForm({ [e.target.name]: e.target.value });
 	useEffect(() => {
 		if (currentFolderData) {
 			setInputForm({ name: currentFolderData.name });
@@ -56,6 +57,7 @@ const FolderMenu = () => {
 	};
 	const handleDeleteFolder = () => {
 		dispatch(deleteFolder(`/workspace/folder/change/${folder}`));
+		history.replace(`/classroom/researcher/workspace/${id}?tab=files`);
 	};
 
 	return (
@@ -94,16 +96,18 @@ const FolderMenu = () => {
 						button={'Add Folder'}
 						action={{ label: 'Create', handler: handleCreateFolder }}
 					>
-						<TextField
-							required
-							value={inputForm.name}
-							onChange={(e) => onChange(e)}
-							name='name'
-							label='Folder Name'
-							type='text'
-							fullWidth
-							variant='outlined'
-						/>
+						<div className='flex mt-4'>
+							<TextField
+								required
+								value={inputForm.name}
+								onChange={(e) => onChange(e)}
+								name='name'
+								label='Folder Name'
+								type='text'
+								fullWidth
+								variant='outlined'
+							/>
+						</div>
 					</DialogComponent>
 				</MenuItem>
 				<MenuItem>
@@ -112,16 +116,18 @@ const FolderMenu = () => {
 						button={'Edit Folder'}
 						action={{ label: 'Save Edit', handler: handleEditFolder }}
 					>
-						<TextField
-							required
-							value={inputForm.name}
-							onChange={(e) => onChange(e)}
-							name='name'
-							label='Folder Name'
-							type='text'
-							fullWidth
-							variant='outlined'
-						/>
+						<div className='flex mt-4'>
+							<TextField
+								required
+								value={inputForm.name}
+								onChange={(e) => onChange(e)}
+								name='name'
+								label='Folder Name'
+								type='text'
+								fullWidth
+								variant='outlined'
+							/>
+						</div>
 					</DialogComponent>
 				</MenuItem>
 				<MenuItem>

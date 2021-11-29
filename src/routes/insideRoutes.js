@@ -31,7 +31,22 @@ import ResearcherWorkspaceFileViewer from '../classroomModule/classroomUser/clas
 import ModeratorInstitutionPageManager from '../institutionModule/institutionModerator/pageManager/moderatorInstitutionManager';
 import DataGridExp from '../experiments/dataGrid';
 import ModeratorInstitutionDepartmentManager from '../institutionModule/institutionModerator/pageManager/tabs/departments/pageManager/moderatorInstitutionDepartmentManager';
+import AdviserSubmissionViewer from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/submissions/fileViewer/adviserSubmissionViewer';
+import ModeratorSubmissionViewerFile from '../institutionModule/institutionModerator/pageManager/tabs/submissions/fileViewer/moderatorSubmissionViewerFile';
+import ModeratorInstitutionArticleViewer from '../institutionModule/institutionModerator/pageManager/tabs/wall/moderatorInstitutionArticleViewer';
 export default [
+	<Route
+		exact
+		path='/institutions/moderator/article/:id'
+		component={ModeratorInstitutionArticleViewer}
+	/>,
+
+	<Route exact path='/classroom/adviser/submission/:id' component={AdviserSubmissionViewer} />,
+	<Route
+		exact
+		path='/institutions/moderator/submission/:id'
+		component={ModeratorSubmissionViewerFile}
+	/>,
 	<Route
 		exact
 		path='/classroom/researcher/workspace/:id'
@@ -69,6 +84,7 @@ export default [
 		component={ResearcherWorkspaceFileViewer}
 	/>,
 	<Route exact path='/works/:id' component={ProjectManager} />,
+
 	<Route exact path='/fileViewer' component={FileViewer} />,
 	<Route exact path='/works' component={WorkSpace} />,
 	<Route exact path='/messages' component={NewMesssages} />,

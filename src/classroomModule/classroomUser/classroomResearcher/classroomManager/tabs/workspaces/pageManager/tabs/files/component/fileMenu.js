@@ -43,9 +43,19 @@ const FileMenu = () => {
 	const dispatch = useDispatch();
 
 	const handleCreateFile = () => {
-		dispatch(addFile(`/workspace/file/${folder}`, inputForm.name));
+		let formData = new FormData();
+		formData.append('name', inputForm.name);
+		formData.append('content', '<h1>Welcome to Meegu!</h1>');
+		dispatch(addFile(`/workspace/file/${folder}`, formData));
 	};
-	const handleUploadFile = () => {};
+	const handleUploadFile = () => {
+		console.log(inputForm.file);
+		let formData = new FormData();
+		formData.append('file', inputForm.file, inputForm.file.name);
+		formData.append('name', inputForm.file.name);
+		console.log(formData);
+		dispatch(addFile(`/workspace/file/${folder}`, formData));
+	};
 
 	return (
 		<div>

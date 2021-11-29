@@ -19,6 +19,7 @@ import { useHistory } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { logout } from '../../store/authSlice';
+import { useSelector } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -68,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar(props) {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+	const { user } = useSelector((state) => state.auth);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -99,38 +101,40 @@ export default function PrimarySearchAppBar(props) {
 
 	const menuId = 'primary-search-account-menu';
 	const renderMenu = (
-		<Menu
-			anchorEl={anchorEl}
-			// anchorOrigin={{
-			// 	vertical: 'top',
-			// 	horizontal: 'right',
-			// }}
-			id={menuId}
-			keepMounted
-			// transformOrigin={{
-			// 	vertical: 'top',
-			// 	horizontal: 'right',
-			// }}
-			open={isMenuOpen}
-			onClose={handleMenuClose}
-		>
-			<MenuItem
-				onClick={() => {
-					handleMenuClose();
-					goToProfile();
-				}}
+		<>
+			<Menu
+				anchorEl={anchorEl}
+				// anchorOrigin={{
+				// 	vertical: 'top',
+				// 	horizontal: 'right',
+				// }}
+				id={menuId}
+				keepMounted
+				// transformOrigin={{
+				// 	vertical: 'top',
+				// 	horizontal: 'right',
+				// }}
+				open={isMenuOpen}
+				onClose={handleMenuClose}
 			>
-				My Profile
-			</MenuItem>
-			<MenuItem
-				onClick={() => {
-					handleMenuClose();
-					goToLogout();
-				}}
-			>
-				Logout
-			</MenuItem>
-		</Menu>
+				<MenuItem
+					onClick={() => {
+						handleMenuClose();
+						goToProfile();
+					}}
+				>
+					<div className='flex justify-center items-center'>{user && user.username}</div>
+				</MenuItem>
+				<MenuItem
+					onClick={() => {
+						handleMenuClose();
+						goToLogout();
+					}}
+				>
+					Logout
+				</MenuItem>
+			</Menu>
+		</>
 	);
 
 	const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -176,7 +180,8 @@ export default function PrimarySearchAppBar(props) {
 				>
 					<AccountCircle />
 				</IconButton>
-				<p>Profile</p>
+				{/* <p>Profile</p> */}
+				<div className='flex justify-center items-center'>{user && user.username}</div>
 			</MenuItem>
 		</Menu>
 	);
@@ -221,6 +226,7 @@ export default function PrimarySearchAppBar(props) {
 								<NotificationsIcon />
 							</Badge>
 						</IconButton>
+
 						<IconButton
 							size='large'
 							edge='end'

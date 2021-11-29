@@ -31,7 +31,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	applyVerification,
 	createInstitution,
-	getMyInstitutions,
+	getInstitutions,
 } from '../../store/newInstitutionSlice';
 import useFetch from '../../hooks/useFetch';
 import { getInstitutionPlans } from '../../store/subscriptionSlice';
@@ -52,7 +52,7 @@ const ModeratorInstitution = () => {
 	const dispatch = useDispatch();
 
 	useState(() => {
-		dispatch(getMyInstitutions());
+		dispatch(getInstitutions('/institution/moderator/list'));
 	}, []);
 
 	const fetchPlans = useSelector((state) => state.subscription.plans);
@@ -171,9 +171,9 @@ const ModeratorInstitution = () => {
 					{/* {institutionStatus == 'loading' ? <Loader /> : null} */}
 					{institutions.map((item) => (
 						<CardComponent
-							image={item.cover}
-							item={item}
-							link={`/institutions/moderator/${item.id}?tab=wall`}
+							image={item.institution.cover}
+							item={item.institution}
+							link={`/institutions/moderator/${item.institution.id}?tab=wall`}
 						/>
 					))}
 				</CardHolder>

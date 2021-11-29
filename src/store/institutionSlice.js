@@ -30,7 +30,7 @@ export const institutionSlice = createSlice({
 
 		loadSuccess: (state, action) => {
 			state.classes = action.payload;
-			state.isLoading = false; 
+			state.isLoading = false;
 		},
 		loadFailed: (state, action) => {
 			state.classes = null;

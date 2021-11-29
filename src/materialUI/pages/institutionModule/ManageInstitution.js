@@ -36,7 +36,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	applyVerification,
 	createInstitution,
-	getMyInstitutions,
+	getInstitutions,
 } from '../../../store/newInstitutionSlice';
 import useFetch from '../../../hooks/useFetch';
 import { getInstitutionPlans } from '../../../store/subscriptionSlice';
@@ -67,7 +67,7 @@ const ManageInstitution = ({ item }) => {
 	// 1. dispatch the action
 	useState(() => {
 		dispatch(getInstitutionPlans());
-		dispatch(getMyInstitutions());
+		dispatch(getInstitutions());
 	}, []);
 	// 2. get the selector
 	const fetchPlans = useSelector((state) => state.subscription.plans);

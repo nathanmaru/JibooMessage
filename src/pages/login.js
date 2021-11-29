@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoadingButton from '@mui/lab/LoadingButton';
 import FeedBackButton from '../hooks/feedBackButton';
 import useStatus from '../hooks/useStatus';
+import useForm from '../hooks/useForm';
 
 const Login = () => {
 	const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 
 	const { email, password } = formData;
+	// const { errors, showError, setShowError } = useForm(formData);
 
 	const onChange = (e) => {
 		e.preventDefault();
@@ -31,8 +33,10 @@ const Login = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
+		// setShowError(true);
+		// if (!errors) {
 		dispatch(login(email, password));
+		// }
 	};
 	const history = useHistory();
 
@@ -81,6 +85,7 @@ const Login = () => {
 								onChange={(e) => onChange(e)}
 								type='email'
 							/>
+
 							<TextField
 								variant='outlined'
 								fullWidth
@@ -90,7 +95,7 @@ const Login = () => {
 								onChange={(e) => onChange(e)}
 								type='password'
 							/>
-
+							{/* {errors ? <>{errors.password && showError ? errors.password : null}</> : null} */}
 							<div className='flex flex-row justify-between'>
 								<div class='pt-12 pb-12 text-center justify-start'>
 									<p>
