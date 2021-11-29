@@ -51,10 +51,7 @@ const FileMenu = () => {
 
 	const dispatch = useDispatch();
 
-	// const handleCreateFile = () => {
-	// 	dispatch(addFile(`/workspace/file/${folder}`, inputForm.name));
-	// };
-	const handleUploadFile = () => {};
+
 
 	//validation
 	const validationMsg = Yup.object().shape({
@@ -69,10 +66,20 @@ const FileMenu = () => {
 		resolver: yupResolver(validationMsg),
 	});
 
-	const onSubmit = (data) => {
+	const handleCreateFile = (data) => {
 		console.log(JSON.stringify(data, null, 2));
-
-		dispatch(addFile(`/workspace/file/${folder}`, data.name));
+    let formData = new FormData();
+		formData.append('name', data.name);
+		formData.append('content', '<h1>Welcome to Meegu!</h1>');
+		dispatch(addFile(`/workspace/file/${folder}`, formData));
+		
+	};
+  const handleUploadFile = () => {
+		let formData = new FormData();
+		formData.append('file', inputForm.file, inputForm.file.name);
+		formData.append('name', inputForm.file.name);
+		console.log(formData);
+		dispatch(addFile(`/workspace/file/${folder}`, formData));
 	};
 
 	return (
@@ -131,7 +138,7 @@ const FileMenu = () => {
 						// action={{ label: 'Create', handler: handleCreateFile }}
 					>
 						<form
-							onSubmit={handleSubmit(onSubmit)}
+							onSubmit={handleSubmit(handleCreateFile)}
 							className="flex flex-col space-y-3"
 						>
 							<TextField

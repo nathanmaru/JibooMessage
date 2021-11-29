@@ -1,39 +1,37 @@
-import { useState, useEffect } from "react";
-import { Redirect, Link, useHistory } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-import { useDispatch, useSelector } from "react-redux";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useState, useEffect } from 'react';
+import { Redirect, Link, useHistory } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import { ToastContainer } from 'react-toastify';
 
-import {
-	socialLoginFacebook,
-	login,
-	socialLoginGoogle,
-} from "../store/authSlice";
+import { socialLoginFacebook, login, socialLoginGoogle } from '../store/authSlice';
 // import FacebookLogin from 'react-facebook-login';
-import purple from "../assets/img/Artboard 1.png";
 
-import FeedBackButton from "../hooks/feedBackButton";
-import useStatus from "../hooks/useStatus";
+import purple from '../assets/img/Artboard 1.png';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
-//mui
-import LoadingButton from "@mui/lab/LoadingButton";
-import { TextField, Box, Typography, Button } from "@mui/material";
+import 'react-toastify/dist/ReactToastify.css';
+import LoadingButton from '@mui/lab/LoadingButton';
+import FeedBackButton from '../hooks/feedBackButton';
+import useStatus from '../hooks/useStatus';
+import { Typography, Button } from '@mui/material';
 
 //validation
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const Login = () => {
 	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
+		email: '',
+		password: '',
 	});
 	const dispatch = useDispatch();
 
 	const { email, password } = formData;
+	// const { errors, showError, setShowError } = useForm(formData);
 
 	const onChange = (e) => {
 		e.preventDefault();
@@ -42,8 +40,10 @@ const Login = () => {
 
 	const handleSubmitLogin = (e) => {
 		e.preventDefault();
-
+		// setShowError(true);
+		// if (!errors) {
 		dispatch(login(email, password));
+		// }
 	};
 	const history = useHistory();
 
@@ -60,15 +60,15 @@ const Login = () => {
 	const { status } = useSelector((state) => state.auth);
 	const { loading } = useStatus(status);
 	const handleRedirect = () => {
-		history.push("/home");
+		history.push('/home');
 	};
 
 	//validation
 	const validationMsg = Yup.object().shape({
 		email: Yup.string()
-			.required("Your e-mail is required.")
-			.email("Please put the correct e-mail format"),
-		password: Yup.string().required("Password is required."),
+			.required('Your e-mail is required.')
+			.email('Please put the correct e-mail format'),
+		password: Yup.string().required('Password is required.'),
 	});
 
 	const {
@@ -86,15 +86,15 @@ const Login = () => {
 
 	return (
 		<>
-			<div class="flex flex-wrap w-full">
-				<div class="flex flex-col w-full md:w-1/2">
-					<div class="flex justify-center pt-12 md:justify-start md:pl-12 md:-mb-24">
-						<Link to="/" class="p-4 text-xl font-bold text-white bg-purple-800">
+			<div class='flex flex-wrap w-full'>
+				<div class='flex flex-col w-full md:w-1/2'>
+					<div class='flex justify-center pt-12 md:justify-start md:pl-12 md:-mb-24'>
+						<Link to='/' class='p-4 text-xl font-bold text-white bg-purple-800'>
 							meegu.
 						</Link>
 					</div>
-					<div class="flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32">
-						<p class="text-3xl text-center">Welcome back!</p>
+					<div class='flex flex-col justify-center px-8 pt-8 my-auto md:justify-start md:pt-0 md:px-24 lg:px-32'>
+						<p class='text-3xl text-center'>Welcome back!</p>
 						{/* <Box
 							component='form'
 							sx={{
@@ -105,67 +105,65 @@ const Login = () => {
 							className='flex flex-col pt-3 md:pt-8 space-y-2 w-full'
 						> */}
 						<form
-							className="flex flex-col pt-3 md:pt-8 space-y-2 w-full"
+							className='flex flex-col pt-3 md:pt-8 space-y-2 w-full'
 							onSubmit={handleSubmit(onSubmit)}
 						>
 							<TextField
-								variant="outlined"
+								variant='outlined'
 								fullWidth
-								name="email"
-								placeholder="Your email"
-								type="email"
+								name='email'
+								placeholder='Your email'
+								type='email'
 								// value={email}
 								// onChange={(e) => onChange(e)}
-								{...register("email")}
+								{...register('email')}
 								error={errors.email ? true : false}
 							/>
-							<Typography
-								sx={{ fontSize: "12px", color: "red", fontStyle: "italic" }}
-							>
+
+							<Typography sx={{ fontSize: '12px', color: 'red', fontStyle: 'italic' }}>
 								{errors.email?.message}
 							</Typography>
 
 							<TextField
-								variant="outlined"
+								variant='outlined'
 								fullWidth
-								name="password"
-								placeholder="Your password"
-								type="password"
+								name='password'
+								placeholder='Your password'
+								type='password'
 								// value={password}
 								// onChange={(e) => onChange(e)}
-								{...register("password")}
+								{...register('password')}
 								error={errors.password ? true : false}
 							/>
-							<Typography
-								sx={{ fontSize: "12px", color: "red", fontStyle: "italic" }}
-							>
+
+							<Typography sx={{ fontSize: '12px', color: 'red', fontStyle: 'italic' }}>
 								{errors.password?.message}
 							</Typography>
 
-							<div className="flex flex-row justify-between">
-								<div class="pt-12 pb-12 text-center justify-start">
+							<div className='flex flex-row justify-between'>
+								<div class='pt-12 pb-12 text-center justify-start'>
 									<p>
 										<Link
-											to="/signup"
-											className="text-base ml-2 text-gray-400 hover:text-purple-400"
+											to='/signup'
+											className='text-base ml-2 text-gray-400 hover:text-purple-400'
 										>
 											Register
 										</Link>
 									</p>
 								</div>
 
-								<div class="pt-12 pb-12 text-center justify-start">
+								<div class='pt-12 pb-12 text-center justify-start'>
 									<p>
 										<Link
-											to="/reset-password"
-											class="-ml-8 text-gray-400 hover:text-purple-400"
+											to='/reset-password'
+											class='-ml-8 text-gray-400 hover:text-purple-400'
 										>
 											Forgot your password?
 										</Link>
 									</p>
 								</div>
 
-								<div className="mt-9 justify-between">
+								<div className='mt-9 justify-between'>
 									{/* <FeedBackButton
 										button={
 											<LoadingButton
@@ -184,7 +182,7 @@ const Login = () => {
 										actionDescription="Login"
 									/> */}
 									<div>
-										<Button type="submit" variant="contained">
+										<Button type='submit' variant='contained'>
 											Login
 										</Button>
 									</div>
@@ -199,20 +197,17 @@ const Login = () => {
 								</div>
 							</div>
 						</form>
-						<div className="flex flex-row justify-between mb-12 px-10">
-							<div className="text-gray-500">Continue with: </div>
-							<div class="flex flex-row space-x-6 pr-10">
+						<div className='flex flex-row justify-between mb-12 px-10'>
+							<div className='text-gray-500'>Continue with: </div>
+							<div class='flex flex-row space-x-6 pr-10'>
 								<div>
 									<FacebookLogin
-										appId="564451954655803"
+										appId='564451954655803'
 										autoLoad={false}
-										fields="name,email,picture"
+										fields='name,email,picture'
 										callback={responseFacebook}
 										render={(renderProps) => (
-											<button
-												onClick={renderProps.onClick}
-												className="text-purple-400"
-											>
+											<button onClick={renderProps.onClick} className='text-purple-400'>
 												Facebook
 											</button>
 										)}
@@ -220,12 +215,12 @@ const Login = () => {
 								</div>
 								<div>
 									<GoogleLogin
-										clientId="1090422806656-3gpck8pb13jj38c9bp25pmuqe6scgsb1.apps.googleusercontent.com"
+										clientId='1090422806656-3gpck8pb13jj38c9bp25pmuqe6scgsb1.apps.googleusercontent.com'
 										render={(renderProps) => (
 											<button
 												onClick={renderProps.onClick}
 												disabled={renderProps.disabled}
-												className="text-purple-400"
+												className='text-purple-400'
 											>
 												Google
 											</button>
@@ -240,11 +235,11 @@ const Login = () => {
 						</form> */}
 					</div>
 				</div>
-				<div class="w-1/2 shadow-2xl">
+				<div class='w-1/2 shadow-2xl'>
 					<img
-						class="hidden object-center w-full h-screen md:block"
+						class='hidden object-center w-full h-screen md:block'
 						src={purple}
-						alt="login"
+						alt='login'
 					/>
 				</div>
 			</div>

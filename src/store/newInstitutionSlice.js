@@ -110,10 +110,10 @@ export default institutionSlice.reducer;
 
 //action creators
 
-export const getMyInstitutions = () =>
+export const getInstitutions = (link) =>
 	apiCallBegan({
-		url: "/institution/",
-		method: "get",
+		url: link,
+		method: 'get',
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("access_token"),
 			"Content-Type": "application/json",
@@ -155,6 +155,7 @@ export const createInstitution = (formdata) =>
 		onSuccess: institutionCreateSuccess.type,
 		onError: institutionCreateFailed.type,
 	});
+
 export const retrieveInstitution = (id) =>
 	apiCallBegan({
 		url: "/institution/change/" + id,
