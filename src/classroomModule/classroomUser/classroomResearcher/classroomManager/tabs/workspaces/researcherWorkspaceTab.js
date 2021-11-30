@@ -17,6 +17,9 @@ import WorkspaceDetail from "./createSteps/workspaceDetails";
 //mui
 import { Button, TextField, Typography } from "@mui/material";
 
+//Tour
+import { Steps } from "intro.js-react";
+
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -73,8 +76,42 @@ const ResearcherWorkspaceTab = () => {
 		console.log(JSON.stringify(data, null, 2));
 	};
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".create",
+			intro: "Create your workspace here.",
+		},
+		{
+			element: ".join",
+			intro: "Create your workspace here.",
+		},
+		{
+			element: ".cards",
+			intro: "Manage your workspaces here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
 			<div class="flex flex-col w-full space-y-4">
 				<BannerComponent
 					title="Welcome to Project Workspace!"
@@ -88,10 +125,15 @@ const ResearcherWorkspaceTab = () => {
 							context="Start your research journey today!"
 							maxWidth="md"
 							steps={steps}
+							tourIdentifier="create"
 						></DialogStepperComponent>
 						{/* Join Project */}
 						<DialogComponent
-							button={<Button variant="contained">Join Project</Button>}
+							button={
+								<Button className="join" variant="contained">
+									Join Project
+								</Button>
+							}
 							title="Join Project Workspace"
 							maxWidth="sm"
 							// action={{ label: 'Join', handler: handleJoinProject }}
@@ -128,7 +170,7 @@ const ResearcherWorkspaceTab = () => {
 						</DialogComponent>
 					</div>
 				</BannerComponent>
-				<CardHolder>
+				<CardHolder tourIdentifier="cards">
 					{workspaces.map((item) => (
 						<CardComponent
 							item={item}

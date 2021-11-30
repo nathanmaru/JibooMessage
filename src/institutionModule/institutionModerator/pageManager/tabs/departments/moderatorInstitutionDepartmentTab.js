@@ -15,6 +15,9 @@ import {
 
 import { styled } from "@mui/material/styles";
 
+//Tour
+import { Steps } from "intro.js-react";
+
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -100,8 +103,38 @@ const ModeratorInstitutionDepartmentTab = () => {
 		form_data.append("description", description);
 		dispatch(createDepartment(id, form_data));
 	};
+
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".create",
+			intro: "You can create your departments here.",
+		},
+		{
+			element: ".cards",
+			intro: "You'll find your department list here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
 			<div className="flex flex-col space-y-4">
 				<BannerComponent
 					title="Welcome to Departments"
@@ -109,7 +142,11 @@ const ModeratorInstitutionDepartmentTab = () => {
 				>
 					<DialogComponent
 						title="Create Department"
-						button={<Button variant="contained">Create Department</Button>}
+						button={
+							<Button className="create" variant="contained">
+								Create Department
+							</Button>
+						}
 						// action={{ label: 'Create Department', handler: handleCreate }}
 					>
 						<div className="flex flex-col w-full  space-y-4 mt-4">
@@ -188,7 +225,8 @@ const ModeratorInstitutionDepartmentTab = () => {
 						</div>
 					</DialogComponent>
 				</BannerComponent>
-				<CardHolder>
+
+				<CardHolder tourIdentifier="cards">
 					{departments.map((item) => (
 						<CardComponent
 							link={`/institutions/moderator/department/${item.id}`}

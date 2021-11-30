@@ -113,21 +113,6 @@ export default institutionSlice.reducer;
 export const getInstitutions = (link) =>
 	apiCallBegan({
 		url: link,
-		method: 'get',
-		headers: {
-			Authorization: "Bearer " + localStorage.getItem("access_token"),
-			"Content-Type": "application/json",
-			accept: "application/json",
-		},
-		type: "regular",
-		onStart: institutionLoadRequest.type,
-		onSuccess: institutionLoadSuccess.type,
-		onError: institutionLoadFailed.type,
-	});
-
-export const getInstitutions = (link) =>
-	apiCallBegan({
-		url: link,
 		method: "get",
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("access_token"),

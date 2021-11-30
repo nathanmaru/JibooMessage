@@ -13,6 +13,9 @@ import { getInstitutions } from "../../store/newInstitutionSlice";
 //mui
 import { Button, TextField, Typography } from "@mui/material";
 
+//Tour
+import { Steps } from "intro.js-react";
+
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -53,8 +56,38 @@ const InstitutionStaff = () => {
 		// dispatch(joinClassroom(data.code));
 	};
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".join",
+			intro: "Join specific institution pages to your liking.",
+		},
+		{
+			element: ".cards",
+			intro: "Visit the institution here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
 			<div className="flex flex-col w-full space-y-4">
 				<BannerComponent
 					title=" Hello dear, Staff !"
@@ -62,7 +95,11 @@ const InstitutionStaff = () => {
 				>
 					<DialogComponent
 						title="Join Institution"
-						button={<Button variant="contained">Join Institution</Button>}
+						button={
+							<Button className="join" variant="contained">
+								Join Institution
+							</Button>
+						}
 					>
 						<form
 							onSubmit={handleSubmit(onSubmit)}
@@ -96,7 +133,7 @@ const InstitutionStaff = () => {
 					</DialogComponent>
 				</BannerComponent>
 
-				<CardHolder>
+				<CardHolder tourIdentifier="cards">
 					{institutions && institutions.length > 0 ? (
 						<>
 							{institutions.map((item) => (
@@ -109,7 +146,7 @@ const InstitutionStaff = () => {
 							))}
 						</>
 					) : (
-						<div>You don't have a classroom yet.</div>
+						<div>You are not currently assigned to any institution.</div>
 					)}
 				</CardHolder>
 			</div>

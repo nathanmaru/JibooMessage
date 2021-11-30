@@ -12,6 +12,9 @@ import {
 	joinClassroom,
 } from "../../../store/newClassroomSlice";
 
+//Tour
+import { Steps } from "intro.js-react";
+
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -68,8 +71,38 @@ const ClassroomResearcher = () => {
 		setOpen(false);
 	};
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".join",
+			intro: "Join classrooms here.",
+		},
+		{
+			element: ".cards",
+			intro: "Visit the classrooms here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
 			<div class="flex flex-col w-full p-4 space-y-4">
 				<BannerComponent
 					title=" Hello there, Researcher !"
@@ -77,7 +110,11 @@ const ClassroomResearcher = () => {
 				>
 					<DialogComponent
 						title="Join Classroom"
-						button={<Button variant="contained">Join Classroom</Button>}
+						button={
+							<Button className="join" variant="contained">
+								Join Classroom
+							</Button>
+						}
 						// action={{ label: "Join", handler: handleSubmitCode }}
 						// action={{ label: "Join" }}
 					>
@@ -113,7 +150,7 @@ const ClassroomResearcher = () => {
 					</DialogComponent>
 				</BannerComponent>
 
-				<CardHolder>
+				<CardHolder tourIdentifier="cards">
 					{classrooms && classrooms.length > 0 ? (
 						<>
 							{classrooms.map((item) => (
@@ -126,7 +163,7 @@ const ClassroomResearcher = () => {
 							))}
 						</>
 					) : (
-						<div>You don't have a classroom yet.</div>
+						<div>You haven't joined a classroom yet.</div>
 					)}
 				</CardHolder>
 			</div>
