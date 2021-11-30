@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import BannerComponent from '../../../materialUI/components/reuseableComponents/bannerComponent';
-import DialogStepperComponent from '../../../materialUI/components/reuseableComponents/dialogStepperComponent';
-import CardHolder from '../../../materialUI/components/reuseableComponents/cardHolder';
-import CardComponent from '../../../materialUI/components/reuseableComponents/cardComponent';
-import useFetch from '../../../hooks/useFetch';
-import ClassroomDetail from './createSteps/classroomDetail';
-import ClassroomAffliate from './createSteps/classroomAffliate';
-import ClassroomSubscriptionPlan from './createSteps/classroomSubscriptionPlan';
-import { getAdviserClassroom } from '../../../store/newClassroomSlice';
+import BannerComponent from "../../../materialUI/components/reuseableComponents/bannerComponent";
+import DialogStepperComponent from "../../../materialUI/components/reuseableComponents/dialogStepperComponent";
+import CardHolder from "../../../materialUI/components/reuseableComponents/cardHolder";
+import CardComponent from "../../../materialUI/components/reuseableComponents/cardComponent";
+import useFetch from "../../../hooks/useFetch";
+import ClassroomDetail from "./createSteps/classroomDetail";
+import ClassroomAffliate from "./createSteps/classroomAffliate";
+import ClassroomSubscriptionPlan from "./createSteps/classroomSubscriptionPlan";
+import { getAdviserClassroom } from "../../../store/newClassroomSlice";
+
+//Tour
+import { Steps } from "intro.js-react";
 
 const ClassroomAdviser = () => {
 	const dispatch = useDispatch();
@@ -26,11 +29,11 @@ const ClassroomAdviser = () => {
 
 	const steps = [
 		{
-			label: 'Classroom Details',
+			label: "Classroom Details",
 			component: <ClassroomDetail />,
 		},
 		{
-			label: 'Classroom Affliate',
+			label: "Classroom Affliate",
 			component: <ClassroomAffliate />,
 		},
 		// {
@@ -39,21 +42,52 @@ const ClassroomAdviser = () => {
 		// },
 	];
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".create",
+			intro: "You can create a new classroom here.",
+		},
+		{
+			element: ".cards",
+			intro: "Manage your classroom here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
-			<div class='flex flex-col w-full p-4 space-y-4'>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
+			<div class="flex flex-col w-full p-4 space-y-4">
 				<BannerComponent
-					title=' Hello dear, Adviser !'
-					subtitle='Here is what’s happening with your projects today:'
+					title=" Hello dear, Adviser !"
+					subtitle="Here is what’s happening with your projects today:"
 				>
 					<DialogStepperComponent
-						maxWidth='md'
-						button='Create Classroom'
-						title='Create Classroom'
+						maxWidth="md"
+						button="Create Classroom"
+						title="Create Classroom"
 						steps={steps}
+						tourIdentifier="create"
 					></DialogStepperComponent>
 				</BannerComponent>
-				<CardHolder>
+				<CardHolder tourIdentifier="cards">
 					{classrooms && classrooms.length > 0 ? (
 						<>
 							{classrooms.map((item) => (

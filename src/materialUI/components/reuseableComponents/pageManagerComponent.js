@@ -1,10 +1,10 @@
-import TabContext from '@mui/lab/TabContext';
-import Box from '@mui/material/Box';
-import TabList from '@mui/lab/TabList';
-import Tab from '@mui/material/Tab';
-import TabPanel from '@mui/lab/TabPanel';
-import { Link, Switch, useLocation, useParams } from 'react-router-dom';
-import queryString from 'query-string';
+import TabContext from "@mui/lab/TabContext";
+import Box from "@mui/material/Box";
+import TabList from "@mui/lab/TabList";
+import Tab from "@mui/material/Tab";
+import TabPanel from "@mui/lab/TabPanel";
+import { Link, Switch, useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
 
 const PageManagerComponent = ({ tabs, value, handleChange }) => {
 	const location = useLocation();
@@ -12,11 +12,20 @@ const PageManagerComponent = ({ tabs, value, handleChange }) => {
 	return (
 		<>
 			<TabContext value={value}>
-				<Box component='div' sx={{ borderBottom: 1, borderColor: 'divider' }}>
-					<TabList onChange={handleChange} aria-label='lab API tabs example'>
-						{tabs.map((val) => (
-							<Tab component={Link} to={val.link} label={val.label} value={val.value} />
-						))}
+				<Box component="div" sx={{ borderBottom: 1, borderColor: "divider" }}>
+					<TabList onChange={handleChange} aria-label="lab API tabs example">
+						{tabs.map((val) => {
+							console.log(val.tourIdentifier);
+							return (
+								<Tab
+									component={Link}
+									to={val.link}
+									label={val.label}
+									value={val.value}
+									className={val.tourIdentifier ? val.tourIdentifier : ""}
+								/>
+							);
+						})}
 					</TabList>
 				</Box>
 				{tabs.map((tab) => (
