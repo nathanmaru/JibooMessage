@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import useFetch from '../../../../hooks/useFetch';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
-import { staffInstitutionList } from '../../../../store/newInstitutionSlice';
+import { getInstitutions, staffInstitutionList } from '../../../../store/newInstitutionSlice';
 
 import FeedBackButton from '../../../../hooks/feedBackButton';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -23,7 +23,7 @@ const ClassroomAffliate = () => {
 	const { currentClassroom } = useSelector((state) => state.newClass);
 
 	useEffect(() => {
-		dispatch(staffInstitutionList());
+		dispatch(getInstitutions(`/institution/staff`));
 	}, []);
 	const fetchedInstitutions = useSelector((state) => state.institution.institutions);
 	const { items: institutions, setItems: setInstitutions } = useFetch2(fetchedInstitutions);

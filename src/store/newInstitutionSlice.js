@@ -14,8 +14,10 @@ export const institutionSlice = createSlice({
 			state.status = 'loading';
 		},
 		institutionLoadSuccess: (state, action) => {
-			state.status = 'success';
 			state.institutions = action.payload;
+
+			state.status = 'success';
+			// state.institutions = action.payload;
 		},
 		institutionLoadFailed: (state, action) => {
 			state.status = 'failed';
@@ -124,9 +126,9 @@ export const getInstitutions = (link) =>
 		onSuccess: institutionLoadSuccess.type,
 		onError: institutionLoadFailed.type,
 	});
-export const createInstitution = (formdata) =>
+export const createInstitution = (link, formdata) =>
 	apiCallBegan({
-		url: '/institution/',
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

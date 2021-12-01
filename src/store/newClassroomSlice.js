@@ -14,8 +14,10 @@ export const newClassroomSlice = createSlice({
 		},
 
 		loadClassroomSuccess: (state, action) => {
-			state.classes = action.payload;
-			state.status = 'Classroom load success';  
+			if (action.payload[0]) {
+				state.classes = action.payload[0].classrooms;
+			}
+			state.status = 'Classroom load success';
 		},
 		loadClassroomFailed: (state, action) => {
 			state.classes = null;
@@ -29,7 +31,7 @@ export const newClassroomSlice = createSlice({
 
 		loadCurrentClassroomSuccess: (state, action) => {
 			state.currentClassroom = action.payload;
-			state.status = 'Classroom load success'; 
+			state.status = 'Classroom load success';
 		},
 		loadCurrentClassroomFailed: (state, action) => {
 			state.status = 'Classroom load failed';
@@ -41,14 +43,30 @@ export const newClassroomSlice = createSlice({
 		},
 
 		createClassroomSuccess: (state, action) => {
+			console.log(action.payload);
 			state.classes.unshift(action.payload);
 			state.currentClassroom = action.payload;
 			state.status = 'Classroom add success';
-			alert('Classroom Create Success!');
+			alert('Classroom add Success!');
 		},
 		createClassroomFailed: (state, action) => {
 			state.status = 'Classroom add failed';
 			alert('Classroom Create Failed!');
+		},
+		joinClassroomLoadRequest: (state, action) => {
+			state.status = 'Classroom join loading';
+		},
+
+		joinClassroomSuccess: (state, action) => {
+			console.log(action.payload);
+			state.classes.unshift(action.payload.classrooms[0]);
+			state.currentClassroom = action.payload.classrooms[0];
+			state.status = 'Classroom join success';
+			alert('Classroom join Success!');
+		},
+		joinClassroomFailed: (state, action) => {
+			state.status = 'Classroom add failed';
+			alert('Classroom join Failed!');
 		},
 
 		classroomEditRequest: (state, action) => {
@@ -96,9 +114,101 @@ const {
 	deleteClassroomRequest,
 	deleteClassroomSuccess,
 	deleteClassroomFailed,
+	joinClassroomLoadRequest,
+	joinClassroomSuccess,
+	joinClassroomFailed,
 } = newClassroomSlice.actions;
 
 export default newClassroomSlice.reducer;
+
+export const getClassrooms = (link) =>
+	apiCallBegan({
+		url: '/classroom/',
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadClassroomRequest.type,
+		onSuccess: loadClassroomSuccess.type,
+		onError: loadClassroomFailed.type,
+	});
+
+export const addClassroom = (link, formdata) =>
+	apiCallBegan({
+		url: link,
+		method: 'post',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		data: formdata,
+		type: 'regular',
+		onStart: createClassroomLoadRequest.type,
+		onSuccess: createClassroomSuccess.type,
+		onError: createClassroomFailed.type,
+	});
+export const joinClassroom = (link, formdata) =>
+	apiCallBegan({
+		url: link,
+		method: 'post',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		data: formdata,
+		type: 'regular',
+		onStart: joinClassroomLoadRequest.type,
+		onSuccess: joinClassroomSuccess.type,
+		onError: joinClassroomFailed.type,
+	});
+export const retrieveClassroom = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadCurrentClassroomRequest.type,
+		onSuccess: loadCurrentClassroomSuccess.type,
+		onError: loadCurrentClassroomFailed.type,
+	});
+export const editClassroom = (link, formData) =>
+	apiCallBegan({
+		url: link,
+		method: 'put',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		data: formData,
+		onStart: classroomEditRequest.type,
+		onSuccess: classroomEditSuccess.type,
+		onError: classroomEditFailed.type,
+	});
+export const deleteClassroom = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'delete',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: deleteClassroomRequest.type,
+		onSuccess: deleteClassroomSuccess.type,
+		onError: deleteClassroomFailed.type,
+	});
 
 export const getAdviserClassroom = () =>
 	apiCallBegan({
@@ -189,18 +299,18 @@ export const getStudentClassroom = () =>
 		onError: loadClassroomFailed.type,
 	});
 
-export const joinClassroom = (classroom) =>
-	apiCallBegan({
-		url: '/classroom/join',
-		method: 'post',
-		headers: {
-			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-			'Content-Type': 'application/json',
-			accept: 'application/json',
-		},
-		data: { classroom },
-		type: 'regular',
-		onStart: createClassroomLoadRequest.type,
-		onSuccess: createClassroomSuccess.type,
-		onError: createClassroomFailed.type,
-	});
+// export const joinClassroom = (link, formdata) =>
+// 	apiCallBegan({
+// 		url: link,
+// 		method: 'post',
+// 		headers: {
+// 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+// 			'Content-Type': 'application/json',
+// 			accept: 'application/json',
+// 		},
+// 		data: formdata,
+// 		type: 'regular',
+// 		onStart: createClassroomLoadRequest.type,
+// 		onSuccess: createClassroomSuccess.type,
+// 		onError: createClassroomFailed.type,
+// 	});

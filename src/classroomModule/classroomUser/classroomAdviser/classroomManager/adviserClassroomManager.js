@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useParams, Route } from 'react-router';
+import { useParams, Route, useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import queryString from 'query-string';
 import ClassroomDashboard from './tabs/dashboard/classroomAdviserDashboard';
@@ -10,8 +10,11 @@ import ClassroomSubmission from './tabs/submissions/classroomAdviserSubmission';
 
 import {
 	deleteAdviserClassroom,
+	deleteClassroom,
 	editAdviserClassroom,
+	editClassroom,
 	getCurrentClassroom,
+	retrieveClassroom,
 } from '../../../../store/newClassroomSlice';
 import useFetch from '../../../../hooks/useFetch';
 import {
@@ -35,6 +38,7 @@ const Input = styled('input')({
 
 const AdviserClassroomManager = () => {
 	const location = useLocation();
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const { tab } = queryString.parse(location.search);
 	const { id } = useParams();
@@ -47,15 +51,21 @@ const AdviserClassroomManager = () => {
 	};
 
 	useEffect(() => {
-		dispatch(getCurrentClassroom(id));
+		dispatch(retrieveClassroom(`/classroom/change/${id}`));
 	}, []);
 	const currentClassroom = useSelector((state) => state.newClass.currentClassroom);
+	const status = useSelector((state) => state.newClass.status);
 	const [classroom, setClassroom] = useState({});
 	useEffect(() => {
 		if (currentClassroom) {
 			setClassroom({ ...currentClassroom, coverFile: currentClassroom.cover });
 		}
 	}, [currentClassroom]);
+	useEffect(() => {
+		if (status == 'Classroom delete success') {
+			history.replace('/classroom?ref=adviser&navTab=classroom');
+		}
+	}, [status]);
 
 	const onChange = (e) => {
 		e.preventDefault();
@@ -88,11 +98,11 @@ const AdviserClassroomManager = () => {
 		form_data.append('description', description);
 		form_data.append('privacy', privacy);
 		form_data.append('subject', subject);
-		dispatch(editAdviserClassroom(classroom.id, form_data));
+		dispatch(editClassroom(`/classroom/change/${classroom.id}`, form_data));
 	};
 
 	const handleDelete = () => {
-		dispatch(deleteAdviserClassroom(classroom.id));
+		dispatch(deleteClassroom(`/classroom/change/${classroom.id}`));
 	};
 
 	const tabs = [

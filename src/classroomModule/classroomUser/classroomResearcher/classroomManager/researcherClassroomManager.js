@@ -5,7 +5,7 @@ import ProductDetailComponent from '../../../../materialUI/components/reuseableC
 import PageManagerComponent from '../../../../materialUI/components/reuseableComponents/pageManagerComponent';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
-import { getCurrentClassroom } from '../../../../store/newClassroomSlice';
+import { getCurrentClassroom, retrieveClassroom } from '../../../../store/newClassroomSlice';
 import useFetch from '../../../../hooks/useFetch';
 import ResearcherResourceTab from './tabs/resources/researcherResourceTab';
 import ResearcherWorkspaceTab from './tabs/workspaces/researcherWorkspaceTab';
@@ -23,7 +23,7 @@ const ResearcherClassroomManager = () => {
 		setValue(newValue);
 	};
 	useEffect(() => {
-		dispatch(getCurrentClassroom(id));
+		dispatch(retrieveClassroom(`/classroom/change/${id}`));
 	}, []);
 	const fetchedClassroom = useSelector((state) => state.newClass.currentClassroom);
 	const { items: classroom, setItems: setClassroom } = classroomState(fetchedClassroom);

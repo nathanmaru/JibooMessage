@@ -9,16 +9,21 @@ import useFetch from '../../../hooks/useFetch';
 import ClassroomDetail from './createSteps/classroomDetail';
 import ClassroomAffliate from './createSteps/classroomAffliate';
 import ClassroomSubscriptionPlan from './createSteps/classroomSubscriptionPlan';
-import { getAdviserClassroom } from '../../../store/newClassroomSlice';
+import { getAdviserClassroom, getClassrooms } from '../../../store/newClassroomSlice';
 
 const ClassroomAdviser = () => {
 	const dispatch = useDispatch();
 	// api call
 	useEffect(() => {
-		dispatch(getAdviserClassroom());
+		dispatch(getClassrooms(`/classroom/?search=adviser`));
 	}, []);
 	// get from redux
 	const { classes } = useSelector((state) => state.newClass);
+	// const [classrooms, setClassrooms] = useState([]);
+	// useEffect(() => {
+	// 	setClassrooms(classes);
+	// }, [classes]);
+	// console.log(classrooms);
 
 	const { items: classrooms, setItems: setClassrooms } = useFetch(classes);
 

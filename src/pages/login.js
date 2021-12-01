@@ -31,7 +31,6 @@ const Login = () => {
 	const dispatch = useDispatch();
 
 	const { email, password } = formData;
-	// const { errors, showError, setShowError } = useForm(formData);
 
 	const onChange = (e) => {
 		e.preventDefault();
@@ -40,10 +39,7 @@ const Login = () => {
 
 	const handleSubmitLogin = (e) => {
 		e.preventDefault();
-		// setShowError(true);
-		// if (!errors) {
 		dispatch(login(email, password));
-		// }
 	};
 	const history = useHistory();
 
@@ -57,8 +53,13 @@ const Login = () => {
 		// dispatch(socialLoginFacebook(response.accessToken));
 	};
 
-	const { status } = useSelector((state) => state.auth);
+	const { isAuthenticated, status } = useSelector((state) => state.auth);
 	const { loading } = useStatus(status);
+	useEffect(() => {
+		if (isAuthenticated) {
+			history.push('/home');
+		}
+	}, [isAuthenticated]);
 	const handleRedirect = () => {
 		history.push('/home');
 	};

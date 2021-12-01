@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import useStatus from '../../../../hooks/useStatus';
 import FeedBackButton from '../../../../hooks/feedBackButton';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { addAdviserClassroom } from '../../../../store/newClassroomSlice';
+import { addAdviserClassroom, addClassroom } from '../../../../store/newClassroomSlice';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -42,7 +42,8 @@ const ClassroomDetail = () => {
 		form_data.append('description', description);
 		form_data.append('privacy', privacy);
 		form_data.append('subject', subject);
-		dispatch(addAdviserClassroom(form_data));
+		// dispatch(addAdviserClassroom(form_data));
+		dispatch(addClassroom(`/classroom/create/`, form_data));
 	};
 	console.log(inputForm.coverFile);
 	const onChange = (e) => {
