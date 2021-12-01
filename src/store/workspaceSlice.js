@@ -115,9 +115,9 @@ export const getCurrentWorkspace = (id) =>
 		onSuccess: currentWorkspaceLoadSuccess.type,
 		onError: currentWorkspaceLoadFailed.type,
 	});
-export const createWorkspace = (classroom, formdata) =>
+export const createWorkspace = (link, formdata) =>
 	apiCallBegan({
-		url: '/workspace/' + classroom,
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -130,10 +130,10 @@ export const createWorkspace = (classroom, formdata) =>
 		onSuccess: workspaceAddSuccess.type,
 		onError: workspaceAddFailed.type,
 	});
-export const updateWorkspace = (id, formdata) =>
+export const updateWorkspace = (link, formdata) =>
 	apiCallBegan({
-		url: '/workspace/change/' + id,
-		method: 'put',
+		url: link,
+		method: 'patch',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',

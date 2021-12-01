@@ -91,9 +91,9 @@ export default submissionSlice.reducer;
 
 //action creators
 
-export const createSubmission = (workspace, formData) =>
+export const createSubmission = (link, formData) =>
 	apiCallBegan({
-		url: '/submission/workspace/' + workspace,
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

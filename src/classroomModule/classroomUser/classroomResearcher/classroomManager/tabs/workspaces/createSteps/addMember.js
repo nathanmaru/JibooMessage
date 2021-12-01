@@ -17,6 +17,7 @@ import {
 	getAvailableMember,
 	getAvailableWorkspace,
 } from '../../../../../../../store/workspaceMemberSlice';
+import { updateWorkspace } from '../../../../../../../store/workspaceSlice';
 import { getMembers } from '../../../../../../../store/classroomMemberSlice';
 import useFetch from '../../../../../../../hooks/useFetch';
 
@@ -39,14 +40,17 @@ const AddMember = () => {
 	const memberState = useFetch;
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(getAvailableMember(id));
+		dispatch(getMembers(`/classroom/member/list/?search=${id}`));
 	}, []);
-	const fetchedMembers = useSelector((state) => state.worksMember.members);
+	const fetchedMembers = useSelector((state) => state.classMember.members);
+	const user = useSelector((state) => state.auth.user);
 	const { items: left, setItems: setLeft } = memberState(fetchedMembers);
+	console.log(fetchedMembers);
 
 	const [checked, setChecked] = React.useState([]);
 	// const [left, setLeft] = React.useState([{ id: 1, name: 'Jonathan Aplacador' }]); //Fetched Members of the classroom here
 	const [right, setRight] = React.useState([]); ///Selected
+	const [myId, setMyId] = React.useState(0); ///Selected
 
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
@@ -85,11 +89,21 @@ const AddMember = () => {
 		setRight(not(right, rightChecked));
 		setChecked(not(checked, rightChecked));
 	};
+	function handleSet(id) {
+		// setMyId(id);
+	}
 	const handleAddMember = () => {
+		let ids = [];
 		right.map((val) => {
-			console.log(val.uid);
-			dispatch(addWorkspaceMember(currentWorkspace.id, val.uid));
+			console.log(val.id);
+			ids.push(val.id);
 		});
+		// ids.push(myId);
+		console.log(ids);
+		let formData = new FormData();
+		formData.append('members', ids);
+
+		dispatch(updateWorkspace(`/workspace/change/${currentWorkspace.id}`, formData));
 	};
 
 	const customList = (title, items) => (
@@ -126,25 +140,27 @@ const AddMember = () => {
 			>
 				{items.map((value) => {
 					const labelId = `transfer-list-all-item-${value.id}-label`;
-
-					return (
-						<ListItem key={value.id} role='listitem' button onClick={handleToggle(value)}>
-							<ListItemIcon>
-								<Checkbox
-									checked={checked.indexOf(value) !== -1}
-									tabIndex={-1}
-									disableRipple
-									inputProps={{
-										'aria-labelledby': labelId,
-									}}
-								/>
-							</ListItemIcon>
-							<ListItemText
-								id={labelId}
-								primary={`${value.first_name} ${value.last_name}`}
-							/>
-						</ListItem>
-					);
+					console.log(value);
+					if (value.user.id == user.id) {
+						handleSet(value.id);
+					}
+					if (value.user.id != user.id) {
+						return (
+							<ListItem key={value.id} role='listitem' button onClick={handleToggle(value)}>
+								<ListItemIcon>
+									<Checkbox
+										checked={checked.indexOf(value) !== -1}
+										tabIndex={-1}
+										disableRipple
+										inputProps={{
+											'aria-labelledby': labelId,
+										}}
+									/>
+								</ListItemIcon>
+								<ListItemText id={labelId} primary={`${value.user.full_name}`} />
+							</ListItem>
+						);
+					}
 				})}
 				<ListItem />
 			</List>

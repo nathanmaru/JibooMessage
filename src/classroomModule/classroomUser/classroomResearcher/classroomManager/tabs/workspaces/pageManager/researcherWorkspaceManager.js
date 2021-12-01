@@ -93,13 +93,14 @@ const ResearcherWorkspaceManager = () => {
 		const { name, description, status, cover, coverFile, code } = workspace;
 		console.log(coverFile, cover);
 		if (coverFile != cover) {
+			alert('Picture is change');
 			form_data.append('cover', coverFile, coverFile.name);
 		}
 		form_data.append('name', name);
 		form_data.append('code', code);
 		form_data.append('description', description);
 		form_data.append('status', status);
-		dispatch(updateWorkspace(id, form_data));
+		dispatch(updateWorkspace(`workspace/change/${id}`, form_data));
 	};
 
 	const handleDelete = () => {

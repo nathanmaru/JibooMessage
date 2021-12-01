@@ -19,7 +19,7 @@ const ResearcherWorkspaceSubmissions = () => {
 	const dispatch = useDispatch();
 	const submissionState = useFetch;
 	useEffect(() => {
-		dispatch(getSubmissions(`/submission/workspace/${id}`));
+		dispatch(getSubmissions(`/submission/?search=${id}`));
 	}, []);
 	const fetchedSubmissions = useSelector((state) => state.submission.submissions);
 	const { items: submissions, setItems: setSubmissions } = submissionState(fetchedSubmissions);

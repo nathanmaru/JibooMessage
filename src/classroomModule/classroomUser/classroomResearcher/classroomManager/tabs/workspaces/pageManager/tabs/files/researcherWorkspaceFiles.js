@@ -27,7 +27,7 @@ const ResearcherWorkspaceFiles = () => {
 
 	// folder
 	useEffect(() => {
-		dispatch(getFolders(`workspace/folder/${id}`));
+		dispatch(getFolders(`/workspace/folder?search=${id}`));
 	}, []);
 	const fetchedFolders = useSelector((state) => state.folder.folders);
 	const { items: folders, setItems: setFolders } = folderState(fetchedFolders);
@@ -35,7 +35,7 @@ const ResearcherWorkspaceFiles = () => {
 	// Files
 	useEffect(() => {
 		if (folder) {
-			dispatch(getfiles(`workspace/file/${folder}`));
+			dispatch(getfiles(`/workspace/file?search=${folder}`));
 		}
 	}, [folder]);
 	const fetchedFiles = useSelector((state) => state.file.files);
@@ -59,7 +59,7 @@ const ResearcherWorkspaceFiles = () => {
 		// }
 	};
 	const handleDelete = (item) => {
-		dispatch(deletefile(`workspace/file/change/${item.id}`));
+		dispatch(deletefile(`workspace/file/${item.id}`));
 	};
 
 	const [inputForm, setInputForm] = useState({
@@ -78,7 +78,7 @@ const ResearcherWorkspaceFiles = () => {
 		formData.append('description', description);
 		formData.append('status', status);
 		formData.append('file', selectedFile.id);
-		dispatch(createSubmission(id, formData));
+		dispatch(createSubmission('/submission/', formData));
 	};
 
 	return (

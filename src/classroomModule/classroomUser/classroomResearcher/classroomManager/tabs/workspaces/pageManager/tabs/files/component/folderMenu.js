@@ -40,7 +40,7 @@ const FolderMenu = () => {
 	};
 	useEffect(() => {
 		if (folder) {
-			dispatch(retrieveFolder(`/workspace/folder/change/${folder}`));
+			dispatch(retrieveFolder(`/workspace/folder/${folder}`));
 		}
 	}, [folder]);
 	const currentFolderData = useSelector((state) => state.folder.currentFolder);
@@ -59,15 +59,24 @@ const FolderMenu = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams();
 	const handleCreateFolder = () => {
-		dispatch(addFolder(`/workspace/folder/${id}`, inputForm.name));
+		let formData = new FormData();
+		formData.append('workspace', id);
+		formData.append('name', inputForm.name);
+		dispatch(addFolder(`/workspace/folder`, formData));
 	};
 	const handleEditFolder = () => {
-		dispatch(editFolder(`/workspace/folder/change/${folder}`, inputForm.name));
+		dispatch(editFolder(`/workspace/folder/${folder}`, inputForm.name));
 	};
 	const handleDeleteFolder = () => {
-		dispatch(deleteFolder(`/workspace/folder/change/${folder}`));
-		history.replace(`/classroom/researcher/workspace/${id}?tab=files`);
+		dispatch(deleteFolder(`/workspace/folder/${folder}`));
+		// history.replace(`/classroom/researcher/workspace/${id}?tab=files`);
 	};
+	const { status } = useSelector((state) => state.folder);
+	useEffect(() => {
+		if (status == 'Folder delete success') {
+			history.replace('/classroom/researcher/workspace/' + id);
+		}
+	}, [status]);
 
 	//validation
 	const validationMsg = Yup.object().shape({
@@ -84,8 +93,11 @@ const FolderMenu = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
-
-		dispatch(addFolder(`/workspace/folder/${id}`, data.name));
+		let formData = new FormData();
+		formData.append('workspace', id);
+		formData.append('name', data.name);
+		dispatch(addFolder(`/workspace/folder`, formData));
+		// dispatch(addFolder(`/workspace/folder/${id}`, data.name));
 	};
 
 	return (

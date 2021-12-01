@@ -53,7 +53,7 @@ const ClassroomSubmission = () => {
 	const { id } = useParams();
 
 	useEffect(() => {
-		dispatch(getSubmissions(`submission/classroom/${id}`));
+		dispatch(getSubmissions(`/submission/classroom?search=${id}`));
 	}, []);
 	const fetchedSubmissions = useSelector((state) => state.submission.submissions);
 	const { items: submissions, setItems: setSubmissions } = submissionsState(fetchedSubmissions);
