@@ -14,9 +14,15 @@ export const newClassroomSlice = createSlice({
 		},
 
 		loadClassroomSuccess: (state, action) => {
-			if (action.payload[0]) {
-				state.classes = action.payload[0].classrooms;
-			}
+			state.classes = [];
+			action.payload.map((val) => {
+				const { classrooms } = val;
+				state.classes.unshift(classrooms[0]);
+			});
+			console.log(action.payload);
+			// if (action.payload[0]) {
+			// 	state.classes = action.payload[0].classrooms;
+			// }
 			state.status = 'Classroom load success';
 		},
 		loadClassroomFailed: (state, action) => {
@@ -82,6 +88,20 @@ export const newClassroomSlice = createSlice({
 			state.status = 'Classroom edit failed';
 			alert('Classroom Edit Failed!');
 		},
+		classroomPatchRequest: (state, action) => {
+			state.status = 'Classroom affilate add loading';
+		},
+		classroomPatchSuccess: (state, action) => {
+			const index = state.classes.findIndex((item) => item.id === action.payload.id);
+			state.classes[index] = action.payload;
+			state.currentClassroom = action.payload;
+			state.status = 'Classroom affilate add success';
+			alert('Classroom affilate add Success!');
+		},
+		classroomPatchFailed: (state, action) => {
+			state.status = 'Classroom affilate add failed';
+			alert('Classroom affilate add Failed!');
+		},
 		deleteClassroomRequest: (state, action) => {
 			state.status = 'Classroom delete loading';
 		},
@@ -117,13 +137,16 @@ const {
 	joinClassroomLoadRequest,
 	joinClassroomSuccess,
 	joinClassroomFailed,
+	classroomPatchRequest,
+	classroomPatchSuccess,
+	classroomPatchFailed,
 } = newClassroomSlice.actions;
 
 export default newClassroomSlice.reducer;
 
 export const getClassrooms = (link) =>
 	apiCallBegan({
-		url: '/classroom/',
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -180,10 +203,10 @@ export const retrieveClassroom = (link) =>
 		onSuccess: loadCurrentClassroomSuccess.type,
 		onError: loadCurrentClassroomFailed.type,
 	});
-export const editClassroom = (link, formData) =>
+export const editClassroom = (link, formData, method) =>
 	apiCallBegan({
 		url: link,
-		method: 'put',
+		method: method,
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
@@ -194,6 +217,21 @@ export const editClassroom = (link, formData) =>
 		onStart: classroomEditRequest.type,
 		onSuccess: classroomEditSuccess.type,
 		onError: classroomEditFailed.type,
+	});
+export const addAffliateClassroom = (link, formData) =>
+	apiCallBegan({
+		url: link,
+		method: 'patch',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		data: formData,
+		onStart: classroomPatchRequest.type,
+		onSuccess: classroomPatchSuccess.type,
+		onError: classroomPatchFailed.type,
 	});
 export const deleteClassroom = (link) =>
 	apiCallBegan({

@@ -97,9 +97,9 @@ export default classroomMemberSlice.reducer;
 
 //action creators
 
-export const getMembers = (classroom) =>
+export const getMembers = (link) =>
 	apiCallBegan({
-		url: '/classroom/members/' + classroom,
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

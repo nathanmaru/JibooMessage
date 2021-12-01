@@ -42,9 +42,9 @@ const ResearcherClassroomManager = () => {
 			component: <ResearcherResourceTab />,
 		},
 		{
-			label: 'Students',
-			link: `/classroom/researcher/${id}?tab=students`,
-			value: 'students',
+			label: 'People',
+			link: `/classroom/researcher/${id}?tab=people`,
+			value: 'people',
 			component: <ResearcherClassroomStudentTab />,
 		},
 		{

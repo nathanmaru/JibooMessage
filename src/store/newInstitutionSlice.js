@@ -14,7 +14,12 @@ export const institutionSlice = createSlice({
 			state.status = 'loading';
 		},
 		institutionLoadSuccess: (state, action) => {
-			state.institutions = action.payload;
+			state.institutions = [];
+			action.payload.map((val) => {
+				const { institutions } = val;
+				state.institutions.unshift(institutions[0]);
+			});
+			// state.institutions = action.payload;
 			state.status = 'success';
 			// state.institutions = action.payload;
 		},
@@ -45,6 +50,30 @@ export const institutionSlice = createSlice({
 		institutionRetrieveFailed: (state, action) => {
 			state.status = 'failed';
 			alert('Institution Retrieve Failed!');
+		},
+		institutionEditRequest: (state, action) => {
+			state.status = 'loading';
+		},
+		institutionEditSuccess: (state, action) => {
+			state.status = 'success';
+			state.currentInstitution = action.payload;
+			alert('Institution Edit Sucess!');
+		},
+		institutionEditFailed: (state, action) => {
+			state.status = 'failed';
+			alert('Institution Edit Failed!');
+		},
+		institutionDeleteRequest: (state, action) => {
+			state.status = 'loading';
+		},
+		institutionDeleteSuccess: (state, action) => {
+			state.status = 'Institution Delete Sucess';
+			state.currentInstitution = null;
+			alert('Institution Delete Sucess!');
+		},
+		institutionDeleteFailed: (state, action) => {
+			state.status = 'failed';
+			alert('Institution Delete Failed!');
 		},
 		// verification
 		verificationApplyRequest: (state, action) => {
@@ -105,6 +134,12 @@ const {
 	verificationCheckRequest,
 	verificationCheckSuccess,
 	verificationCheckFailed,
+	institutionEditRequest,
+	institutionEditSuccess,
+	institutionEditFailed,
+	institutionDeleteRequest,
+	institutionDeleteSuccess,
+	institutionDeleteFailed,
 } = institutionSlice.actions;
 
 export default institutionSlice.reducer;
@@ -141,9 +176,9 @@ export const createInstitution = (link, formdata) =>
 		onError: institutionCreateFailed.type,
 	});
 
-export const retrieveInstitution = (id) =>
+export const retrieveInstitution = (link) =>
 	apiCallBegan({
-		url: '/institution/change/' + id,
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -155,9 +190,9 @@ export const retrieveInstitution = (id) =>
 		onSuccess: institutionRetrieveSuccess.type,
 		onError: institutionRetrieveFailed.type,
 	});
-export const editInstitution = (id, form_data) =>
+export const editInstitution = (link, form_data) =>
 	apiCallBegan({
-		url: '/institution/change/' + id,
+		url: link,
 		method: 'patch',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -166,9 +201,24 @@ export const editInstitution = (id, form_data) =>
 		},
 		data: form_data,
 		type: 'regular',
-		onStart: institutionRetrieveRequest.type,
-		onSuccess: institutionRetrieveSuccess.type,
-		onError: institutionRetrieveFailed.type,
+		onStart: institutionEditRequest.type,
+		onSuccess: institutionEditSuccess.type,
+		onError: institutionEditFailed.type,
+	});
+export const deleteInstitution = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'delete',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+
+		type: 'regular',
+		onStart: institutionDeleteRequest.type,
+		onSuccess: institutionDeleteSuccess.type,
+		onError: institutionDeleteFailed.type,
 	});
 
 // Verification

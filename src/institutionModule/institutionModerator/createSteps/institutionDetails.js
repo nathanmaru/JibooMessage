@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	TextField,
 	Button,
+	Input,
 	InputLabel,
 	MenuItem,
 	FormControl,
@@ -31,7 +32,7 @@ import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { IMaskInput } from 'react-imask';
 
-const Input = styled('input')({
+const InputUpload = styled('input')({
 	display: 'none',
 });
 
@@ -67,6 +68,7 @@ const InstitutionDetails = () => {
 		contact: '',
 		email: '',
 		website: '',
+		textmask: '',
 		privacy: 'public',
 		description: '',
 		cover: defaultImage,
@@ -133,6 +135,7 @@ const InstitutionDetails = () => {
 
 	const onSubmit = (data) => {
 		console.log(JSON.stringify(data, null, 2));
+		console.log(values.textmask);
 
 		let form_data = new FormData();
 		const { website, privacy, description, cover, coverFile } = inputForm;
@@ -141,12 +144,12 @@ const InstitutionDetails = () => {
 		}
 		form_data.append('name', data.name);
 		form_data.append('address', data.address);
-		form_data.append('contact', data.contact);
+		form_data.append('contact', values.textmask);
 		form_data.append('email', data.email);
 		form_data.append('website', website);
 		form_data.append('privacy', privacy);
 		form_data.append('description', description);
-		dispatch(createInstitution(form_data));
+		dispatch(createInstitution(`/institution/create`, form_data));
 	};
 
 	//contact-no
@@ -179,7 +182,7 @@ const InstitutionDetails = () => {
 							}}
 						>
 							<label htmlFor='contained-button-file'>
-								<Input
+								<InputUpload
 									accept='image/*'
 									id='contained-button-file'
 									name='cover'
@@ -248,13 +251,6 @@ const InstitutionDetails = () => {
 
 				{/* Right Side */}
 				<div className=' flex flex-col space-y-3 '>
-					{/* <TextField
-						label="Contact No."
-						variant="outlined"
-						name="contact"
-						value={inputForm.contact}
-						onChange={(e) => onChange(e)}
-					/> */}
 					<FormControl fullWidth>
 						<InputLabel htmlFor='formatted-text-mask-input'>Mobile Number</InputLabel>
 						<Input
@@ -277,11 +273,6 @@ const InstitutionDetails = () => {
 						// {...register("website")}
 						// error={errors.website ? true : false}
 					/>
-					{/* <Typography
-						sx={{ fontSize: "12px", color: "red", fontStyle: "italic", mb: 1 }}
-					>
-						{errors.website?.message}
-					</Typography> */}
 
 					<FormControl fullWidth>
 						<InputLabel id='demo-simple-select-label'>Privacy</InputLabel>
@@ -306,24 +297,11 @@ const InstitutionDetails = () => {
 						multiline
 						minRows={4}
 					/>
+
 					<div className='flex justify-end'>
-						{/* <Button onClick={handleClassroomDetail} variant="contained"> */}
 						<Button type='submit' variant='contained'>
 							Create Institution
 						</Button>
-						{/* <FeedBackButton
-						button={
-							<LoadingButton
-								onClick={handleClassroomDetail}
-								loading={loading}
-								type='submit'
-								variant='contained'
-							>
-								Create Classroom
-							</LoadingButton>
-						}
-						status={status}
-					/> */}
 					</div>
 				</div>
 			</div>

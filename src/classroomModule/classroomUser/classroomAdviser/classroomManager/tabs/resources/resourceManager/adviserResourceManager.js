@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, Switch, useLocation } from 'react-router-dom';
-import { useParams, Route } from 'react-router';
+import { useParams, Route, useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import queryString from 'query-string';
 import ProductDetailComponent from '../../../../../../../materialUI/components/reuseableComponents/dashboardComponentCopy';
@@ -34,12 +34,15 @@ const Input = styled('input')({
 const AdviserResourceManager = () => {
 	const dispatch = useDispatch();
 	const { id } = useParams();
+	const history = useHistory();
 	const useResource = useFetch;
 
 	useEffect(() => {
-		dispatch(retrieveResource(`resource/classroom/change/${id}`));
+		dispatch(retrieveResource(`/resource/classroom/change/${id}`));
 	}, []);
 	const fetchedResource = useSelector((state) => state.newResource.currentResource);
+	const { status } = useSelector((state) => state.newResource);
+
 	const { items: resource, setItems: setResource } = useResource(fetchedResource);
 	useEffect(() => {
 		if (fetchedResource) {
@@ -73,11 +76,16 @@ const AdviserResourceManager = () => {
 		form_data.append('name', name);
 		form_data.append('description', description);
 		form_data.append('status', status);
-		dispatch(editResource(`resource/classroom/change/${id}`, form_data));
+		dispatch(editResource(`/resource/classroom/change/${id}`, form_data));
 	};
 	const handleDelete = () => {
-		dispatch(deleteResource(`resource/classroom/change/${id}`));
+		dispatch(deleteResource(`/resource/classroom/change/${id}`));
 	};
+	useEffect(() => {
+		if (status == 'Resources Delete success') {
+			history.goBack();
+		}
+	}, [status]);
 	const EditDialog = () => {
 		return (
 			<div className='flex flex-col space-y-4 '>

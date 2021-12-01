@@ -12,7 +12,7 @@ const ResearcherResourceTab = () => {
 	const { id } = useParams();
 
 	useEffect(() => {
-		dispatch(getResources('resource/classroom/' + id));
+		dispatch(getResources('/resource/classroom?search=' + id));
 	}, []);
 	const fetchedResources = useSelector((state) => state.newResource.resources);
 	const { items: resources, setItems: setResources } = resourceState(fetchedResources);

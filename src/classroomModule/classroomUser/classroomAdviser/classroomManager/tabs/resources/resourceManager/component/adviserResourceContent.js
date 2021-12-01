@@ -19,7 +19,7 @@ const AdviserResourceContent = () => {
 
 	// folder
 	useEffect(() => {
-		dispatch(getFolders(`resource/classroom/folder/${id}`));
+		dispatch(getFolders(`/resource/classroom/folder?search=${id}`));
 	}, []);
 	const fetchedFolders = useSelector((state) => state.folder.folders);
 	const { items: folders, setItems: setFolders } = folderState(fetchedFolders);
@@ -27,31 +27,22 @@ const AdviserResourceContent = () => {
 	// Files
 	useEffect(() => {
 		if (folder) {
-			dispatch(getfiles(`resource/classroom/file/${folder}`));
+			dispatch(getfiles(`/resource/classroom/file?search=${folder}`));
 		}
 	}, [folder]);
 	const fetchedFiles = useSelector((state) => state.file.files);
 	const { items: files, setItems: setFiles } = fileState(fetchedFiles);
 
-	// Upload Files
-	useEffect(() => {
-		if (folder) {
-			dispatch(getfiles(`resource/classroom/uploadfile/${folder}`));
-		}
-	}, [folder]);
-	const fetchedUploadFiles = useSelector((state) => state.file.uploadFiles);
-	const { items: uploadFiles, setItems: setUploadFiles } = fileState(fetchedUploadFiles);
-
 	const handMeID = (item) => {
-		if (item.hasOwnProperty('content')) {
+		if (item.file) {
+			alert('is an upload file');
+		} else {
 			history.push(`/classroom/adviser/resources/file/${item.id}`);
 			console.log(item);
 		}
 	};
 	const delete_File = (item) => {
-		if (item.hasOwnProperty('content')) {
-			dispatch(deletefile(`resource/classroom/file/change/${item.id}`));
-		}
+		dispatch(deletefile(`resource/classroom/file/change/${item.id}`));
 	};
 	return (
 		<div className='grid grid-rows-7 grid-flow-row gap-2  min-w-full'>
@@ -60,12 +51,7 @@ const AdviserResourceContent = () => {
 					<FolderList folders={folders} link={`/classroom/adviser/resources/${id}`} />
 				</div>
 				<div className=' col-span-5 border-2 rounded-md'>
-					<FileTable
-						files={files}
-						uploadFiles={uploadFiles}
-						handMeID={handMeID}
-						delete_File={delete_File}
-					/>
+					<FileTable files={files} handMeID={handMeID} delete_File={delete_File} />
 				</div>
 			</div>
 			<div className='row-span-2'></div>

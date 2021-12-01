@@ -120,10 +120,10 @@ const AdviserClassroomManager = () => {
 			component: <AdviserResourceTab />,
 		},
 		{
-			label: 'Students',
-			link: `/classroom/adviser/${id}?tab=students`,
+			label: 'People',
+			link: `/classroom/adviser/${id}?tab=people`,
 
-			value: 'students',
+			value: 'people',
 			component: <AdviserClassroomStudents />,
 		},
 		{

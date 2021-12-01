@@ -26,7 +26,6 @@ export const newResourceSlice = createSlice({
 		retrieveResourcesSuccess: (state, action) => {
 			state.status = 'Resources Retrieve success';
 			state.currentResource = action.payload;
-			alert('Resources Load Success!');
 		},
 		retrieveResourcesFailed: (state, action) => {
 			state.status = 'Resources Retrieve failed';
@@ -53,7 +52,7 @@ export const newResourceSlice = createSlice({
 			alert('Resources Edit Success!');
 		},
 		editResourcesFailed: (state, action) => {
-			state.status = 'Resources Edit failed'; 
+			state.status = 'Resources Edit failed';
 			alert('Resources Edit Failed!');
 		},
 		deleteResourcesRequest: (state, action) => {
@@ -66,7 +65,7 @@ export const newResourceSlice = createSlice({
 		},
 		deleteResourcesFailed: (state, action) => {
 			state.status = 'Resources Delete failed';
-			alert('Resources Edit Failed!'); 
+			alert('Resources Edit Failed!');
 		},
 	},
 });
@@ -108,7 +107,7 @@ export const getResources = (link) =>
 		onError: loadResourcesFailed.type,
 	});
 
-export const addResource = (link, name, description) =>
+export const addResource = (link, formdata) =>
 	apiCallBegan({
 		url: link,
 		method: 'post',
@@ -117,7 +116,7 @@ export const addResource = (link, name, description) =>
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { name, description },
+		data: formdata,
 		type: 'regular',
 		onStart: addResourcesRequest.type,
 		onSuccess: addResourcesSuccess.type,
@@ -141,7 +140,7 @@ export const retrieveResource = (link) =>
 export const editResource = (link, formData) =>
 	apiCallBegan({
 		url: link,
-		method: 'put',
+		method: 'patch',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',

@@ -108,7 +108,7 @@ export const getFolders = (link) =>
 		onSuccess: loadFolderSuccess.type,
 		onError: loadFolderFailed.type,
 	});
-export const addFolder = (link, name) =>
+export const addFolder = (link, formdata) =>
 	apiCallBegan({
 		url: link,
 		method: 'post',
@@ -118,7 +118,7 @@ export const addFolder = (link, name) =>
 			accept: 'application/json',
 		},
 		type: 'regular',
-		data: { name },
+		data: formdata,
 		onStart: addFolderRequest.type,
 		onSuccess: addFolderSuccess.type,
 		onError: addFolderFailed.type,
@@ -138,7 +138,7 @@ export const retrieveFolder = (link) =>
 		onSuccess: retrieveFolderSuccess.type,
 		onError: retrieveFolderFailed.type,
 	});
-export const editFolder = (link, name) =>
+export const editFolder = (link, formData) =>
 	apiCallBegan({
 		url: link,
 		method: 'patch',
@@ -148,7 +148,7 @@ export const editFolder = (link, name) =>
 			accept: 'application/json',
 		},
 		type: 'regular',
-		data: { name },
+		data: formData,
 		onStart: editFolderRequest.type,
 		onSuccess: editFolderSuccess.type,
 		onError: editFolderFailed.type,

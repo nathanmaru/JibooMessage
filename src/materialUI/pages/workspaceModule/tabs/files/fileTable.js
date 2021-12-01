@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import Tooltip from '@mui/material/Tooltip';
 
-const FileTable = ({ files, uploadFiles, handMeID, delete_File, handleSubmit, submitButton }) => {
+const FileTable = ({ files, handMeID, delete_File, handleSubmit, submitButton }) => {
 	const contents = [...files];
 
 	return (

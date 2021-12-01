@@ -37,19 +37,19 @@ const ClassroomDetail = () => {
 	const { status } = useSelector((state) => state.class);
 	const { loading } = useStatus(status);
 
-	const handleClassroomDetail = () => {
-		let form_data = new FormData();
-		const { name, description, privacy, subject, cover, coverFile } = inputForm;
-		if (coverFile != defaultImage) {
-			form_data.append('cover', coverFile, coverFile.name);
-		}
-		form_data.append('name', name);
-		form_data.append('description', description);
-		form_data.append('privacy', privacy);
-		form_data.append('subject', subject);
-		// dispatch(addAdviserClassroom(form_data));
-		dispatch(addClassroom(`/classroom/create/`, form_data));
-	};
+	// const handleClassroomDetail = () => {
+	// 	let form_data = new FormData();
+	// 	const { name, description, privacy, subject, cover, coverFile } = inputForm;
+	// 	if (coverFile != defaultImage) {
+	// 		form_data.append('cover', coverFile, coverFile.name);
+	// 	}
+	// 	form_data.append('name', name);
+	// 	form_data.append('description', description);
+	// 	form_data.append('privacy', privacy);
+	// 	form_data.append('subject', subject);
+	// 	// dispatch(addAdviserClassroom(form_data));
+	// 	dispatch(addClassroom(`/classroom/create/`, form_data));
+	// };
 
 	console.log(inputForm.coverFile);
 	const onChange = (e) => {

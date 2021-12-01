@@ -13,7 +13,7 @@ import { getInstitutions, staffInstitutionList } from '../../../../store/newInst
 import FeedBackButton from '../../../../hooks/feedBackButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import useStatus from '../../../../hooks/useStatus';
-import { editAdviserClassroom } from '../../../../store/newClassroomSlice';
+import { editAdviserClassroom, editClassroom } from '../../../../store/newClassroomSlice';
 import ClassroomSubscriptionPlan from './classroomSubscriptionPlan';
 
 const ClassroomAffliate = () => {
@@ -23,7 +23,7 @@ const ClassroomAffliate = () => {
 	const { currentClassroom } = useSelector((state) => state.newClass);
 
 	useEffect(() => {
-		dispatch(getInstitutions(`/institution/staff`));
+		dispatch(getInstitutions(`/institution/`));
 	}, []);
 	const fetchedInstitutions = useSelector((state) => state.institution.institutions);
 	const { items: institutions, setItems: setInstitutions } = useFetch2(fetchedInstitutions);
@@ -48,7 +48,7 @@ const ClassroomAffliate = () => {
 		}
 		// console.log(form_data.entries());
 		console.log(selectInstitution);
-		dispatch(editAdviserClassroom(currentClassroom.id, form_data));
+		dispatch(editClassroom(`classroom/change/${currentClassroom.id}`, form_data, 'patch'));
 	};
 	return (
 		<>

@@ -164,9 +164,9 @@ const ModeratorInstitution = () => {
 					{/* {institutionStatus == 'loading' ? <Loader /> : null} */}
 					{institutions.map((item) => (
 						<CardComponent
-							image={item.institutions[0].cover}
-							item={item.institutions[0]}
-							link={`/institutions/moderator/${item.institutions[0].id}?tab=wall`}
+							image={item.cover}
+							item={item}
+							link={`/institutions/moderator/${item.id}?tab=wall`}
 						/>
 					))}
 				</CardHolder>
