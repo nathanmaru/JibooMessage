@@ -15,7 +15,6 @@ export const institutionSlice = createSlice({
 		},
 		institutionLoadSuccess: (state, action) => {
 			state.institutions = action.payload;
-
 			state.status = 'success';
 			// state.institutions = action.payload;
 		},

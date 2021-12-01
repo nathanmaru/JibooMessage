@@ -14,6 +14,9 @@ import {
 //mui
 import { Button, TextField, Typography } from "@mui/material";
 
+//Tour
+import { Steps } from "intro.js-react";
+
 //validation
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -61,8 +64,38 @@ const AdviserResourceTab = () => {
 		dispatch(addResource(`resource/classroom/${id}`, data.name, description));
 	};
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".create",
+			intro: "Create new resource packages here.",
+		},
+		{
+			element: ".cards",
+			intro: "Manage your packages here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
 			<div class="flex flex-col w-full space-y-4">
 				<BannerComponent
 					title=" Hello dear, Adviser !"
@@ -71,7 +104,9 @@ const AdviserResourceTab = () => {
 					{/* title, context, action, maxWidth, name, button */}
 					<DialogComponent
 						button={
-							<Button variant="contained">Create Resource Package</Button>
+							<Button className="create" variant="contained">
+								Create Resource Package
+							</Button>
 						}
 						title="Create Resource Package"
 						context="Guide your students to grow."
@@ -121,7 +156,7 @@ const AdviserResourceTab = () => {
 					</DialogComponent>
 				</BannerComponent>
 
-				<CardHolder>
+				<CardHolder tourIdentifier="cards">
 					{resources.length > 0
 						? resources.map((item) => (
 								<CardComponent

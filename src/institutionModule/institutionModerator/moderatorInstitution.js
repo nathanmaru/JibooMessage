@@ -83,23 +83,10 @@ const ModeratorInstitution = () => {
 	const [initialStep, setInitialStep] = useState(0);
 
 	const tourSteps = [
-		// {
-		// 	element: ".create",
-		// 	intro: (
-		// 		<>
-		// 			<p>
-		// 				Here you can create your institutional page that can help guide the
-		// 				students for a better research journey.
-		// 			</p>
-		// 			<p className="mt-2 text-purple-400">
-		// 				Click the button to create your institution
-		// 			</p>
-		// 			<p className="mt-2 text-red-400 text-xs text-right">
-		// 				Click the x to close the tour
-		// 			</p>
-		// 		</>
-		// 	),
-		// },
+		{
+			element: '.create',
+			intro: 'You can create your new institution page here.',
+		},
 		{
 			element: '.search',
 			intro: 'You can search for a specific institution here.',
@@ -107,6 +94,10 @@ const ModeratorInstitution = () => {
 		{
 			element: '.filter',
 			intro: 'Filter out things for your convenience.',
+		},
+		{
+			element: '.cards',
+			intro: 'See your institution cards here.',
 		},
 	];
 
@@ -137,6 +128,7 @@ const ModeratorInstitution = () => {
 						name='dialogStepper'
 						steps={steps}
 						button='Create New Institution'
+						tourIdentifier='create'
 					></DialogStepperComponent>
 				</BannerComponent>
 
@@ -168,7 +160,7 @@ const ModeratorInstitution = () => {
 					</IconButton>
 				</div>
 
-				<CardHolder>
+				<CardHolder tourIdentifier='cards'>
 					{/* {institutionStatus == 'loading' ? <Loader /> : null} */}
 					{institutions.map((item) => (
 						<CardComponent

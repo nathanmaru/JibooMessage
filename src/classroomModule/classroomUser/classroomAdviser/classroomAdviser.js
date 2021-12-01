@@ -10,6 +10,8 @@ import ClassroomDetail from './createSteps/classroomDetail';
 import ClassroomAffliate from './createSteps/classroomAffliate';
 import ClassroomSubscriptionPlan from './createSteps/classroomSubscriptionPlan';
 import { getAdviserClassroom, getClassrooms } from '../../../store/newClassroomSlice';
+//Tour
+import { Steps } from 'intro.js-react';
 
 const ClassroomAdviser = () => {
 	const dispatch = useDispatch();
@@ -44,8 +46,38 @@ const ClassroomAdviser = () => {
 		// },
 	];
 
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState('true');
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: '.create',
+			intro: 'You can create a new classroom here.',
+		},
+		{
+			element: '.cards',
+			intro: 'Manage your classroom here.',
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
+
 	return (
 		<>
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
+
 			<div class='flex flex-col w-full p-4 space-y-4'>
 				<BannerComponent
 					title=' Hello dear, Adviser !'
@@ -56,9 +88,10 @@ const ClassroomAdviser = () => {
 						button='Create Classroom'
 						title='Create Classroom'
 						steps={steps}
+						tourIdentifier='create'
 					></DialogStepperComponent>
 				</BannerComponent>
-				<CardHolder>
+				<CardHolder tourIdentifier='cards'>
 					{classrooms && classrooms.length > 0 ? (
 						<>
 							{classrooms.map((item) => (

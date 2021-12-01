@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Doughnut } from "react-chartjs-2";
 
 //mui
@@ -5,6 +7,9 @@ import { Card, CardActions, CardContent, Divider } from "@mui/material";
 
 //Icons
 import { FaRegCommentAlt } from "react-icons/fa";
+
+//Tour
+import { Steps } from "intro.js-react";
 
 const data = {
 	labels: ["Storage Used", "Storage Left"],
@@ -26,16 +31,46 @@ const data = {
 		},
 	],
 };
+
 const ClassroomDashboard = () => {
+	//tour
+	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [initialStep, setInitialStep] = useState(0);
+
+	const tourSteps = [
+		{
+			element: ".storage",
+			position: "right",
+			intro: "Keep track of your storage here.",
+		},
+		{
+			element: ".logs",
+			position: "left",
+			intro: "Keep track of your activities here.",
+		},
+	];
+
+	const onExit = () => {
+		setStepsEnabled(false);
+	};
+
+	function toggleSteps() {
+		setStepsEnabled((prevState) => ({ stepsEnabled: !prevState.stepsEnabled }));
+	}
 	return (
 		<>
-			{/* <div className="bg-gray-200 flex">
-				<div className="bg-red-300 w-1/5">ddg</div>
-				<div className="bg-blue-300 w-4/5 h-40">ddg</div>
-			</div> */}
+			<Steps
+				enabled={stepsEnabled}
+				steps={tourSteps}
+				initialStep={initialStep}
+				onExit={onExit}
+			/>
 
 			<div class="grid grid-cols-4 gap-4">
-				<div class="" style={{ maxHeight: "350px", minHeight: "350px" }}>
+				<div
+					className="storage"
+					style={{ maxHeight: "350px", minHeight: "350px" }}
+				>
 					<Card variant="outlined" sx={{ maxWidth: "100%" }}>
 						<CardContent>
 							<p className="text-lg text-center text-gray-400 mb-1">
@@ -46,7 +81,7 @@ const ClassroomDashboard = () => {
 					</Card>
 				</div>
 				<div
-					class="col-span-3 px-1 overflow-y-auto"
+					class="logs col-span-3 px-1 overflow-y-auto"
 					style={{ maxHeight: "650px", minHeight: "650px" }}
 				>
 					{/* Activity Log starts here */}
