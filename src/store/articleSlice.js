@@ -76,6 +76,20 @@ export const getArticles = () =>
 		onSuccess: articleLoadSuccess.type,
 		onError: articleLoadFailed.type,
 	});
+export const getnewArticles = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: articleLoadRequest.type,
+		onSuccess: articleLoadSuccess.type,
+		onError: articleLoadFailed.type,
+	});
 export const retrieveArticle = (id) =>
 	apiCallBegan({
 		url: '/post/change/' + id,
