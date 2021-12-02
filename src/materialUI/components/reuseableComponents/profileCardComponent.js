@@ -25,7 +25,7 @@ const ProfileCardComponent = ({ item, setItem, dispatchAction, editButton }) => 
 				<CardMedia
 					component='div'
 					height='140'
-					image={item.cover}
+					image={item.profileCover}
 					className='flex justify-end items-center'
 					sx={{
 						minHeight: '300px',
@@ -78,7 +78,7 @@ const ProfileCardComponent = ({ item, setItem, dispatchAction, editButton }) => 
 							<IconButton aria-label='upload picture' component='span'>
 								<Avatar
 									alt='Remy Sharp'
-									src={item.image}
+									src={item.profileImage}
 									sx={{ width: '10rem', height: '10rem', border: '6px solid #ffff' }}
 								/>
 							</IconButton>

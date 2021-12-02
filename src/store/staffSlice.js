@@ -94,9 +94,9 @@ export const getStaffTypes = (link) =>
 		onSuccess: loadStaffTypeSuccess.type,
 		onError: loadStaffTypeFailed.type,
 	});
-export const addStaff = (institution, formdata) =>
+export const addStaff = (link, formdata) =>
 	apiCallBegan({
-		url: 'institution/staff/' + institution,
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
