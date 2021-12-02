@@ -35,6 +35,7 @@ const ClassroomDetail = () => {
 	});
 
 	const { status } = useSelector((state) => state.class);
+	const { user } = useSelector((state) => state.auth);
 	const { loading } = useStatus(status);
 
 	// const handleClassroomDetail = () => {
@@ -97,6 +98,7 @@ const ClassroomDetail = () => {
 		form_data.append('description', description);
 		form_data.append('privacy', privacy);
 		form_data.append('subject', data.subject);
+		form_data.append('creator', user.id);
 		dispatch(addClassroom(`/classroom/create/`, form_data));
 	};
 

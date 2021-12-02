@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiCallBegan } from './actions/api';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+let toastId;
+
 export const newClassroomSlice = createSlice({
 	name: 'newClassroom',
 	initialState: {
@@ -11,10 +16,17 @@ export const newClassroomSlice = createSlice({
 	reducers: {
 		loadClassroomRequest: (state, action) => {
 			state.status = 'Classroom loading';
+			// toastId = toast.loading('Logging in...');
 		},
 
 		loadClassroomSuccess: (state, action) => {
 			state.classes = [];
+			// toast.update(toastId, {
+			// 	render: 'All is good',
+			// 	autoClose: 3000,
+			// 	type: 'success',
+			// 	isLoading: false,
+			// });
 			action.payload.map((val) => {
 				const { classrooms } = val;
 				state.classes.unshift(classrooms[0]);
@@ -29,6 +41,11 @@ export const newClassroomSlice = createSlice({
 			state.classes = null;
 			state.status = 'Classroom load failed';
 			alert('Classroom Load Failed!');
+			// toast.update(toastId, {
+			// 	render: 'Login Failed!',
+			// 	type: 'error',
+			// 	isLoading: false,
+			// });
 		},
 
 		loadCurrentClassroomRequest: (state, action) => {
@@ -46,6 +63,7 @@ export const newClassroomSlice = createSlice({
 
 		createClassroomLoadRequest: (state, action) => {
 			state.status = 'Classroom add loading';
+			toastId = toast.loading('Logging in...');
 		},
 
 		createClassroomSuccess: (state, action) => {
@@ -53,11 +71,22 @@ export const newClassroomSlice = createSlice({
 			state.classes.unshift(action.payload);
 			state.currentClassroom = action.payload;
 			state.status = 'Classroom add success';
-			alert('Classroom add Success!');
+			// alert('Classroom add Success!');
+			toast.update(toastId, {
+				render: 'All is good',
+				autoClose: 3000,
+				type: 'success',
+				isLoading: false,
+			});
 		},
 		createClassroomFailed: (state, action) => {
 			state.status = 'Classroom add failed';
-			alert('Classroom Create Failed!');
+			// alert('Classroom Create Failed!');
+			toast.update(toastId, {
+				render: 'Login Failed!',
+				type: 'error',
+				isLoading: false,
+			});
 		},
 		joinClassroomLoadRequest: (state, action) => {
 			state.status = 'Classroom join loading';

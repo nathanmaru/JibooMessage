@@ -17,7 +17,7 @@ export const classroomMemberSlice = createSlice({
 	},
 	reducers: {
 		memberListLoadRequest: (state, action) => {
-			toastId = toast.loading('Loading Members...');
+			// toastId = toast.loading('Loading Members...');
 		},
 		memberListLoadSuccess: (state, action) => {
 			state.isLoading = false;

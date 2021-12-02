@@ -10,11 +10,15 @@ const ResearcherWorkspaceMemberTab = () => {
 	const { id } = useParams();
 	const memberStates = useFetch;
 	const dispatch = useDispatch();
-	// useEffect(() => {
-	// 	dispatch(getMembers(`/workspace/members/${id}`));
-	// }, []);
+	useEffect(() => {
+		dispatch(getMembers(`/workspace/member?search=${id}`));
+	}, []);
 	const fetchedMembers = useSelector((state) => state.works.currentWorkspace);
 	const { items: members, setItems: setMembers } = memberStates(fetchedMembers);
+
+	function handleAddMember() {
+		dispatch();
+	}
 	return (
 		<>
 			<div className='flex flex-row space-x-4 w-full  mt-2'>
