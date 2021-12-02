@@ -6,6 +6,17 @@ import 'react-toastify/dist/ReactToastify.css';
 
 let toastId;
 
+/**
+ * *Instruction for using Toastify:
+ * import { toast } from 'react-toastify';
+ * import 'react-toastify/dist/ReactToastify.css';
+ * let toastId;
+ * TODO: for loading ==> toastId = toast.loading('Your Loading Message');
+ * ? for Success ==> toast.update(toastId, {render: 'Changes Saved!',type: 'success',isLoading: false});
+ * ? another option for silent success ==> toast.dismiss(toastId);
+ * ! for Erorr ==> toast.update(toastId, {render: 'Login Failed!', type: 'error',isLoading: false});
+ */
+
 export const userSlice = createSlice({
 	name: 'auth',
 	initialState: {
@@ -19,6 +30,7 @@ export const userSlice = createSlice({
 		//use this when you talk to the state
 		userLoggedInRequest: (state, action) => {
 			state.status = 'Login loading';
+			toastId = toast.loading('Logging in...');
 		},
 		userLoggedInSuccess: (state, action) => {
 			console.log(action.payload);
@@ -27,6 +39,8 @@ export const userSlice = createSlice({
 			state.isAuthenticated = true;
 
 			state.status = 'Login success';
+
+			toast.dismiss(toastId);
 		},
 
 		userLoggedInFailed: (state, action) => {
@@ -34,6 +48,12 @@ export const userSlice = createSlice({
 			localStorage.removeItem('refresh_token');
 			state.isAuthenticated = false;
 			state.status = 'Login failed';
+
+			toast.update(toastId, {
+				render: 'Login Failed!',
+				type: 'error',
+				isLoading: false,
+			});
 		},
 		userRegisteredRequest: (state, action) => {
 			state.status = 'loading';
