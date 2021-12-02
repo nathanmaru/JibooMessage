@@ -15,6 +15,7 @@ import {
 import { styled } from '@mui/material/styles';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router';
+import DepartmentSubmissions from './tabs/submissions/departmentSubmissions';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -99,7 +100,7 @@ const ModeratorInstitutionDepartmentManager = () => {
 			label: 'Submissions',
 			link: `/institutions/moderator/department/${id}?tab=submissions`,
 			value: 'submissions',
-			component: 'Submissions',
+			component: <DepartmentSubmissions />,
 		},
 		{
 			label: 'Staff',
