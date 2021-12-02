@@ -11,16 +11,17 @@ import {
 	deleteDepartment,
 	editDepartment,
 	retrieveDepartment,
-} from "../../../../../../store/departmentSlice";
-import { styled } from "@mui/material/styles";
-import queryString from "query-string";
-import { useHistory, useLocation } from "react-router";
-import DepartmentSubmissions from "./tabs/submissions/departmentSubmissions";
-import DepartmentStaff from "./tabs/staff/departmentStaff";
-import DepartmentArticles from "./tabs/articles/departmentArticles";
+} from '../../../../../../store/departmentSlice';
+import { styled } from '@mui/material/styles';
+import queryString from 'query-string';
+import { useHistory, useLocation } from 'react-router';
+import DepartmentSubmissions from './tabs/submissions/departmentSubmissions';
+import DepartmentStaff from './tabs/staff/departmentStaff';
+import DepartmentResources from './tabs/resources/departmentResources';
+import DepartmentArticles from './tabs/articles/departmentArticles';
 
-const Input = styled("input")({
-	display: "none",
+const Input = styled('input')({
+	display: 'none',
 });
 const ModeratorInstitutionDepartmentManager = () => {
 	const { id } = useParams();
@@ -101,7 +102,7 @@ const ModeratorInstitutionDepartmentManager = () => {
 		{
 			label: "Articles",
 			link: `/institutions/moderator/department/${id}?tab=articles`,
-			value: "articles",
+			value: 'articles',
 			component: <DepartmentArticles />,
 		},
 		{
@@ -119,15 +120,15 @@ const ModeratorInstitutionDepartmentManager = () => {
 		{
 			label: "Resources",
 			link: `/institutions/moderator/department/${id}?tab=resourcess`,
-			value: "resources",
-			component: "Resources",
+			value: 'resources',
+			component: <DepartmentResources />,
 		},
-		{
-			label: "Publishing",
-			link: `/institutions/moderator/department/${id}?tab=publishing`,
-			value: "publishing",
-			component: <div>File not found</div>,
-		},
+		// {
+		// 	label: 'Publishing',
+		// 	link: `/institutions/moderator/department/${id}?tab=publishing`,
+		// 	value: 'publishing',
+		// 	component: <div>File not found</div>,
+		// },
 		{
 			label: "Settings",
 			link: `/institutions/moderator/department/${id}?tab=settings`,
