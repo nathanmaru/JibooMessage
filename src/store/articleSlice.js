@@ -64,7 +64,7 @@ export default articleSlice.reducer;
 
 export const getArticles = () =>
 	apiCallBegan({
-		url: '/article',
+		url: '/post',
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -78,7 +78,7 @@ export const getArticles = () =>
 	});
 export const retrieveArticle = (id) =>
 	apiCallBegan({
-		url: '/article/' + id,
+		url: '/post/change/' + id,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

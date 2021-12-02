@@ -121,12 +121,12 @@ const ModeratorInstitutionPageManager = () => {
 			value: 'wall',
 			component: <Wall />,
 		},
-		{
-			label: 'Submissions',
-			link: `/institutions/moderator/${id}?tab=submissions`,
-			value: 'submissions',
-			component: <ModeratorInstitutionSubmission />,
-		},
+		// {
+		// 	label: 'Submissions',
+		// 	link: `/institutions/moderator/${id}?tab=submissions`,
+		// 	value: 'submissions',
+		// 	component: <ModeratorInstitutionSubmission />,
+		// },
 		// {
 		// 	label: 'Publishing',
 		// 	link: `/institutions/moderator/${id}?tab=publishing`,

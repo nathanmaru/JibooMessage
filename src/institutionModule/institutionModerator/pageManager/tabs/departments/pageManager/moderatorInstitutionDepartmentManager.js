@@ -68,7 +68,7 @@ const ModeratorInstitutionDepartmentManager = () => {
 	};
 	const handleDelete = () => {
 		dispatch(deleteDepartment(id));
-		history.replace(`/institutions/moderator/${department.institution}?tab=department`);
+		// history.replace(`/institutions/moderator/${department.institution}?tab=department`);
 	};
 	const handleEdit = () => {
 		let form_data = new FormData();
@@ -94,6 +94,12 @@ const ModeratorInstitutionDepartmentManager = () => {
 			link: `/institutions/moderator/department/${id}?tab=articles`,
 			value: 'articles',
 			component: 'FeaturedArticles',
+		},
+		{
+			label: 'Submissions',
+			link: `/institutions/moderator/department/${id}?tab=submissions`,
+			value: 'submissions',
+			component: 'Submissions',
 		},
 		{
 			label: 'Staff',

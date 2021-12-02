@@ -38,6 +38,7 @@ export const departmentSlice = createSlice({
 		createDepartementSuccess: (state, action) => {
 			state.status = 'Department create success';
 			state.departments.unshift(action.payload);
+			alert('Department create Success!');
 		},
 		createDepartementFailed: (state, action) => {
 			state.status = 'Department create failed';
@@ -62,7 +63,7 @@ export const departmentSlice = createSlice({
 			state.currentDepartment = null;
 			const filtered = state.departments.filter((val) => val.id !== action.payload.id);
 			state.departments = filtered;
-			alert('Department success Failed!');
+			alert('Department delete success !');
 		},
 		deleteDepartementFailed: (state, action) => {
 			state.status = 'Department delete failed';

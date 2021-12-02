@@ -35,7 +35,8 @@ const InstitutionVerification = () => {
 		const { previewFile } = inputForm;
 		let form_data = new FormData();
 		form_data.append('document', previewFile, previewFile.name);
-		dispatch(applyVerification(currentInstitution.id, form_data));
+		form_data.append('institution', currentInstitution.id);
+		dispatch(applyVerification('/institution/verify', form_data));
 	};
 	return (
 		<div className='w-full pt-4 flex flex-col justify-center items-center'>

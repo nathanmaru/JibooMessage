@@ -223,9 +223,9 @@ export const deleteInstitution = (link) =>
 
 // Verification
 
-export const applyVerification = (institution, form_data) =>
+export const applyVerification = (link, form_data) =>
 	apiCallBegan({
-		url: '/institution/verify/' + institution,
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),

@@ -20,7 +20,7 @@ const ModeratorInstitutionSubmission = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		dispatch(getSubmissions(`submission/institution/${id}`));
+		dispatch(getSubmissions(`submission${id}`));
 	}, []);
 	const fetchedSubmissions = useSelector((state) => state.submission.submissions);
 	const { items: submissions, setItems: setSubmissions } = submissionsState(fetchedSubmissions);

@@ -84,7 +84,7 @@ const ClassroomAdviser = () => {
 					subtitle='Here is what’s happening with your projects today:'
 				>
 					<DialogStepperComponent
-						maxWidth='md'
+						maxWidth='lg'
 						button='Create Classroom'
 						title='Create Classroom'
 						steps={steps}
