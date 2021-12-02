@@ -18,6 +18,7 @@ import { useHistory, useLocation } from 'react-router';
 import DepartmentSubmissions from './tabs/submissions/departmentSubmissions';
 import DepartmentStaff from './tabs/staff/departmentStaff';
 import DepartmentResources from './tabs/resources/departmentResources';
+import DepartmentArticles from './tabs/articles/departmentArticles';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -96,7 +97,7 @@ const ModeratorInstitutionDepartmentManager = () => {
 			label: 'Articles',
 			link: `/institutions/moderator/department/${id}?tab=articles`,
 			value: 'articles',
-			component: 'FeaturedArticles',
+			component: <DepartmentArticles />,
 		},
 		{
 			label: 'Submissions',
@@ -116,12 +117,12 @@ const ModeratorInstitutionDepartmentManager = () => {
 			value: 'resources',
 			component: <DepartmentResources />,
 		},
-		{
-			label: 'Publishing',
-			link: `/institutions/moderator/department/${id}?tab=publishing`,
-			value: 'publishing',
-			component: <div>File not found</div>,
-		},
+		// {
+		// 	label: 'Publishing',
+		// 	link: `/institutions/moderator/department/${id}?tab=publishing`,
+		// 	value: 'publishing',
+		// 	component: <div>File not found</div>,
+		// },
 		{
 			label: 'Settings',
 			link: `/institutions/moderator/department/${id}?tab=settings`,
