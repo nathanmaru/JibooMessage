@@ -84,6 +84,7 @@ export const newClassroomSlice = createSlice({
 			// alert('Classroom Create Failed!');
 			toast.update(toastId, {
 				render: 'Login Failed!',
+				autoClose: 3000,
 				type: 'error',
 				isLoading: false,
 			});
