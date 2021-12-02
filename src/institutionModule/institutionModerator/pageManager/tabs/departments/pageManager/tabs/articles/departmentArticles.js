@@ -7,6 +7,9 @@ import {
 	getnewArticles,
 } from "../../../../../../../../store/articleSlice";
 
+import DialogStepperComponent from "../../../../../../../../materialUI/components/reuseableComponents/dialogStepperComponent";
+import DialogComponent from "../../../../../../../../materialUI/components/reuseableComponents/dialogComponent";
+
 import {
 	Button,
 	Card,
@@ -17,6 +20,7 @@ import {
 	Avatar,
 	Typography,
 } from "@mui/material";
+import ArticleType from "./createSteps/articleType";
 
 const DepartmentArticles = () => {
 	const { id } = useParams();
@@ -41,11 +45,50 @@ const DepartmentArticles = () => {
 		setOpen(false);
 	};
 
+	//stepper steps
+	const steps = [
+		{
+			label: "Article Type",
+			component: <ArticleType />,
+		},
+		{
+			label: "Publication Detail",
+			component: "<PublicationDetail />",
+		},
+	];
+
 	return (
 		<>
 			<div className="flex w-full justify-end mb-4 bg-red-50">
 				<div className="flex">
-					<Button variant="contained">Add Article</Button>
+					{/* <Button variant="contained">Add Article</Button> */}
+					{/* <DialogStepperComponent
+						title="Publish"
+						steps={steps}
+						button="Add Article"
+						maxWidth="md"
+						tourIdentifier="publish"
+					/> */}
+					<DialogComponent
+						title="Add Article"
+						button={<Button variant="outlined">Add Article</Button>}
+					>
+						<div className="flex min-h-full w-full justify-center items-center">
+							<label htmlFor="contained-button-file">
+								<input
+									accept="application/pdf"
+									// onChange={onChange}
+									name="file"
+									id="icon-button-file"
+									type="file"
+								/>
+							</label>
+						</div>
+
+						<div className="flex w-full space-x-2 mt-5">
+							<Button variant="contained">Add</Button>
+						</div>
+					</DialogComponent>
 				</div>
 			</div>
 
