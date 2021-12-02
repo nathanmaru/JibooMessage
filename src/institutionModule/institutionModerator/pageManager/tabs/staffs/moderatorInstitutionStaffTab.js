@@ -1,7 +1,7 @@
-import { useParams, useHistory, useLocation } from "react-router";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import useFetch from "../../../../../hooks/useFetch";
+import { useParams, useHistory, useLocation } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import useFetch from '../../../../../hooks/useFetch';
 import {
 	Avatar,
 	Button,
@@ -11,22 +11,18 @@ import {
 	MenuItem,
 	TextField,
 	Typography,
-} from "@mui/material";
-import DialogComponent from "../../../../../materialUI/components/reuseableComponents/dialogComponent";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {
-	addStaff,
-	getStaffs,
-	getStaffTypes,
-} from "../../../../../store/staffSlice";
-import InputLabel from "@mui/material/InputLabel";
+} from '@mui/material';
+import DialogComponent from '../../../../../materialUI/components/reuseableComponents/dialogComponent';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { addStaff, getStaffs, getStaffTypes } from '../../../../../store/staffSlice';
+import InputLabel from '@mui/material/InputLabel';
 
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { getDepartments } from "../../../../../store/departmentSlice";
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { getDepartments } from '../../../../../store/departmentSlice';
 
 //Tour
-import { Steps } from "intro.js-react";
+import { Steps } from 'intro.js-react';
 
 const ModeratorInstitutionStaff = () => {
 	const { id } = useParams();
@@ -36,21 +32,18 @@ const ModeratorInstitutionStaff = () => {
 	const departmentStates = useFetch;
 
 	useEffect(() => {
-		dispatch(getStaffs(`institution/staff/${id}`));
-		dispatch(getStaffTypes(`institution/staff-type/${id}`));
+		dispatch(getStaffs(`/institution/staff?search=${id}`));
+		dispatch(getStaffTypes(`/institution/staff-type`));
 		dispatch(getDepartments(id));
 	}, []);
+	useEffect(() => {});
 
 	const fetchedStaffs = useSelector((state) => state.staff.staffs);
 	const fetchedStaffTypes = useSelector((state) => state.staff.staffTypes);
-	const fetchedDepartments = useSelector(
-		(state) => state.department.departments
-	);
+	const fetchedDepartments = useSelector((state) => state.department.departments);
 	const { items: staffs, setItems: setStaffs } = staffStates(fetchedStaffs);
-	const { items: staffTypes, setItems: setStaffTypes } =
-		staffTypeStates(fetchedStaffTypes);
-	const { items: departments, setItems: setDepartments } =
-		departmentStates(fetchedDepartments);
+	const { items: staffTypes, setItems: setStaffTypes } = staffTypeStates(fetchedStaffTypes);
+	const { items: departments, setItems: setDepartments } = departmentStates(fetchedDepartments);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
@@ -62,9 +55,9 @@ const ModeratorInstitutionStaff = () => {
 	};
 
 	const [inputForm, setInputForm] = useState({
-		username: "",
-		type: "",
-		department: "",
+		username: '',
+		type: '',
+		department: '',
 	});
 
 	const onChange = (e) => {
@@ -73,26 +66,26 @@ const ModeratorInstitutionStaff = () => {
 	const handleAddStaff = () => {
 		const { username, type, department } = inputForm;
 		let form_data = new FormData();
-		form_data.append("username", username);
-		form_data.append("type", type);
-		form_data.append("department", department);
+		form_data.append('username', username);
+		form_data.append('type', type);
+		form_data.append('department', department);
 		dispatch(addStaff(id, form_data));
 	};
 	const handleRemoveStaff = () => {};
 
 	//tour
-	const [stepsEnabled, setStepsEnabled] = useState("true");
+	const [stepsEnabled, setStepsEnabled] = useState('true');
 	const [initialStep, setInitialStep] = useState(0);
 
 	const tourSteps = [
 		{
-			element: ".add",
-			position: "left",
-			intro: "You can add new staff here.",
+			element: '.add',
+			position: 'left',
+			intro: 'You can add new staff here.',
 		},
 		{
-			element: ".cards",
-			intro: "See your staff list here.",
+			element: '.cards',
+			intro: 'See your staff list here.',
 		},
 	];
 
@@ -113,39 +106,37 @@ const ModeratorInstitutionStaff = () => {
 				onExit={onExit}
 			/>
 
-			<div className="flex flex-col space-x-4">
-				<div className="flex w-full justify-end">
+			<div className='flex flex-col space-x-4'>
+				<div className='flex w-full justify-end'>
 					<DialogComponent
-						title="Add Staff"
+						title='Add Staff'
 						button={
-							<Button className="add" variant="outlined">
+							<Button className='add' variant='outlined'>
 								Add Staff
 							</Button>
 						}
-						action={{ label: "Add Staff", handler: handleAddStaff }}
+						action={{ label: 'Add Staff', handler: handleAddStaff }}
 					>
-						<div className="flex flex-col w-full space-y-4 mt-4">
+						<div className='flex flex-col w-full space-y-4 mt-4'>
 							<TextField
 								fullWidth
-								label="Staff Username"
-								variant="outlined"
-								name="username"
+								label='Staff Username'
+								variant='outlined'
+								name='username'
 								value={inputForm.username}
 								onChange={(e) => onChange(e)}
 							/>
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">
-									Staff Type
-								</InputLabel>
+								<InputLabel id='demo-simple-select-label'>Staff Type</InputLabel>
 								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
+									labelId='demo-simple-select-label'
+									id='demo-simple-select'
 									value={inputForm.type}
-									label="Staff Type"
+									label='Staff Type'
 									onChange={(e) => onChange(e)}
-									name="type"
+									name='type'
 								>
-									<MenuItem value="">
+									<MenuItem value=''>
 										<em>None</em>
 									</MenuItem>
 									{staffTypes.map((val) => (
@@ -156,16 +147,14 @@ const ModeratorInstitutionStaff = () => {
 								</Select>
 							</FormControl>
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">
-									Department
-								</InputLabel>
+								<InputLabel id='demo-simple-select-label'>Department</InputLabel>
 								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
+									labelId='demo-simple-select-label'
+									id='demo-simple-select'
 									value={inputForm.department}
-									label="Department"
+									label='Department'
 									onChange={onChange}
-									name="department"
+									name='department'
 								>
 									{departments.map((val) => (
 										<MenuItem value={val.id}>{val.name}</MenuItem>
@@ -175,25 +164,25 @@ const ModeratorInstitutionStaff = () => {
 						</div>
 					</DialogComponent>
 				</div>
-				<div className="cards flex flex-row space-x-4 w-full  mt-2">
+				<div className='cards flex flex-row space-x-4 w-full  mt-2'>
 					{staffs.map((staff) => (
-						<Card raised sx={{ width: "200px", borderRadius: "1rem" }}>
-							<CardContent className="flex flex-col w-full justify-center items-center space-y-3 ">
-								<div className="flex w-full justify-end">
+						<Card raised sx={{ width: '200px', borderRadius: '1rem' }}>
+							<CardContent className='flex flex-col w-full justify-center items-center space-y-3 '>
+								<div className='flex w-full justify-end'>
 									<MoreVertIcon
-										className="cursor-pointer"
-										aria-expanded={open ? "true" : undefined}
+										className='cursor-pointer'
+										aria-expanded={open ? 'true' : undefined}
 										onClick={handleClick}
 									/>
 									{/* </Button> */}
 								</div>
 								<Menu
-									id="basic-menu"
+									id='basic-menu'
 									anchorEl={anchorEl}
 									open={open}
 									onClose={handleClose}
 									MenuListProps={{
-										"aria-labelledby": "basic-button",
+										'aria-labelledby': 'basic-button',
 									}}
 								>
 									<MenuItem
@@ -206,23 +195,23 @@ const ModeratorInstitutionStaff = () => {
 									</MenuItem>
 								</Menu>
 								<Avatar
-									alt="Remy Sharp"
+									alt='Remy Sharp'
 									src={staff.image}
 									sx={{
-										height: "100px",
-										width: "100px",
-										border: "1px solid #808080",
+										height: '100px',
+										width: '100px',
+										border: '1px solid #808080',
 									}}
 								/>
 								<Typography
-									className="text-gray-800"
+									className='text-gray-800'
 									gutterBottom
-									variant="h6"
-									component="div"
+									variant='h6'
+									component='div'
 								>
 									{staff.name}
 								</Typography>
-								<Typography variant="body2" color="text.secondary">
+								<Typography variant='body2' color='text.secondary'>
 									@{staff.username}
 								</Typography>
 							</CardContent>

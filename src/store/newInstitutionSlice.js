@@ -17,7 +17,11 @@ export const institutionSlice = createSlice({
 			state.institutions = [];
 			action.payload.map((val) => {
 				const { institutions } = val;
-				state.institutions.unshift(institutions[0]);
+				if (institutions) {
+					institutions.map((i) => {
+						state.institutions.unshift(i);
+					});
+				}
 			});
 			// state.institutions = action.payload;
 			state.status = 'success';

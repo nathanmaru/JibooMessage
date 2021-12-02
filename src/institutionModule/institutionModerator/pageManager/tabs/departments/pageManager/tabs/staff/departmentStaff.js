@@ -10,7 +10,7 @@ const DepartmentStaff = () => {
 	const staffsState = useFetch;
 	const staffTypeState = useFetch;
 	useEffect(() => {
-		dispatch(getStaffs(`/institution/department/staff?search=${id}`));
+		dispatch(getStaffs(`/institution/staff?search=${id}`));
 		dispatch(getStaffTypes(`/institution/staff-type`));
 	}, []);
 	const fetchedStaffs = useSelector((state) => state.staff.staffs);
