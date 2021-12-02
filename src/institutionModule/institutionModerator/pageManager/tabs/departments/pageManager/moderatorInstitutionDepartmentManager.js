@@ -17,6 +17,7 @@ import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router';
 import DepartmentSubmissions from './tabs/submissions/departmentSubmissions';
 import DepartmentStaff from './tabs/staff/departmentStaff';
+import DepartmentResources from './tabs/resources/departmentResources';
 const Input = styled('input')({
 	display: 'none',
 });
@@ -113,7 +114,7 @@ const ModeratorInstitutionDepartmentManager = () => {
 			label: 'Resources',
 			link: `/institutions/moderator/department/${id}?tab=resourcess`,
 			value: 'resources',
-			component: 'Resources',
+			component: <DepartmentResources />,
 		},
 		{
 			label: 'Publishing',
