@@ -37,6 +37,7 @@ import ModeratorInstitutionDepartmentManager from '../institutionModule/institut
 import AdviserSubmissionViewer from '../classroomModule/classroomUser/classroomAdviser/classroomManager/tabs/submissions/fileViewer/adviserSubmissionViewer';
 import ModeratorSubmissionViewerFile from '../institutionModule/institutionModerator/pageManager/tabs/submissions/fileViewer/moderatorSubmissionViewerFile';
 import ModeratorInstitutionArticleViewer from '../institutionModule/institutionModerator/pageManager/tabs/wall/moderatorInstitutionArticleViewer';
+import Messsages from '../messageModule/messages';
 export default [
 	<Route
 		exact
@@ -93,7 +94,7 @@ export default [
 
 	<Route exact path='/fileViewer' component={FileViewer} />,
 	<Route exact path='/works' component={WorkSpace} />,
-	<Route exact path='/messages' component={NewMesssages} />,
+	<Route exact path='/messages' component={Messsages} />,
 	<Route exact path='/classroom/researcher/:id' component={ResearcherClassroomManager} />,
 	<Route exact path='/classroom/adviser/:id' component={AdviserClassroomManager} />,
 	<Route exact path='/classroom' component={Classroom} />,
