@@ -42,8 +42,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
+import Pusher from 'pusher-js';
+
 export default function NewMesssages() {
-	const [message, setMessage] = useState("");
+	const [message, setMessage] = useState([]);
 	const location = useLocation();
 
 	const [user, setUser] = useState({
@@ -51,6 +53,21 @@ export default function NewMesssages() {
 		first_name: "",
 		last_name: "",
 	});
+
+	let allMessages = [];
+	useEffect(() => {
+		Pusher.logToConsole = true;
+
+		const pusher = new Pusher('', {
+			cluster: '',
+		});
+
+		const channel = pusher.subscribe('chat'); //change this to code
+		channel.bind('message', function (data) {
+			allMessages.push(data);
+			setMessage(allMessages);
+		});
+	}, []);
 
 	const dispatch = useDispatch();
 

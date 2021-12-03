@@ -15,7 +15,7 @@ export const messageSlice = createSlice({
 		},
 		messagesLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.messages = action.payload; 
+			state.messages = action.payload;
 		},
 		messagesLoadFailed: (state, action) => {
 			state.isLoading = false;
@@ -26,7 +26,7 @@ export const messageSlice = createSlice({
 		},
 		roomsLoadSuccess: (state, action) => {
 			state.isLoading = false;
-			state.rooms = action.payload; 
+			state.rooms = action.payload;
 		},
 		roomsLoadFailed: (state, action) => {
 			state.isLoading = false;
@@ -37,11 +37,7 @@ export const messageSlice = createSlice({
 		},
 		roomCreateSuccess: (state, action) => {
 			state.isLoading = false;
-			state.rooms.unshift({
-				id: action.payload.id.id,
-				messages: '',
-				title: action.payload.title,
-			});
+			state.rooms.unshift(action.payload);
 			alert('Create Message Success!');
 		},
 		roomCreateFailed: (state, action) => {
@@ -81,9 +77,9 @@ export default messageSlice.reducer;
 
 //action creators
 
-export const getMessages = (room) =>
+export const getMessages = (link) =>
 	apiCallBegan({
-		url: '/chat/fetchMessage/' + room,
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -95,9 +91,9 @@ export const getMessages = (room) =>
 		onSuccess: messagesLoadSuccess.type,
 		onError: messagesLoadFailed.type,
 	});
-export const getRooms = () =>
+export const getRooms = (link) =>
 	apiCallBegan({
-		url: '/chat/fetchRoom',
+		url: link,
 		method: 'get',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
@@ -124,16 +120,16 @@ export const sendMessage = (content, room) =>
 		onSuccess: sendMessageSuccess.type,
 		onError: sendMessageFailed.type,
 	});
-export const createRoom = (receiver) =>
+export const createRoom = (link, formdata) =>
 	apiCallBegan({
-		url: '/chat/createRoom',
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { receiver },
+		data: formdata,
 		type: 'regular',
 		onStart: roomCreateRequest.type,
 		onSuccess: roomCreateSuccess.type,
