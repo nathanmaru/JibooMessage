@@ -49,14 +49,12 @@ const Messsages = () => {
 	}
 
 	function handleAddRoom() {
-		let formData = new FormData();
 		let members = [];
 		members.push(user.username);
-		console.log(members);
-		formData.append('name', name);
-		formData.append('members', members);
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
+
+	function handleSendMessage() {}
 	return (
 		<>
 			<div className='grid grid-cols-2'>
