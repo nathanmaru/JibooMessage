@@ -398,11 +398,22 @@ const Messsages = () => {
 											>
 												{messages.map((val) => (
 													<div className="chat-message">
-														<div className="flex items-end bg-blue-50">
-															<div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start bg-red-50">
-																<li className="bg-green-200" key={val.id}>
-																	<p>{val.sender.full_name}</p>
-																	<p>{val.content}</p>
+														<div className="flex items-end">
+															<div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
+																<li className="mb-2" key={val.id}>
+																	<div className="flex flex-col">
+																		<div className="flex flex-row">
+																			<Avatar src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
+																			<div className="flex flex-col">
+																				<p className="ml-2 text-sm text-gray-900">
+																					{val.sender.full_name}
+																				</p>
+																				<p className="ml-2 text-xs text-gray-500">
+																					{val.content}
+																				</p>
+																			</div>
+																		</div>
+																	</div>
 																</li>
 															</div>
 														</div>
