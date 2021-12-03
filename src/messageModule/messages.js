@@ -110,7 +110,7 @@ const Messsages = () => {
 			}
 		}
 	}, [you2]);
-	function printing(sender) {
+	function catchId(sender) {
 		setYou2(sender);
 	}
 
@@ -124,7 +124,7 @@ const Messsages = () => {
 
 			const channel = pusher.subscribe('chat');
 			channel.bind(room, function (data) {
-				printing(data.sender.id);
+				catchId(data.sender.id);
 			});
 		}
 	}, [room]);
