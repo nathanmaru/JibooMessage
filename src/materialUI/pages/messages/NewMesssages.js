@@ -1,42 +1,55 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import * as React from "react";
+import { useState, useEffect } from "react";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { getMessages, getRooms, sendMessage, createRoom } from '../../../store/messageSlice';
-
-import IconButton from '@mui/material/IconButton';
+import { useSelector, useDispatch } from "react-redux";
+import {
+	getMessages,
+	getRooms,
+	sendMessage,
+	createRoom,
+} from "../../../store/messageSlice";
 
 //Icons
-import { BiMessageAltAdd } from 'react-icons/bi';
-import { BsInfoCircle, BsSearch } from 'react-icons/bs';
-import { FiSend } from 'react-icons/fi';
+import { BiMessageAltAdd } from "react-icons/bi";
+import { BsInfoCircle, BsSearch } from "react-icons/bs";
+import { FiSend } from "react-icons/fi";
 
-//Input
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
+//mui
+import {
+	InputAdornment,
+	FormControl,
+	TextField,
+	IconButton,
+	Button,
+	Typography,
+	List,
+	ListItem,
+	ListItemText,
+	ListItemAvatar,
+	Avatar,
+} from "@mui/material";
 
-//Modal
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import MessageNotifier from './messageNotifier';
-import MessagesRoom from './messagesRoom';
-import MessagesList from './messagesList';
-import { useLocation, Link } from 'react-router-dom';
-import queryString from 'query-string';
+import MessageNotifier from "./messageNotifier";
+import MessagesRoom from "./messagesRoom";
+import MessagesList from "./messagesList";
+import { useLocation, Link } from "react-router-dom";
+import queryString from "query-string";
+
+import DialogComponent from "../../components/reuseableComponents/dialogComponent";
+
+//validation
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
 export default function NewMesssages() {
-	const [message, setMessage] = useState('');
+	const [message, setMessage] = useState("");
 	const location = useLocation();
 
 	const [user, setUser] = useState({
-		username: '',
-		first_name: '',
-		last_name: '',
+		username: "",
+		first_name: "",
+		last_name: "",
 	});
 
 	const dispatch = useDispatch();
@@ -69,13 +82,14 @@ export default function NewMesssages() {
 
 		dispatch(sendMessage(message, parseInt(roomID)));
 		// send message here
-		setMessage('');
+		setMessage("");
 	};
 
 	//Modals
-	const [inputForm, setInputForm] = React.useState({ username: '' });
-	const { username } = inputForm;
-	const onChange = (e) => setInputForm({ ...inputForm, [e.target.name]: e.target.value });
+	const [inputForm, setInputForm] = React.useState({ room_name: "" });
+	const { room_name } = inputForm;
+	const onChange = (e) =>
+		setInputForm({ ...inputForm, [e.target.name]: e.target.value });
 
 	const [open, setOpen] = useState(false);
 
@@ -90,80 +104,108 @@ export default function NewMesssages() {
 		dispatch(createRoom(username));
 	};
 
+	//validation
+	const validationMsg = Yup.object().shape({
+		room_name: Yup.string().required("Room Name is required."),
+		username: Yup.string().required("Username is required."),
+	});
+
+	const {
+		register, // register inputs
+		handleSubmit, // handle form submit
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(validationMsg),
+	});
+
+	const onSubmit = (data) => {
+		console.log(JSON.stringify(data, null, 2));
+	};
+
+	const items = [
+		{
+			id: 1,
+			username: "Eda Yildiz",
+			role: "Creator/Admin",
+		},
+		{
+			id: 2,
+			username: "Eda Yildiz",
+			role: "Creator/Admin",
+		},
+	];
+
 	return (
 		<>
-			<div className=''>
+			<div className="">
 				<div>
 					<div
-						className=' relative min-h-screen flex flex-col'
-						style={{ minHeight: '675px', maxHeight: '675px' }}
+						className=" relative min-h-screen flex flex-col"
+						style={{ minHeight: "675px", maxHeight: "675px" }}
 					>
 						{/* Chat Layout */}
 
-						<div className='flex-grow w-full mx-auto lg:flex'>
+						<div className="flex-grow w-full mx-auto lg:flex">
 							<div
-								className='flex-1 min-w-0 xl:flex'
-								style={{ minHeight: '665px', maxHeight: '665px' }}
+								className="flex-1 min-w-0 xl:flex"
+								style={{ minHeight: "665px", maxHeight: "665px" }}
 							>
-								<div className='border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-gray-50'>
+								<div className="border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-gray-50">
 									<div
-										className='pl-4 pr-2 py-6 sm:pl-6 lg:pl-8 xl:pl-0'
-										style={{ minHeight: '665px', maxHeight: '665px' }}
+										className="pl-4 pr-2 py-6 sm:pl-6 lg:pl-8 xl:pl-0"
+										style={{ minHeight: "665px", maxHeight: "665px" }}
 									>
-										<div className='h-full relative'>
-											<div className='flex flex-row justify-between ml-2'>
-												<p className='text-2xl text-gray-500 p-1 justify-start'>
-													{' '}
+										<div className="h-full relative">
+											<div className="flex flex-row justify-between ml-2">
+												<p className="text-2xl text-gray-500 p-1 justify-start">
+													{" "}
 													Chats
 												</p>
-												<IconButton
-													aria-label='more'
-													className='justify-between'
-													onClick={handleClickOpen}
+												<DialogComponent
+													title="New Chat Room"
+													button={
+														<IconButton color="primary" aria-label="add room">
+															<BiMessageAltAdd />
+														</IconButton>
+													}
 												>
-													<BiMessageAltAdd />
-												</IconButton>
-
-												<Dialog open={open} onClose={handleClose}>
-													<DialogTitle>Connect with your friends</DialogTitle>
-													<DialogContent>
-														<DialogContentText sx={{ fontSize: '14px' }}>
-															Enter their username here!
-														</DialogContentText>
+													<form onSubmit={handleSubmit(onSubmit)}>
 														<TextField
-															id='standard-search'
-															label='Username'
-															variant='standard'
-															name='username'
-															value={username}
-															onChange={(e) => onChange(e)}
-															sx={{
-																width: '520px',
-																marginBottom: '3px',
-																marginTop: '15px',
-																marginLeft: '15px',
-																padding: '2px',
-																fontWeight: 'bold',
-															}}
+															fullWidth
+															sx={{ mt: 1 }}
+															id="outlined-search"
+															label="Enter room name"
+															variant="outlined"
+															name="room_name"
+															{...register("room_name")}
+															error={errors.room_name ? true : false}
 														/>
-													</DialogContent>
-													<DialogActions>
-														<Button
-															onClick={() => {
-																handleClose();
-																create_Room();
-																// handleSubmit();
+														<Typography
+															sx={{
+																fontSize: "12px",
+																color: "red",
+																fontStyle: "italic",
 															}}
 														>
-															Add
-														</Button>
-													</DialogActions>
-												</Dialog>
+															{errors.room_name?.message}
+														</Typography>
+
+														<div className="mt-5">
+															<Button
+																className="add"
+																variant="contained"
+																type="submit"
+															>
+																Create Room
+															</Button>
+														</div>
+													</form>
+												</DialogComponent>
 											</div>
 
 											<div
-												className='h-full p-2 mt-2 overflow-y-auto space-y-1'
-												style={{ minHeight: '600px', maxHeight: '600px' }}
+												className="h-full p-2 mt-2 overflow-y-auto space-y-1"
+												style={{ minHeight: "600px", maxHeight: "600px" }}
 											>
 												{/* Room List */}
 												<MessagesRoom />
@@ -174,36 +216,124 @@ export default function NewMesssages() {
 
 								{/* Right Side */}
 								<div
-									className='flex-1 p:2 sm:pb-6 justify-between flex flex-col  xl:flex'
-									style={{ minHeight: '675px', maxHeight: '675px' }}
+									className="flex-1 p:2 sm:pb-6 justify-between flex flex-col  xl:flex"
+									style={{ minHeight: "675px", maxHeight: "675px" }}
 								>
-									<div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p3'>
-										<div className='flex items-center space-x-4'>
+									<div className="flex sm:items-center justify-between py-3 border-b border-gray-200 p3">
+										<div className="flex items-center space-x-4">
 											<img
-												src='https://images.unsplash.com/photo-1635336969198-ec9553adc0e1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80'
-												alt=''
-												className='w-10 sm:w-12 h-10 sm:h-12 ml-2 rounded-full cursor-pointer object-cover'
+												src="https://images.unsplash.com/photo-1635336969198-ec9553adc0e1?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1332&q=80"
+												alt=""
+												className="w-10 sm:w-12 h-10 sm:h-12 ml-2 rounded-full cursor-pointer object-cover"
 											/>
 
-											<div className='flex flex-col leading-tight'>
-												<div className='text-1xl mt-1 flex items-center'>
-													<span className='text-gray-700 mr-3'>{selectedRoom}</span>
-													<span className='text-green-500'>
+											<div className="flex flex-col leading-tight">
+												<div className="text-1xl mt-1 flex items-center">
+													<span className="text-gray-700 mr-3">
+														{selectedRoom}
+													</span>
+													<span className="text-green-500">
 														<svg width={10} height={10}>
-															<circle cx={5} cy={5} r={5} fill='currentColor' />
+															<circle cx={5} cy={5} r={5} fill="currentColor" />
 														</svg>
 													</span>
 												</div>
 											</div>
 										</div>
 
-										<div className='flex items-center space-x-2'>
-											<IconButton aria-label='search'>
+										<div className="flex items-center space-x-2">
+											<IconButton aria-label="search">
 												<BsSearch />
 											</IconButton>
-											<IconButton aria-label='more'>
-												<BsInfoCircle />
-											</IconButton>
+
+											<DialogComponent
+												title="Chat Room Information"
+												button={
+													<IconButton color="primary" aria-label="Room Info">
+														<BsInfoCircle />
+													</IconButton>
+												}
+											>
+												<TextField
+													fullWidth
+													sx={{ mt: 1 }}
+													id="outlined-search"
+													label="Room name"
+													variant="outlined"
+													name="room_name"
+												/>
+												{/* Lists */}
+												<List
+													sx={{
+														width: "100%",
+														maxHeight: "330px",
+														minHeight: "330px",
+														bgcolor: "background.paper",
+														overflowY: "auto",
+														mt: 1,
+													}}
+												>
+													{items.map((item) => (
+														<ListItem>
+															<ListItemAvatar>
+																<Avatar>d</Avatar>
+															</ListItemAvatar>
+															<ListItemText
+																primary={item.username}
+																secondary={item.role}
+															/>
+														</ListItem>
+													))}
+												</List>
+												<div className="mt-1">
+													<DialogComponent
+														maxWidth="xs"
+														title="Add Member"
+														button={
+															<Button
+																color="primary"
+																aria-label="Room Info"
+																variant="contained"
+															>
+																Add Member
+															</Button>
+														}
+													>
+														<form onSubmit={handleSubmit(onSubmit)}>
+															<TextField
+																fullWidth
+																sx={{ mt: 1 }}
+																id="outlined-search"
+																label="Username"
+																variant="outlined"
+																name="username"
+																{...register("username")}
+																error={errors.username ? true : false}
+															/>
+
+															<Typography
+																sx={{
+																	fontSize: "12px",
+																	color: "red",
+																	fontStyle: "italic",
+																}}
+															>
+																{errors.username?.message}
+															</Typography>
+
+															<div className="mt-5">
+																<Button
+																	className="add"
+																	variant="contained"
+																	type="submit"
+																>
+																	Add member
+																</Button>
+															</div>
+														</form>
+													</DialogComponent>
+												</div>
+											</DialogComponent>
 										</div>
 									</div>
 
@@ -211,9 +341,12 @@ export default function NewMesssages() {
 									<MessagesList />
 
 									{/* Messages ends here */}
-									<div className='border-t-2 border-gray-200 p-4 -mb-3.5'>
-										<div className='relative flex'>
-											<FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'>
+									<div className="border-t-2 border-gray-200 p-4 -mb-3.5">
+										<div className="relative flex">
+											<FormControl
+												sx={{ m: 1, width: "25ch" }}
+												variant="outlined"
+											>
 												<TextField
 													multiline
 													minRows={3}
@@ -222,10 +355,10 @@ export default function NewMesssages() {
 													// onKeyPress={submitEnter}
 													InputProps={{
 														endAdornment: (
-															<InputAdornment position='end'>
+															<InputAdornment position="end">
 																<IconButton
-																	aria-label='send'
-																	edge='end'
+																	aria-label="send"
+																	edge="end"
 																	sx={{ m: 2 }}
 																	onClick={submit}
 																>
@@ -235,11 +368,11 @@ export default function NewMesssages() {
 														),
 													}}
 													sx={{
-														width: '900px',
-														padding: '5px',
-														textAlign: 'justify',
+														width: "900px",
+														padding: "5px",
+														textAlign: "justify",
 													}}
-													label='Type message here ...'
+													label="Type message here ..."
 												/>
 											</FormControl>
 										</div>
