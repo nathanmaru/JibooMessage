@@ -394,16 +394,17 @@ const Messsages = () => {
 										{messages.length > 0 ? (
 											<div
 												id="messages"
-												className="flex flex-col-reverse space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
+												className="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
 											>
 												{messages.map((val) => (
 													<div className="chat-message">
 														<div className="flex items-end">
-															<div className="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-																<li className="mb-2" key={val.id}>
+															<div className="flex flex-col text-xs max-w-xs mx-2 order-2 items-start">
+																<li className="mb-1" key={val.id}>
 																	<div className="flex flex-col">
 																		<div className="flex flex-row">
-																			<Avatar src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" />
+																			{/* <Avatar src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" /> */}
+																			<Avatar src={val.sender.profileImage} />
 																			<div className="flex flex-col">
 																				<p className="ml-2 text-sm text-gray-900">
 																					{val.sender.full_name}
