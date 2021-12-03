@@ -49,6 +49,7 @@ export const messageSlice = createSlice({
 		},
 		sendMessageSuccess: (state, action) => {
 			state.isLoading = false;
+			state.messages.push(action.payload);
 			alert('Sending Message Success!');
 		},
 		sendMessageFailed: (state, action) => {
@@ -105,16 +106,16 @@ export const getRooms = (link) =>
 		onSuccess: roomsLoadSuccess.type,
 		onError: roomsLoadFailed.type,
 	});
-export const sendMessage = (content, room) =>
+export const sendMessage = (link, formdata) =>
 	apiCallBegan({
-		url: '/chat/sendMessage',
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { content, room },
+		data: formdata,
 		type: 'regular',
 		onStart: sendMessageRequest.type,
 		onSuccess: sendMessageSuccess.type,

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import useFetch from '../hooks/useFetch';
-import { createRoom, getMessages, getRooms } from '../store/messageSlice';
+import { createRoom, getMessages, getRooms, sendMessage } from '../store/messageSlice';
 import queryString from 'query-string';
 import { Button, TextField } from '@mui/material';
 
@@ -54,7 +54,15 @@ const Messsages = () => {
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
 
-	function handleSendMessage() {}
+	const [message, setMessage] = useState('');
+
+	function onChangeMessage(e) {
+		setMessage(e.target.value);
+	}
+
+	function handleSendMessage() {
+		dispatch(sendMessage(`/chat/`, { content: message, sender: user.id, room }));
+	}
 	return (
 		<>
 			<div className='grid grid-cols-2'>
@@ -101,8 +109,24 @@ const Messsages = () => {
 			</div>
 			<div>
 				<TextField variant='outlined' value={name} onChange={onChange} />
-				<Button variant='contained' type='submit' onClick={handleAddRoom}>
+				<Button
+					variant='contained'
+					placeholder='Enter Room Name'
+					type='submit'
+					onClick={handleAddRoom}
+				>
 					Create Room
+				</Button>
+			</div>
+			<div>
+				<TextField
+					variant='outlined'
+					placeholder='Enter Message'
+					value={message}
+					onChange={onChangeMessage}
+				/>
+				<Button variant='contained' type='submit' onClick={handleSendMessage}>
+					Send message
 				</Button>
 			</div>
 		</>
