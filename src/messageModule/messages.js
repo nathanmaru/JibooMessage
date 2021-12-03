@@ -1,10 +1,14 @@
-
 import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import useFetch from "../hooks/useFetch";
-import { createRoom, getMessages, getRooms, sendMessage } from '../store/messageSlice';
+import {
+	createRoom,
+	getMessages,
+	getRooms,
+	sendMessage,
+} from "../store/messageSlice";
 import queryString from "query-string";
 
 //Icons
@@ -34,8 +38,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 import DialogComponent from "../materialUI/components/reuseableComponents/dialogComponent";
-
-
 
 const Messsages = () => {
 	const dispatch = useDispatch();
@@ -70,7 +72,8 @@ const Messsages = () => {
 	}, [room]);
 
 	const fetchedMessages = useSelector((state) => state.message.messages);
-	const { items: messages, setItems: setMessages } = messagesState(fetchedMessages);
+	const { items: messages, setItems: setMessages } =
+		messagesState(fetchedMessages);
 
 	// create room
 	const [name, setName] = useState("");
@@ -81,18 +84,20 @@ const Messsages = () => {
 
 	function handleAddRoom() {
 		let members = [];
-    members.push(currentUser.username);
+		members.push(currentUser.username);
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
-  const [message, setMessage] = useState('');
-  function onChangeMessage(e) {
+	const [message, setMessage] = useState("");
+	function onChangeMessage(e) {
 		setMessage(e.target.value);
 	}
 
 	function handleSendMessage() {
-		dispatch(sendMessage(`/chat/`, { content: message, sender: currentUser.id, room }));
+		dispatch(
+			sendMessage(`/chat/`, { content: message, sender: currentUser.id, room })
+		);
 	}
-  // For Real Time Messaging
+	// For Real Time Messaging
 	let allMessages = [];
 	const [dataCatched, setDataCatched] = useState();
 	useEffect(() => {
@@ -112,16 +117,17 @@ const Messsages = () => {
 	useEffect(() => {
 		if (room) {
 			Pusher.logToConsole = true;
-			const pusher = new Pusher('ba5283fee85d5a9a7b86', {
-				cluster: 'ap1',
+			const pusher = new Pusher("ba5283fee85d5a9a7b86", {
+				cluster: "ap1",
 			});
-			const channel = pusher.subscribe('chat');
+			const channel = pusher.subscribe("chat");
 			channel.bind(room, function (data) {
 				catchData(data);
 			});
 		}
 	}, [room]);
-  //validation
+
+	//validation
 	const validationMsg = Yup.object().shape({
 		room_name: Yup.string().required("Room Name is required."),
 		username: Yup.string().required("Username is required."),
@@ -151,7 +157,6 @@ const Messsages = () => {
 			role: "Creator/Admin",
 		},
 	];
-
 
 	return (
 		<>
@@ -187,37 +192,29 @@ const Messsages = () => {
 															</IconButton>
 														}
 													>
-														<form onSubmit={handleSubmit(onSubmit)}>
-															<TextField
-																fullWidth
-																sx={{ mt: 1 }}
-																id="outlined-search"
-																label="Enter room name"
-																variant="outlined"
-																name="room_name"
-																{...register("room_name")}
-																error={errors.room_name ? true : false}
-															/>
-															<Typography
-																sx={{
-																	fontSize: "12px",
-																	color: "red",
-																	fontStyle: "italic",
-																}}
-															>
-																{errors.room_name?.message}
-															</Typography>
+														{/* <form onSubmit={handleSubmit(onSubmit)}> */}
+														<TextField
+															fullWidth
+															sx={{ mt: 1 }}
+															id="outlined-search"
+															label="Enter room name"
+															variant="outlined"
+															name="name"
+															value={name}
+															onChange={onChange}
+														/>
 
-															<div className="mt-5">
-																<Button
-																	className="add"
-																	variant="contained"
-																	type="submit"
-																>
-																	Create Room
-																</Button>
-															</div>
-														</form>
+														<div className="mt-5">
+															<Button
+																className="add"
+																variant="contained"
+																type="submit"
+																onClick={handleAddRoom}
+															>
+																Create Room
+															</Button>
+														</div>
+														{/* </form> */}
 													</DialogComponent>
 												</div>
 
@@ -363,36 +360,30 @@ const Messsages = () => {
 																</Button>
 															}
 														>
-															<form onSubmit={handleSubmit(onSubmit)}>
-																<TextField
-																	fullWidth
-																	sx={{ mt: 1 }}
-																	id="outlined-search"
-																	label="Username"
-																	variant="outlined"
-																	name="username"
-																	{...register("username")}
-																	error={errors.username ? true : false}
-																/>
+															{/* <form onSubmit={handleSubmit(onSubmit)}> */}
+															<TextField
+																fullWidth
+																sx={{ mt: 1 }}
+																id="outlined-search"
+																label="Username"
+																variant="outlined"
+																name="username"
+																// value={username}
+																// onChange={onChange}
+															/>
 
-																<Typography
-																	sx={{
-																		fontSize: "12px",
-																		color: "red",
-																		fontStyle: "italic",
-																	}}
-																>
-																	{errors.username?.message}
-																</Typography>
-
-																<div className="mt-5">
-																	<div>
-																		<Button type="submit" variant="contained">
-																			Add
-																		</Button>
-																	</div>
+															<div className="mt-5">
+																<div>
+																	<Button
+																		type="submit"
+																		variant="contained"
+																		// onClick={}
+																	>
+																		Add
+																	</Button>
 																</div>
-															</form>
+															</div>
+															{/* </form> */}
 														</DialogComponent>
 													</div>
 												</DialogComponent>
@@ -444,7 +435,7 @@ const Messsages = () => {
 																		aria-label="send"
 																		edge="end"
 																		sx={{ m: 2 }}
-																		// onClick={submit}
+																		onClick={handleSendMessage}
 																	>
 																		<FiSend />
 																	</IconButton>
@@ -457,6 +448,8 @@ const Messsages = () => {
 															textAlign: "justify",
 														}}
 														label="Type message here ..."
+														value={message}
+														onChange={onChangeMessage}
 													/>
 												</FormControl>
 											</div>
@@ -513,7 +506,6 @@ const Messsages = () => {
 					Create Room
 				</Button>
 			</div> */}
-
 		</>
 	);
 };
