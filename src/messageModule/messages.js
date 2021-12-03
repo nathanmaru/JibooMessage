@@ -1,9 +1,10 @@
+
 import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 import useFetch from "../hooks/useFetch";
-import { createRoom, getMessages, getRooms } from "../store/messageSlice";
+import { createRoom, getMessages, getRooms, sendMessage } from '../store/messageSlice';
 import queryString from "query-string";
 
 //Icons
@@ -34,15 +35,18 @@ import * as Yup from "yup";
 
 import DialogComponent from "../materialUI/components/reuseableComponents/dialogComponent";
 
+
+
 const Messsages = () => {
 	const dispatch = useDispatch();
 	const messagesState = useFetch;
 	const roomsState = useFetch;
+	const userState = useFetch;
 	const history = useHistory();
 	const location = useLocation();
 	const { room } = queryString.parse(location.search);
 
-	const { user } = useSelector((state) => state.auth);
+	const currentUser = useSelector((state) => state.auth.user);
 
 	// list rooms
 	useEffect(() => {
@@ -66,7 +70,7 @@ const Messsages = () => {
 	}, [room]);
 
 	const fetchedMessages = useSelector((state) => state.message.messages);
-	const { items: messages } = messagesState(fetchedMessages);
+	const { items: messages, setItems: setMessages } = messagesState(fetchedMessages);
 
 	// create room
 	const [name, setName] = useState("");
@@ -76,16 +80,48 @@ const Messsages = () => {
 	}
 
 	function handleAddRoom() {
-		let formData = new FormData();
 		let members = [];
-		members.push(user.username);
-		console.log(members);
-		formData.append("name", name);
-		formData.append("members", members);
+    members.push(currentUser.username);
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
+  const [message, setMessage] = useState('');
+  function onChangeMessage(e) {
+		setMessage(e.target.value);
+	}
 
-	//validation
+	function handleSendMessage() {
+		dispatch(sendMessage(`/chat/`, { content: message, sender: currentUser.id, room }));
+	}
+  // For Real Time Messaging
+	let allMessages = [];
+	const [dataCatched, setDataCatched] = useState();
+	useEffect(() => {
+		if (dataCatched) {
+			messages.map((val) => {
+				allMessages.push(val);
+			});
+			allMessages.push(dataCatched);
+
+			setMessages(allMessages);
+		}
+	}, [dataCatched]);
+	function catchData(data) {
+		setDataCatched(data);
+	}
+
+	useEffect(() => {
+		if (room) {
+			Pusher.logToConsole = true;
+			const pusher = new Pusher('ba5283fee85d5a9a7b86', {
+				cluster: 'ap1',
+			});
+			const channel = pusher.subscribe('chat');
+			channel.bind(room, function (data) {
+				catchData(data);
+			});
+		}
+	}, [room]);
+  //validation
 	const validationMsg = Yup.object().shape({
 		room_name: Yup.string().required("Room Name is required."),
 		username: Yup.string().required("Username is required."),
@@ -115,6 +151,7 @@ const Messsages = () => {
 			role: "Creator/Admin",
 		},
 	];
+
 
 	return (
 		<>
@@ -448,11 +485,35 @@ const Messsages = () => {
 				</div>
 			</div>
 			<div>
+
+				<TextField variant='outlined' value={name} onChange={onChange} />
+				<Button
+					variant='contained'
+					placeholder='Enter Room Name'
+					type='submit'
+					onClick={handleAddRoom}
+				>
+					Create Room
+				</Button>
+			</div>
+			<div>
+				<TextField
+					variant='outlined'
+					placeholder='Enter Message'
+					value={message}
+					onChange={onChangeMessage}
+				/>
+				<Button variant='contained' type='submit' onClick={handleSendMessage}>
+					Send message
+				</Button>
+			</div>
+
 				<TextField variant="outlined" value={name} onChange={onChange} />
 				<Button variant="contained" type="submit" onClick={handleAddRoom}>
 					Create Room
 				</Button>
 			</div> */}
+
 		</>
 	);
 };
