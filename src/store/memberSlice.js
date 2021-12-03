@@ -6,6 +6,7 @@ export const memberSlice = createSlice({
 	initialState: {
 		currentMember: null,
 		members: [],
+		members2: [],
 		currentMemberType: null,
 		memberTypes: [],
 		status: 'idle',
@@ -21,6 +22,18 @@ export const memberSlice = createSlice({
 		loadMemberFailed: (state, action) => {
 			state.status = 'member load failed';
 			state.members = [];
+			alert('members Load Failed!');
+		},
+		loadMemberRequest2: (state, action) => {
+			state.status = 'loading';
+			state.members2 = [];
+		},
+		loadMemberSuccess2: (state, action) => {
+			state.status = 'member load success';
+			state.members2 = action.payload;
+		},
+		loadMemberFailed2: (state, action) => {
+			state.status = 'member load failed';
 			alert('members Load Failed!');
 		},
 		loadMemberTypeRequest: (state, action) => {
@@ -54,6 +67,9 @@ const {
 	loadMemberRequest,
 	loadMemberSuccess,
 	loadMemberFailed,
+	loadMemberRequest2,
+	loadMemberSuccess2,
+	loadMemberFailed2,
 	loadMemberTypeRequest,
 	loadMemberTypeSuccess,
 	loadMemberTypeFailed,
@@ -67,6 +83,20 @@ export default memberSlice.reducer;
 //action creators
 
 export const getMembers = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: loadMemberRequest.type,
+		onSuccess: loadMemberSuccess.type,
+		onError: loadMemberFailed.type,
+	});
+export const getMembers2 = (link) =>
 	apiCallBegan({
 		url: link,
 		method: 'get',
