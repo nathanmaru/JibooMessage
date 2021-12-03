@@ -7,15 +7,21 @@ import { createRoom, getMessages, getRooms, sendMessage } from '../store/message
 import queryString from 'query-string';
 import { Button, TextField } from '@mui/material';
 
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 const Messsages = () => {
 	const dispatch = useDispatch();
 	const messagesState = useFetch;
 	const roomsState = useFetch;
+	const userState = useFetch;
 	const history = useHistory();
 	const location = useLocation();
 	const { room } = queryString.parse(location.search);
 
-	const { user } = useSelector((state) => state.auth);
+	const currentUser = useSelector((state) => state.auth.user);
+	const { items: you } = userState(currentUser);
 
 	// list rooms
 	useEffect(() => {
@@ -39,7 +45,7 @@ const Messsages = () => {
 	}, [room]);
 
 	const fetchedMessages = useSelector((state) => state.message.messages);
-	const { items: messages } = messagesState(fetchedMessages);
+	const { items: messages, setItems: setMessages } = messagesState(fetchedMessages);
 
 	// create room
 	const [name, setName] = useState('');
@@ -50,7 +56,7 @@ const Messsages = () => {
 
 	function handleAddRoom() {
 		let members = [];
-		members.push(user.username);
+		members.push(currentUser.username);
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
 
@@ -61,8 +67,68 @@ const Messsages = () => {
 	}
 
 	function handleSendMessage() {
-		dispatch(sendMessage(`/chat/`, { content: message, sender: user.id, room }));
+		dispatch(sendMessage(`/chat/`, { content: message, sender: currentUser.id, room }));
 	}
+
+	const [open, setOpen] = useState(false);
+
+	const handleClick = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false);
+	};
+
+	const action = (
+		<>
+			<Button
+				color='secondary'
+				size='small'
+				onClick={() => {
+					handleClose();
+					dispatch(getMessages(`/chat/?search=${room}`));
+				}}
+			>
+				Fetch
+			</Button>
+			<IconButton size='small' aria-label='close' color='inherit' onClick={handleClose}>
+				<CloseIcon fontSize='small' />
+			</IconButton>
+		</>
+	);
+	let allMessages = [];
+	const [you2, setYou2] = useState(0);
+	useEffect(() => {
+		if (you2 !== 0) {
+			if (you2 !== currentUser.id) {
+				handleClick();
+			}
+		}
+	}, [you2]);
+	function printing(sender) {
+		setYou2(sender);
+	}
+
+	useEffect(() => {
+		if (room) {
+			Pusher.logToConsole = true;
+
+			const pusher = new Pusher('ba5283fee85d5a9a7b86', {
+				cluster: 'ap1',
+			});
+
+			const channel = pusher.subscribe('chat');
+			channel.bind(room, function (data) {
+				printing(data.sender.id);
+			});
+		}
+	}, [room]);
+
 	return (
 		<>
 			<div className='grid grid-cols-2'>
@@ -129,6 +195,14 @@ const Messsages = () => {
 					Send message
 				</Button>
 			</div>
+
+			<Snackbar
+				open={open}
+				// autoHideDuration={6000}
+				onClose={handleClose}
+				message='New Message Receive'
+				action={action}
+			/>
 		</>
 	);
 };
