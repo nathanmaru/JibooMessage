@@ -1,10 +1,11 @@
 import Pusher from 'pusher-js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import useFetch from '../hooks/useFetch';
-import { getMessages, getRooms } from '../store/messageSlice';
+import { createRoom, getMessages, getRooms } from '../store/messageSlice';
 import queryString from 'query-string';
+import { Button, TextField } from '@mui/material';
 
 const Messsages = () => {
 	const dispatch = useDispatch();
@@ -14,7 +15,9 @@ const Messsages = () => {
 	const location = useLocation();
 	const { room } = queryString.parse(location.search);
 
-	// rooms
+	const { user } = useSelector((state) => state.auth);
+
+	// list rooms
 	useEffect(() => {
 		dispatch(getRooms(`/chat/room`));
 	}, []);
@@ -27,7 +30,7 @@ const Messsages = () => {
 		history.push(`/messages?navTab=messages&room=${code}`);
 	}
 
-	// messages
+	// list of messages
 	useEffect(() => {
 		if (room) {
 			console.log(room);
@@ -38,25 +41,49 @@ const Messsages = () => {
 	const fetchedMessages = useSelector((state) => state.message.messages);
 	const { items: messages } = messagesState(fetchedMessages);
 
+	// create room
+	const [name, setName] = useState('');
+
+	function onChange(e) {
+		setName(e.target.value);
+	}
+
+	function handleAddRoom() {
+		let formData = new FormData();
+		let members = [];
+		members.push(user.username);
+		console.log(members);
+		formData.append('name', name);
+		formData.append('members', members);
+		dispatch(createRoom(`/chat/room`, { name, members }));
+	}
 	return (
 		<>
 			<div className='grid grid-cols-2'>
 				<div>
 					<h2>List of rooms</h2>
 					<ul>
-						{rooms.map((val) => (
-							<li
-								className='cursor-pointer bg-gray-200 rounded-sm'
-								onClick={() => handleClickRoom(val.code)}
-								key={val.id}
-							>
-								<p>Room Name: {val.name}</p>
-								<p>
-									Room latest message: {val.latest_message.sender__username}:{' '}
-									{val.latest_message.content}
-								</p>
-							</li>
-						))}
+						{rooms.length > 0 ? (
+							<>
+								{rooms.map((val) => (
+									<li
+										className='cursor-pointer bg-gray-200 rounded-sm mb-2'
+										onClick={() => handleClickRoom(val.code)}
+										key={val.id}
+									>
+										<p>Room Name: {val.name}</p>
+										{val.latest_message && (
+											<p>
+												Room latest message: {val.latest_message.sender__username}:{' '}
+												{val.latest_message.content}
+											</p>
+										)}
+									</li>
+								))}
+							</>
+						) : (
+							'You have no rooms yet'
+						)}
 					</ul>
 				</div>
 				<div>
@@ -73,6 +100,12 @@ const Messsages = () => {
 						<p>Please click on one of the chat rooms</p>
 					)}
 				</div>
+			</div>
+			<div>
+				<TextField variant='outlined' value={name} onChange={onChange} />
+				<Button variant='contained' type='submit' onClick={handleAddRoom}>
+					Create Room
+				</Button>
 			</div>
 		</>
 	);

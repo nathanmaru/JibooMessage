@@ -37,11 +37,7 @@ export const messageSlice = createSlice({
 		},
 		roomCreateSuccess: (state, action) => {
 			state.isLoading = false;
-			state.rooms.unshift({
-				id: action.payload.id.id,
-				messages: '',
-				title: action.payload.title,
-			});
+			state.rooms.unshift(action.payload);
 			alert('Create Message Success!');
 		},
 		roomCreateFailed: (state, action) => {
@@ -124,16 +120,16 @@ export const sendMessage = (content, room) =>
 		onSuccess: sendMessageSuccess.type,
 		onError: sendMessageFailed.type,
 	});
-export const createRoom = (receiver) =>
+export const createRoom = (link, formdata) =>
 	apiCallBegan({
-		url: '/chat/createRoom',
+		url: link,
 		method: 'post',
 		headers: {
 			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
 			'Content-Type': 'application/json',
 			accept: 'application/json',
 		},
-		data: { receiver },
+		data: formdata,
 		type: 'regular',
 		onStart: roomCreateRequest.type,
 		onSuccess: roomCreateSuccess.type,
