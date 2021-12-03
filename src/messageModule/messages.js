@@ -21,7 +21,6 @@ const Messsages = () => {
 	const { room } = queryString.parse(location.search);
 
 	const currentUser = useSelector((state) => state.auth.user);
-	const { items: you } = userState(currentUser);
 
 	// list rooms
 	useEffect(() => {
@@ -70,61 +69,32 @@ const Messsages = () => {
 		dispatch(sendMessage(`/chat/`, { content: message, sender: currentUser.id, room }));
 	}
 
-	const [open, setOpen] = useState(false);
-
-	const handleClick = () => {
-		setOpen(true);
-	};
-
-	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-
-		setOpen(false);
-	};
-
-	const action = (
-		<>
-			<Button
-				color='secondary'
-				size='small'
-				onClick={() => {
-					handleClose();
-					dispatch(getMessages(`/chat/?search=${room}`));
-				}}
-			>
-				Fetch
-			</Button>
-			<IconButton size='small' aria-label='close' color='inherit' onClick={handleClose}>
-				<CloseIcon fontSize='small' />
-			</IconButton>
-		</>
-	);
+	// For Real Time Messaging
 	let allMessages = [];
-	const [you2, setYou2] = useState(0);
+	const [dataCatched, setDataCatched] = useState();
 	useEffect(() => {
-		if (you2 !== 0) {
-			if (you2 !== currentUser.id) {
-				handleClick();
-			}
+		if (dataCatched) {
+			messages.map((val) => {
+				allMessages.push(val);
+			});
+			allMessages.push(dataCatched);
+
+			setMessages(allMessages);
 		}
-	}, [you2]);
-	function catchId(sender) {
-		setYou2(sender);
+	}, [dataCatched]);
+	function catchData(data) {
+		setDataCatched(data);
 	}
 
 	useEffect(() => {
 		if (room) {
 			Pusher.logToConsole = true;
-
 			const pusher = new Pusher('ba5283fee85d5a9a7b86', {
 				cluster: 'ap1',
 			});
-
 			const channel = pusher.subscribe('chat');
 			channel.bind(room, function (data) {
-				catchId(data.sender.id);
+				catchData(data);
 			});
 		}
 	}, [room]);
@@ -195,14 +165,6 @@ const Messsages = () => {
 					Send message
 				</Button>
 			</div>
-
-			<Snackbar
-				open={open}
-				// autoHideDuration={6000}
-				onClose={handleClose}
-				message='New Message Receive'
-				action={action}
-			/>
 		</>
 	);
 };

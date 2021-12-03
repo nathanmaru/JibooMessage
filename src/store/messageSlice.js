@@ -49,7 +49,7 @@ export const messageSlice = createSlice({
 		},
 		sendMessageSuccess: (state, action) => {
 			state.isLoading = false;
-			state.messages.push(action.payload);
+			// state.messages.push(action.payload);
 			// alert('Sending Message Success!');
 		},
 		sendMessageFailed: (state, action) => {
