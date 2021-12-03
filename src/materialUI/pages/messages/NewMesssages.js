@@ -42,7 +42,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
-import Pusher from 'pusher-js';
+import Pusher from "pusher-js";
 
 export default function NewMesssages() {
 	const [message, setMessage] = useState([]);
@@ -58,12 +58,12 @@ export default function NewMesssages() {
 	useEffect(() => {
 		Pusher.logToConsole = true;
 
-		const pusher = new Pusher('', {
-			cluster: '',
+		const pusher = new Pusher("", {
+			cluster: "",
 		});
 
-		const channel = pusher.subscribe('chat'); //change this to code
-		channel.bind('message', function (data) {
+		const channel = pusher.subscribe("chat"); //change this to code
+		channel.bind("message", function (data) {
 			allMessages.push(data);
 			setMessage(allMessages);
 		});
@@ -135,7 +135,11 @@ export default function NewMesssages() {
 		resolver: yupResolver(validationMsg),
 	});
 
-	const onSubmit = (data) => {
+	const onSubmitCreateRoom = (data) => {
+		console.log(JSON.stringify(data, null, 2));
+	};
+
+	const onSubmitAddMember = (data) => {
 		console.log(JSON.stringify(data, null, 2));
 	};
 
@@ -186,7 +190,7 @@ export default function NewMesssages() {
 														</IconButton>
 													}
 												>
-													<form onSubmit={handleSubmit(onSubmit)}>
+													<form onSubmit={handleSubmit(onSubmitCreateRoom)}>
 														<TextField
 															fullWidth
 															sx={{ mt: 1 }}
@@ -316,7 +320,7 @@ export default function NewMesssages() {
 															</Button>
 														}
 													>
-														<form onSubmit={handleSubmit(onSubmit)}>
+														<form onSubmit={handleSubmit(onSubmitAddMember)}>
 															<TextField
 																fullWidth
 																sx={{ mt: 1 }}
@@ -340,11 +344,11 @@ export default function NewMesssages() {
 
 															<div className="mt-5">
 																<Button
-																	className="add"
+																	// className="add"
 																	variant="contained"
 																	type="submit"
 																>
-																	Add member
+																	Add
 																</Button>
 															</div>
 														</form>
@@ -355,7 +359,7 @@ export default function NewMesssages() {
 									</div>
 
 									{/* Messages starts here */}
-									<MessagesList />
+									{/* <MessagesList /> */}
 
 									{/* Messages ends here */}
 									<div className="border-t-2 border-gray-200 p-4 -mb-3.5">
