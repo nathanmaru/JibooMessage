@@ -7,6 +7,7 @@ export const messageSlice = createSlice({
 	initialState: {
 		messages: [],
 		rooms: [],
+		currentRoom: null,
 		isLoading: false,
 	},
 	reducers: {
@@ -32,6 +33,17 @@ export const messageSlice = createSlice({
 			state.isLoading = false;
 			alert('Load Message Failed!');
 		},
+		roomsRetrieveRequest: (state, action) => {
+			state.isLoading = true;
+		},
+		roomsRetrieveSuccess: (state, action) => {
+			state.isLoading = false;
+			state.currentRoom = action.payload;
+		},
+		roomsRetrieveFailed: (state, action) => {
+			state.isLoading = false;
+			alert('Load Message Failed!');
+		},
 		roomCreateRequest: (state, action) => {
 			state.isLoading = true;
 		},
@@ -43,6 +55,18 @@ export const messageSlice = createSlice({
 		roomCreateFailed: (state, action) => {
 			state.isLoading = false;
 			alert('Create Message Failed!');
+		},
+		roomEditRequest: (state, action) => {
+			state.isLoading = true;
+		},
+		roomEditSuccess: (state, action) => {
+			state.isLoading = false;
+			state.currentRoom = action.payload;
+			alert('Edit Room Success!');
+		},
+		roomEditFailed: (state, action) => {
+			state.isLoading = false;
+			alert('Edit Room Failed!');
 		},
 		sendMessageRequest: (state, action) => {
 			state.isLoading = true;
@@ -72,6 +96,12 @@ const {
 	roomCreateRequest,
 	roomCreateSuccess,
 	roomCreateFailed,
+	roomEditRequest,
+	roomEditSuccess,
+	roomEditFailed,
+	roomsRetrieveRequest,
+	roomsRetrieveSuccess,
+	roomsRetrieveFailed,
 } = messageSlice.actions;
 
 export default messageSlice.reducer;
@@ -135,4 +165,33 @@ export const createRoom = (link, formdata) =>
 		onStart: roomCreateRequest.type,
 		onSuccess: roomCreateSuccess.type,
 		onError: roomCreateFailed.type,
+	});
+export const editRoom = (link, formdata) =>
+	apiCallBegan({
+		url: link,
+		method: 'put',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		data: formdata,
+		type: 'regular',
+		onStart: roomEditRequest.type,
+		onSuccess: roomEditSuccess.type,
+		onError: roomEditFailed.type,
+	});
+export const retrieveRoom = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: roomsRetrieveRequest.type,
+		onSuccess: roomsRetrieveSuccess.type,
+		onError: roomsRetrieveFailed.type,
 	});

@@ -21,6 +21,7 @@ export const userSlice = createSlice({
 	name: 'auth',
 	initialState: {
 		user: null,
+		retrieveProfile: null,
 		image: null,
 		status: 'idle',
 		isAuthenticated: false,
@@ -143,6 +144,17 @@ export const userSlice = createSlice({
 			alert('Sorry the verification failed.\n' + action.payload);
 			state.status = 'failed';
 		},
+		retrieveProfileRequest: (state, action) => {
+			state.status = 'loading';
+		},
+		retrieveProfileSuccess: (state, action) => {
+			state.retrieveProfile = action.payload;
+			state.status = 'success';
+		},
+		retrieveProfileFailed: (state, action) => {
+			alert('Failed to retrieve user');
+			state.status = 'failed';
+		},
 	},
 });
 
@@ -168,6 +180,9 @@ const {
 	verifyUserRequest,
 	verifyUserSuccess,
 	verifyUserFailed,
+	retrieveProfileRequest,
+	retrieveProfileSuccess,
+	retrieveProfileFailed,
 } = userSlice.actions;
 
 export default userSlice.reducer;
@@ -264,6 +279,20 @@ export const loadUser = () =>
 		onStart: userLoadedRequest.type,
 		onSuccess: userLoadedSuccess.type,
 		onError: userLoadedFailed.type,
+	});
+export const loadAUser = (link) =>
+	apiCallBegan({
+		url: link,
+		method: 'get',
+		headers: {
+			Authorization: 'Bearer ' + localStorage.getItem('access_token'),
+			'Content-Type': 'application/json',
+			accept: 'application/json',
+		},
+		type: 'regular',
+		onStart: retrieveProfileRequest.type,
+		onSuccess: retrieveProfileSuccess.type,
+		onError: retrieveProfileFailed.type,
 	});
 
 export const logout = () =>
