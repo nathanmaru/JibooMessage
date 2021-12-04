@@ -45,6 +45,7 @@
 		"react-hook-form": "^7.20.4",
 		"react-icons": "^4.3.1",
 		"react-imask": "^6.2.2",
+		"react-infinite-scroll-component": "^6.1.0",
 		"react-material-ui-form-validator": "^3.0.0",
 		"react-paypal-button-v2": "^2.6.3",
 		"react-quilljs": "^1.2.17",

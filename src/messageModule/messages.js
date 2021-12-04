@@ -42,6 +42,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import DialogComponent from '../materialUI/components/reuseableComponents/dialogComponent';
+import InfiniteScrolling from './infiniteScrolling';
 
 const Messsages = () => {
 	const dispatch = useDispatch();
@@ -419,6 +420,7 @@ const Messsages = () => {
 										</div>
 
 										{/* Conversation */}
+										{/* <InfiniteScrolling data={messages} /> */}
 										{messages.length > 0 ? (
 											<div>
 												{messages.map((val) => (
@@ -428,7 +430,6 @@ const Messsages = () => {
 																<li className='mb-1' key={val.id}>
 																	<div className='flex flex-col'>
 																		<div className='flex flex-row'>
-																			{/* <Avatar src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" /> */}
 																			<Avatar src={val.sender.profileImage} />
 																			<div className='flex flex-col'>
 																				<p className='ml-2 text-sm text-gray-900'>
