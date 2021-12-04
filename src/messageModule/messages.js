@@ -43,6 +43,7 @@ import * as Yup from 'yup';
 
 import DialogComponent from '../materialUI/components/reuseableComponents/dialogComponent';
 import InfiniteScrolling from './infiniteScrolling';
+import { format } from 'date-fns';
 
 const Messsages = () => {
 	const dispatch = useDispatch();
@@ -452,6 +453,13 @@ const Messsages = () => {
 																				</p>
 																				<p className='ml-2 text-xs text-gray-500'>
 																					{val.content}
+																				</p>
+																				<p className='ml-2 text-xs text-gray-500'>
+																					{val.dateModified &&
+																						format(
+																							new Date(val.dateModified),
+																							'MMM-dd h:m b'
+																						)}
 																				</p>
 																			</div>
 																		</div>
