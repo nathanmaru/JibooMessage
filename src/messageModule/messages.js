@@ -441,12 +441,12 @@ const Messsages = () => {
 										{/* Conversation */}
 										{messages.length > 0 ? (
 											<div
-												className="chat-message bg-green-200 py-1 px-2 overflow-y-auto"
+												className="chat-message p-2 overflow-y-auto"
 												style={{ maxHeight: "450px", minHeight: "450px" }}
 											>
 												{messages.map((val) => (
-													<div className="chat-message bg-blue-200">
-														<div className="flex items-end bg-red-100">
+													<div className="chat-message">
+														<div className="flex items-end">
 															<div className="flex flex-col text-xs max-w-xs mx-2 order-2 items-start">
 																<li className="mb-1" key={val.id}>
 																	<div className="flex flex-col">
