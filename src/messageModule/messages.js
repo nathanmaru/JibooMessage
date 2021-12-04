@@ -1,8 +1,8 @@
-import Pusher from 'pusher-js';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
-import useFetch from '../hooks/useFetch';
+import Pusher from "pusher-js";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
+import useFetch from "../hooks/useFetch";
 import {
 	createRoom,
 	editRoom,
@@ -10,14 +10,14 @@ import {
 	getRooms,
 	retrieveRoom,
 	sendMessage,
-} from '../store/messageSlice';
-import queryString from 'query-string';
+} from "../store/messageSlice";
+import queryString from "query-string";
 
 //Icons
-import { BiMessageAltAdd } from 'react-icons/bi';
-import { BsInfoCircle, BsSearch } from 'react-icons/bs';
-import { FiSend } from 'react-icons/fi';
-import { RiChat1Line } from 'react-icons/ri';
+import { BiMessageAltAdd } from "react-icons/bi";
+import { BsInfoCircle, BsSearch } from "react-icons/bs";
+import { FiSend } from "react-icons/fi";
+import { RiChat1Line } from "react-icons/ri";
 
 //mui
 import {
@@ -32,16 +32,16 @@ import {
 	ListItemText,
 	ListItemAvatar,
 	Avatar,
-} from '@mui/material';
+} from "@mui/material";
 
-import AvatarGroup from '@mui/material/AvatarGroup';
+import AvatarGroup from "@mui/material/AvatarGroup";
 
 //validation
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
 
-import DialogComponent from '../materialUI/components/reuseableComponents/dialogComponent';
+import DialogComponent from "../materialUI/components/reuseableComponents/dialogComponent";
 
 const Messsages = () => {
 	const dispatch = useDispatch();
@@ -79,11 +79,12 @@ const Messsages = () => {
 
 	const fetchedMessages = useSelector((state) => state.message.messages);
 	const fetchedCurrentRoom = useSelector((state) => state.message.currentRoom);
-	const { items: messages, setItems: setMessages } = messagesState(fetchedMessages);
+	const { items: messages, setItems: setMessages } =
+		messagesState(fetchedMessages);
 	const { items: currentRoom } = currentRoomState(fetchedCurrentRoom);
 
 	// create room
-	const [name, setName] = useState('');
+	const [name, setName] = useState("");
 
 	function onChange(e) {
 		setName(e.target.value);
@@ -94,13 +95,15 @@ const Messsages = () => {
 		members.push(currentUser.username);
 		dispatch(createRoom(`/chat/room`, { name, members }));
 	}
-	const [message, setMessage] = useState('');
+	const [message, setMessage] = useState("");
 	function onChangeMessage(e) {
 		setMessage(e.target.value);
 	}
 
 	function handleSendMessage() {
-		dispatch(sendMessage(`/chat/`, { content: message, sender: currentUser.id, room }));
+		dispatch(
+			sendMessage(`/chat/`, { content: message, sender: currentUser.id, room })
+		);
 	}
 	// For Real Time Messaging
 	let allMessages = [];
@@ -122,10 +125,10 @@ const Messsages = () => {
 	useEffect(() => {
 		if (room) {
 			Pusher.logToConsole = true;
-			const pusher = new Pusher('ba5283fee85d5a9a7b86', {
-				cluster: 'ap1',
+			const pusher = new Pusher("ba5283fee85d5a9a7b86", {
+				cluster: "ap1",
 			});
-			const channel = pusher.subscribe('chat');
+			const channel = pusher.subscribe("chat");
 			channel.bind(room, function (data) {
 				catchData(data);
 			});
@@ -134,8 +137,8 @@ const Messsages = () => {
 
 	//validation
 	const validationMsg = Yup.object().shape({
-		room_name: Yup.string().required('Room Name is required.'),
-		username: Yup.string().required('Username is required.'),
+		room_name: Yup.string().required("Room Name is required."),
+		username: Yup.string().required("Username is required."),
 	});
 
 	const {
@@ -152,10 +155,16 @@ const Messsages = () => {
 
 	// Editing Room Detail
 
-	const [roomDetails, setRoomDetails] = useState({ room_name: '', members: [] });
+	const [roomDetails, setRoomDetails] = useState({
+		room_name: "",
+		members: [],
+	});
 	useEffect(() => {
 		if (currentRoom) {
-			setRoomDetails({ room_name: currentRoom.name, members: currentRoom.members });
+			setRoomDetails({
+				room_name: currentRoom.name,
+				members: currentRoom.members,
+			});
 		}
 	}, [currentRoom]);
 	function onChangeCurrentRoom(e) {
@@ -175,7 +184,7 @@ const Messsages = () => {
 			})
 		);
 	}
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState("");
 	function onChangeUsername(e) {
 		setUsername(e.target.value);
 	}
@@ -199,34 +208,34 @@ const Messsages = () => {
 
 	return (
 		<>
-			<div className=''>
+			<div className="">
 				<div>
 					<div>
 						<div
-							className=' relative min-h-screen flex flex-col'
-							style={{ minHeight: '675px', maxHeight: '675px' }}
+							className=" relative min-h-screen flex flex-col"
+							style={{ minHeight: "675px", maxHeight: "675px" }}
 						>
-							<div className='flex-grow w-full mx-auto lg:flex'>
+							<div className="flex-grow w-full mx-auto lg:flex">
 								<div
-									className='flex-1 min-w-0 xl:flex'
-									style={{ minHeight: '665px', maxHeight: '665px' }}
+									className="flex-1 min-w-0 xl:flex"
+									style={{ minHeight: "665px", maxHeight: "665px" }}
 								>
-									<div className='border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-gray-50'>
+									<div className="border-b border-gray-200 xl:border-b-0 xl:flex-shrink-0 xl:w-64 xl:border-r xl:border-gray-200 bg-gray-50">
 										<div
-											className='pl-4 pr-2 py-6 sm:pl-6 lg:pl-8 xl:pl-0'
-											style={{ minHeight: '665px', maxHeight: '665px' }}
+											className="pl-4 pr-2 py-6 sm:pl-6 lg:pl-8 xl:pl-0"
+											style={{ minHeight: "665px", maxHeight: "665px" }}
 										>
-											<div className='h-full relative'>
-												<div className='flex flex-row justify-between ml-2'>
-													<p className='text-2xl text-gray-500 p-1 justify-start'>
-														{' '}
+											<div className="h-full relative">
+												<div className="flex flex-row justify-between ml-2">
+													<p className="text-2xl text-gray-500 p-1 justify-start">
+														{" "}
 														Chats
 													</p>
 
 													<DialogComponent
-														title='New Chat Room'
+														title="New Chat Room"
 														button={
-															<IconButton color='primary' aria-label='add room'>
+															<IconButton color="primary" aria-label="add room">
 																<BiMessageAltAdd />
 															</IconButton>
 														}
@@ -235,19 +244,19 @@ const Messsages = () => {
 														<TextField
 															fullWidth
 															sx={{ mt: 1 }}
-															id='outlined-search'
-															label='Enter room name'
-															variant='outlined'
-															name='name'
+															id="outlined-search"
+															label="Enter room name"
+															variant="outlined"
+															name="name"
 															value={name}
 															onChange={onChange}
 														/>
 
-														<div className='mt-5'>
+														<div className="mt-5">
 															<Button
-																className='add'
-																variant='contained'
-																type='submit'
+																className="add"
+																variant="contained"
+																type="submit"
 																onClick={handleAddRoom}
 															>
 																Create Room
@@ -260,10 +269,10 @@ const Messsages = () => {
 												{/* Room List */}
 												<List
 													sx={{
-														width: '100%',
-														maxHeight: '580px',
-														minHeight: '580px',
-														overflowY: 'auto',
+														width: "100%",
+														maxHeight: "580px",
+														minHeight: "580px",
+														overflowY: "auto",
 														mt: 1,
 													}}
 												>
@@ -272,7 +281,7 @@ const Messsages = () => {
 															{rooms.map((val) => (
 																<ListItem
 																	// className="cursor-pointer bg-gray-200 rounded-sm mb-2"
-																	sx={{ cursor: 'pointer' }}
+																	sx={{ cursor: "pointer" }}
 																	onClick={() => handleClickRoom(val.code)}
 																	key={val.id}
 																>
@@ -301,7 +310,7 @@ const Messsages = () => {
 															))}
 														</>
 													) : (
-														'You have no rooms yet'
+														"You have no rooms yet"
 													)}
 												</List>
 											</div>
@@ -310,19 +319,24 @@ const Messsages = () => {
 
 									{/* Right Side */}
 									<div
-										className='flex-1 p:2 sm:pb-6 justify-between flex flex-col  xl:flex'
-										style={{ minHeight: '675px', maxHeight: '675px' }}
+										className="flex-1 p:2 sm:pb-6 justify-between flex flex-col  xl:flex"
+										style={{ minHeight: "675px", maxHeight: "675px" }}
 									>
-										<div className='flex sm:items-center justify-between py-3 border-b border-gray-200 p-3'>
-											<div className='flex items-center space-x-4'>
-												<div className='flex flex-col leading-tight'>
-													<div className='text-1xl mt-1 flex items-center'>
-														<span className='text-gray-700 mr-3'>
+										<div className="flex sm:items-center justify-between py-3 border-b border-gray-200 p-3">
+											<div className="flex items-center space-x-4">
+												<div className="flex flex-col leading-tight">
+													<div className="text-1xl mt-1 flex items-center">
+														<span className="text-gray-700 mr-3">
 															{roomDetails && roomDetails.room_name}
 														</span>
-														<span className='text-green-500'>
+														<span className="text-green-500">
 															<svg width={10} height={10}>
-																<circle cx={5} cy={5} r={5} fill='currentColor' />
+																<circle
+																	cx={5}
+																	cy={5}
+																	r={5}
+																	fill="currentColor"
+																/>
 															</svg>
 														</span>
 													</div>
@@ -335,38 +349,41 @@ const Messsages = () => {
 												</AvatarGroup>
 											</div>
 
-											<div className='flex items-center space-x-2'>
-												<IconButton aria-label='search'>
+											<div className="flex items-center space-x-2">
+												<IconButton aria-label="search">
 													<BsSearch />
 												</IconButton>
 
 												<DialogComponent
-													title='Chat Room Information'
+													title="Chat Room Information"
 													button={
-														<IconButton color='primary' aria-label='Room Info'>
+														<IconButton color="primary" aria-label="Room Info">
 															<BsInfoCircle />
 														</IconButton>
 													}
-													action={{ label: 'Save Changes', handler: handleEditRoom }}
+													action={{
+														label: "Save Changes",
+														handler: handleEditRoom,
+													}}
 												>
 													<TextField
 														fullWidth
 														sx={{ mt: 1 }}
-														id='outlined-search'
-														label='Room name'
-														variant='outlined'
-														name='room_name'
+														id="outlined-search"
+														label="Room name"
+														variant="outlined"
+														name="room_name"
 														value={roomDetails.room_name}
 														onChange={onChangeCurrentRoom}
 													/>
 
 													<List
 														sx={{
-															width: '100%',
-															maxHeight: '330px',
-															minHeight: '330px',
-															bgcolor: 'background.paper',
-															overflowY: 'auto',
+															width: "100%",
+															maxHeight: "330px",
+															minHeight: "330px",
+															bgcolor: "background.paper",
+															overflowY: "auto",
 															mt: 1,
 														}}
 													>
@@ -384,29 +401,32 @@ const Messsages = () => {
 															))}
 													</List>
 
-													<div className='mt-1'>
+													<div className="mt-1">
 														<DialogComponent
-															maxWidth='xs'
-															title='Add Member'
+															maxWidth="xs"
+															title="Add Member"
 															button={
 																<Button
-																	color='primary'
-																	aria-label='Room Info'
-																	variant='contained'
+																	color="primary"
+																	aria-label="Room Info"
+																	variant="contained"
 																>
 																	Add Member
 																</Button>
 															}
-															action={{ label: 'Add', handler: handleAddMember }}
+															action={{
+																label: "Add",
+																handler: handleAddMember,
+															}}
 														>
 															{/* <form onSubmit={handleSubmit(onSubmit)}> */}
 															<TextField
 																fullWidth
 																sx={{ mt: 1 }}
-																id='outlined-search'
-																label='Username'
-																variant='outlined'
-																name='username'
+																id="outlined-search"
+																label="Username"
+																variant="outlined"
+																name="username"
 																value={username}
 																onChange={onChangeUsername}
 															/>
@@ -420,21 +440,24 @@ const Messsages = () => {
 
 										{/* Conversation */}
 										{messages.length > 0 ? (
-											<div>
+											<div
+												className="chat-message bg-green-200 py-1 px-2 overflow-y-auto"
+												style={{ maxHeight: "450px", minHeight: "450px" }}
+											>
 												{messages.map((val) => (
-													<div className='chat-message'>
-														<div className='flex items-end'>
-															<div className='flex flex-col text-xs max-w-xs mx-2 order-2 items-start'>
-																<li className='mb-1' key={val.id}>
-																	<div className='flex flex-col'>
-																		<div className='flex flex-row'>
+													<div className="chat-message bg-blue-200">
+														<div className="flex items-end bg-red-100">
+															<div className="flex flex-col text-xs max-w-xs mx-2 order-2 items-start">
+																<li className="mb-1" key={val.id}>
+																	<div className="flex flex-col">
+																		<div className="flex flex-row">
 																			{/* <Avatar src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" /> */}
 																			<Avatar src={val.sender.profileImage} />
-																			<div className='flex flex-col'>
-																				<p className='ml-2 text-sm text-gray-900'>
+																			<div className="flex flex-col">
+																				<p className="ml-2 text-sm text-gray-900">
 																					{val.sender.full_name}
 																				</p>
-																				<p className='ml-2 text-xs text-gray-500'>
+																				<p className="ml-2 text-xs text-gray-500">
 																					{val.content}
 																				</p>
 																			</div>
@@ -447,14 +470,17 @@ const Messsages = () => {
 												))}
 											</div>
 										) : (
-											<p className='text-center text-gray-400'>
+											<p className="text-center text-gray-400">
 												Please click on one of the chat rooms
 											</p>
 										)}
 
-										<div className='border-t-2 border-gray-200 p-4 -mb-3.5'>
-											<div className='relative flex'>
-												<FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'>
+										<div className="border-t-2 border-gray-200 p-4 -mb-3.5">
+											<div className="relative flex">
+												<FormControl
+													sx={{ m: 1, width: "25ch" }}
+													variant="outlined"
+												>
 													<TextField
 														fullWidth
 														multiline
@@ -464,10 +490,10 @@ const Messsages = () => {
 														// onKeyPress={submitEnter}
 														InputProps={{
 															endAdornment: (
-																<InputAdornment position='end'>
+																<InputAdornment position="end">
 																	<IconButton
-																		aria-label='send'
-																		edge='end'
+																		aria-label="send"
+																		edge="end"
 																		sx={{ m: 2 }}
 																		onClick={handleSendMessage}
 																	>
@@ -477,11 +503,11 @@ const Messsages = () => {
 															),
 														}}
 														sx={{
-															width: '1000px',
-															padding: '5px',
-															textAlign: 'justify',
+															width: "1025px",
+															padding: "5px",
+															textAlign: "justify",
 														}}
-														label='Type message here ...'
+														label="Type message here ..."
 														value={message}
 														onChange={onChangeMessage}
 													/>
