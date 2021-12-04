@@ -153,10 +153,16 @@ const Messsages = () => {
 
 	// Editing Room Detail
 
-	const [roomDetails, setRoomDetails] = useState({ room_name: '', members: [] });
+	const [roomDetails, setRoomDetails] = useState({
+		room_name: '',
+		members: [],
+	});
 	useEffect(() => {
 		if (currentRoom) {
-			setRoomDetails({ room_name: currentRoom.name, members: currentRoom.members });
+			setRoomDetails({
+				room_name: currentRoom.name,
+				members: currentRoom.members,
+			});
 		}
 	}, [currentRoom]);
 	function onChangeCurrentRoom(e) {
@@ -348,7 +354,10 @@ const Messsages = () => {
 															<BsInfoCircle />
 														</IconButton>
 													}
-													action={{ label: 'Save Changes', handler: handleEditRoom }}
+													action={{
+														label: 'Save Changes',
+														handler: handleEditRoom,
+													}}
 												>
 													<TextField
 														fullWidth
@@ -398,7 +407,10 @@ const Messsages = () => {
 																	Add Member
 																</Button>
 															}
-															action={{ label: 'Add', handler: handleAddMember }}
+															action={{
+																label: 'Add',
+																handler: handleAddMember,
+															}}
 														>
 															{/* <form onSubmit={handleSubmit(onSubmit)}> */}
 															<TextField
@@ -422,10 +434,13 @@ const Messsages = () => {
 										{/* Conversation */}
 										{/* <InfiniteScrolling data={messages} /> */}
 										{messages.length > 0 ? (
-											<div>
+											<div
+												className='chat-message p-2 overflow-y-auto'
+												style={{ maxHeight: '450px', minHeight: '450px' }}
+											>
 												{messages.map((val) => (
 													<div className='chat-message'>
-														<div className='flex items-end'>
+														<div className='flex items-start'>
 															<div className='flex flex-col text-xs max-w-xs mx-2 order-2 items-start'>
 																<li className='mb-1' key={val.id}>
 																	<div className='flex flex-col'>
@@ -478,7 +493,7 @@ const Messsages = () => {
 															),
 														}}
 														sx={{
-															width: '1000px',
+															width: '1025px',
 															padding: '5px',
 															textAlign: 'justify',
 														}}
