@@ -130,36 +130,6 @@ export default function MiniDrawer(props) {
 	let hiddenNavigation;
 	const mainNavigations = [
 		{
-			text: "Home",
-			icon: <AiFillHome className="w-6 h-6 " />,
-			toolTip: "Home",
-			onClick: () => {
-				history.push("/home?navTab=home");
-				setPageTitle("Home");
-			},
-			selected: "home",
-		},
-		// {
-		// 	text: 'Library',
-		// 	icon: <ImBooks className='w-6 h-6 ' />,
-		// 	toolTip: 'Library',
-		// 	onClick: () => {
-		// 		history.push('/library?navTab=library');
-		// 		setPageTitle('Library');
-		// 	},
-		// 	selected: 'library',
-		// },
-		// {
-		// 	text: 'Notes',
-		// 	icon: <CgNotes className='w-6 h-6 ' />,
-		// 	toolTip: 'Notes',
-		// 	onClick: () => {
-		// 		history.push('/notes?navTab=notes');
-		// 		setPageTitle('Notes');
-		// 	},
-		// 	selected: 'notes',
-		// },
-		{
 			text: "Messages",
 			icon: <SiGooglemessages className="w-6 h-6 " />,
 			toolTip: "Messages",
@@ -169,45 +139,13 @@ export default function MiniDrawer(props) {
 			},
 			selected: "messages",
 		},
+		{
+			text: "Log Out",
+			icon: <LogoutIcon />,
+			toolTip: "Log Out",
+			onClick: () => history.push("/logout"),
+		},
 	];
-	// const paidNavigations = [
-	// 	{
-	// 		text: 'Classrooms',
-	// 		icon: <BsFillPeopleFill className='w-6 h-6 ' />,
-	// 		toolTip: 'Classrooms',
-	// 		onClick: () => {
-	// 			history.push('/classroom?ref=researcher&navTab=classroom');
-	// 			setPageTitle('Classrooms');
-	// 		},
-	// 		selected: 'classroom',
-	// 	},
-	// 	{
-	// 		text: 'Institutions',
-	// 		icon: <MdSchool className='w-6 h-6 ' />,
-	// 		toolTip: 'Institutions',
-	// 		onClick: () => {
-	// 			history.push('/institutions?ref=managing&navTab=institutions');
-	// 			setPageTitle('Institutions');
-	// 		},
-	// 		selected: 'institutions',
-	// 	},
-	// 	{
-	// 		text: 'Settings',
-	// 		icon: <AiFillSetting className='w-6 h-6 ' />,
-	// 		toolTip: 'Settings',
-	// 		onClick: () => {
-	// 			history.push('/settings?navTab=settings');
-	// 			setPageTitle('Settings');
-	// 		},
-	// 		selected: 'settings',
-	// 	},
-	// 	{
-	// 		text: 'Log Out',
-	// 		icon: <LogoutIcon />,
-	// 		toolTip: 'Log Out',
-	// 		onClick: () => history.push('/logout'),
-	// 	},
-	// ];
 
 	if (open) {
 		hiddenNavigation = "flex";
@@ -291,20 +229,7 @@ export default function MiniDrawer(props) {
 							flexDirection: "column",
 							alignItems: "flex-center",
 						}}
-					>
-						{/* {paidNavigations.map((item, index) => (
-							<ListItemButton
-								key={item.text}
-								onClick={item.onClick}
-								selected={selectedIndex === item.selected}
-							>
-								<Tooltip title={item.toolTip} placement='right'>
-									{item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
-								</Tooltip>
-								<ListItemText primary={item.text} />
-							</ListItemButton>
-						))} */}
-					</List>
+					></List>
 				</Drawer>
 				<Box
 					component="main"

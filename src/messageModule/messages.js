@@ -282,7 +282,7 @@ const Messsages = () => {
 														<>
 															{rooms.map((val) => (
 																<ListItem
-																	// className="cursor-pointer bg-gray-200 rounded-sm mb-2"
+																	className="border-b rounded-b-xl"
 																	sx={{ cursor: "pointer" }}
 																	onClick={() => handleClickRoom(val.code)}
 																	key={val.id}
@@ -297,12 +297,15 @@ const Messsages = () => {
 																		secondary={
 																			<>
 																				{val.latest_message && (
-																					<p>
-																						{
-																							val.latest_message
-																								.sender__username
-																						}
-																						: {val.latest_message.content}
+																					<p className="truncate">
+																						<b>
+																							{
+																								val.latest_message
+																									.sender__username
+																							}
+																							:
+																						</b>
+																						{val.latest_message.content}
 																					</p>
 																				)}
 																			</>
@@ -352,10 +355,6 @@ const Messsages = () => {
 											</div>
 
 											<div className="flex items-center space-x-2">
-												<IconButton aria-label="search">
-													<BsSearch />
-												</IconButton>
-
 												<DialogComponent
 													title="Chat Room Information"
 													button={
@@ -448,34 +447,33 @@ const Messsages = () => {
 												style={{ maxHeight: "450px", minHeight: "450px" }}
 											>
 												{messages.map((val) => (
-													<div className="chat-message">
-														<div className="flex items-start">
-															<div className="flex flex-col text-xs max-w-xs mx-2 order-2 items-start">
-																<li className="mb-2" key={val.id}>
-																	<div className="flex flex-col">
-																		<div className="flex flex-row">
-																			<Avatar src={val.sender.profileImage} />
+													<div className="flex w-full items-start">
+														<div className="flex flex-col w-full mx-2 order-2 items-start">
+															<div
+																className="mb-8 list-none w-full"
+																key={val.id}
+															>
+																<div className="flex flex-row">
+																	<Avatar src={val.sender.profileImage} />
 
-																			<div className="flex flex-col">
-																				<div className="flex flex-row items-center">
-																					<p className="ml-2 text-sm text-gray-900">
-																						{val.sender.full_name}
-																					</p>
-																					<p className="ml-3 text-xs text-gray-400">
-																						{val.dateModified &&
-																							format(
-																								new Date(val.dateModified),
-																								"MMM-dd h:m b"
-																							)}
-																					</p>
-																				</div>
-																				<p className="ml-2 text-xs text-gray-500">
-																					{val.content}
-																				</p>
-																			</div>
+																	<div className="flex flex-col w-full">
+																		<div className="flex flex-row items-center">
+																			<p className="ml-2 text-sm text-gray-900">
+																				{val.sender.full_name}
+																			</p>
+																			<p className="ml-3 text-xs text-gray-400">
+																				{val.dateModified &&
+																					format(
+																						new Date(val.dateModified),
+																						"MMM-dd h:m b"
+																					)}
+																			</p>
 																		</div>
+																		<p className="ml-2 text-xs text-gray-500">
+																			{val.content}
+																		</p>
 																	</div>
-																</li>
+																</div>
 															</div>
 														</div>
 													</div>
